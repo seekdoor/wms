@@ -22,3 +22,4 @@ public enum CompanyCategoryEnum {
         return value;
     }
 }
+

@@ -70,6 +70,13 @@ public class User {
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date createTime;
 
+
+    private Integer gender;
+
+    private String avatar;
+
+    private Integer roleId;
+
     /**
      * 隐藏安全字段
      *
@@ -165,4 +172,27 @@ public class User {
         this.createTime = createTime;
     }
 
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public Integer getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
+    }
 }

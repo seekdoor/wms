@@ -59,7 +59,7 @@ public class CompanyController {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
-        company.setCreatorId(userService.getLoginUser().getId());
+        company.setCreateUid(userService.getLoginUser().getId());
         companyMapper.insert(company);
         return Result.success("新增合作方成功");
     }

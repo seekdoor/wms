@@ -4,7 +4,7 @@ export default class CompanyModel {
 
     id = 0;
     code = '';
-    category = 1;
+    category = 0;
     name = '';
     address = '';
     contactName = '';
@@ -12,17 +12,17 @@ export default class CompanyModel {
     mobile = '';
     email = '';
     remark = '';
-    creatorId = 0;
-    approverId = 0;
+    createUid = 0;
+    approveUid = 0;
     createTime = '';
-    creator = new UserModel;
-    approver = new UserModel;
+    createUser = new UserModel;
+    approveUser = new UserModel;
     categoryName = '';
 
 
     getFilterForm() {
-        this.creator = null;
-        this.approver = null;
+        this.createUser = null;
+        this.approveUser = null;
         return this;
     }
 

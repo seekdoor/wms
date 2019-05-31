@@ -4,9 +4,12 @@
                 :visible="visible"
                 @update:visible="showDialog"
                 width="500px"
-                title="新增"
+                :title=" editId? `编辑 ${editId}` : '新增'"
+                :close-on-click-modal="false"
         >
-            <el-form>
+            <el-form
+                    v-loading="loading"
+            >
                 <el-row :gutter="5">
                     <el-col :span="18">
                         <el-form-item label="编码">
@@ -99,7 +102,8 @@
         },
         data() {
             return {
-                company: new CompanyModel()
+                company: new CompanyModel(),
+                loading: false
             }
         },
         mounted() {
@@ -111,6 +115,18 @@
             showDialog(v) {
                 this.$emit('update:visible', v)
             },
+            refreshCompany() {
+                if (!this.editId) {
+                    this.loading = false;
+                    return this.company = new CompanyModel;
+                }
+                this.loading = true;
+                this.$ajax.request(Api.company.getById, {
+                    id: this.editId
+                }).then(resp => {
+                    this.company = resp;
+                }).finally(() => this.loading = false)
+            },
             submit() {
                 let api = this.editId ? Api.company.edit : Api.company.add;
                 this.$ajax.request(api, this.company)
@@ -121,7 +137,11 @@
                     })
             }
         },
-        watch: {},
+        watch: {
+            visible(v) {
+                if (v) this.refreshCompany();
+            }
+        },
         computed: {},
 
     }

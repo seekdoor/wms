@@ -7,20 +7,31 @@ export default [
             icon: 'iconfont icon-tachometer-alt'
         }
     },
+
     {
         path: '/UserManager',
         component: () => import("@/components/page-content/user/UserManagerView.vue"),
         meta: {
-            title: '用户管理',
-            icon: 'iconfont icon-tachometer-alt'
+            title: '系统管理',
+            icon: 'iconfont icon-cog'
         },
+        children : [
+            {
+                path: '/UserManager',
+                component: () => import("@/components/page-content/user/UserManagerView.vue"),
+                meta: {
+                    title: '用户管理',
+                },
+            },
+            {
+                path: '/CompanyManager',
+                component: () => import("@/components/page-content/company/CompanyManagerView.vue"),
+                meta: {
+                    title: '合作方管理',
+                },
+            },
+        ]
     },
-    {
-        path: '/CompanyManager',
-        component: () => import("@/components/page-content/company/CompanyManagerView.vue"),
-        meta: {
-            title: '合作方管理',
-            icon: 'iconfont icon-tachometer-alt'
-        },
-    },
+
+
 ]

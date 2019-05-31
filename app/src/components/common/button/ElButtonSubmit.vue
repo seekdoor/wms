@@ -1,16 +1,14 @@
 <template>
-    <div class="ElButtonSubmit lh-1">
-        <el-button
-                type="primary"
-                :style="buttonStyle"
-                :icon="icon"
-                :size="size"
-                :loading="loading"
-                :native-type="nativeType"
-        >
-            <slot></slot>
-        </el-button>
-    </div>
+    <el-button
+            type="primary"
+            :style="buttonStyle"
+            :icon="icon"
+            :size="size"
+            :loading="loading"
+            :native-type="nativeType"
+    >
+        <slot></slot>
+    </el-button>
 </template>
 
 <script>

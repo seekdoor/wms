@@ -3,7 +3,6 @@ package com.lansea.wms.service;
 import com.lansea.wms.mapper.CompanyMapper;
 import com.lansea.wms.mapper.UserMapper;
 import com.lansea.wms.model.Company;
-import com.lansea.wms.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,11 +24,11 @@ public class CompanyService {
      * @param company 合作伙伴
      * @return
      */
-    public Company addUsers(Company company) {
+    public Company addUser(Company company) {
         try {
-            company.setCreator(userMapper.findById(company.getCreatorId()));
-            if (company.getApproverId() != 0) {
-                company.setApprover(userMapper.findById(company.getApproverId()));
+            company.setCreateUser(userMapper.findById(company.getCreateUid()));
+            if (company.getApproveUid() != 0) {
+                company.setApproveUser(userMapper.findById(company.getApproveUid()));
             }
         } catch (Exception ignore) {
         }
@@ -44,7 +43,7 @@ public class CompanyService {
      */
     public List<Company> addUsers(List<Company> companies) {
         for (Company company : companies) {
-            addUsers(company);
+            addUser(company);
         }
         return companies;
     }

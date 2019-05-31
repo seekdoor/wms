@@ -3,8 +3,6 @@ package com.lansea.wms.model;
 import com.lansea.wms.entity.SerializeBase;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.enums.CompanyCategoryEnum;
-import com.lansea.wms.mapper.UserMapper;
-import com.lansea.wms.util.BeanUtil;
 import com.lansea.wms.util.DateUtil;
 import com.lansea.wms.util.EnumUtil;
 import com.lansea.wms.validate.Mobile;
@@ -22,7 +20,6 @@ import java.util.Date;
 @Repository
 @ApiModel(value = "Company", description = "第三方公司（客户，供应商）模型")
 public class Company extends SerializeBase {
-
 
     @ApiModelProperty(value = "ID")
     @Min(value = 1, message = "ID 非法", groups = {ValidClass.EditForm.class, ValidClass.FindIdForm.class})
@@ -63,10 +60,10 @@ public class Company extends SerializeBase {
     private String remark;
 
     @ApiModelProperty(value = "创建人 id")
-    private Integer creatorId;
+    private Integer createUid;
 
     @ApiModelProperty(value = "审批人")
-    private Integer approverId;
+    private Integer approveUid;
 
     @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
@@ -75,27 +72,27 @@ public class Company extends SerializeBase {
     // 扩展字段
 
     @ApiModelProperty(value = "创建人")
-    private User creator;
+    private User createUser;
     @ApiModelProperty(value = "审批人")
-    private User approver;
+    private User approveUser;
     @ApiModelProperty(value = "分类名称")
     private String categoryName;
 
 
-    public void setCreator(User creator) {
-        this.creator = creator;
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
     }
 
-    public void setApprover(User approver) {
-        this.approver = approver;
+    public void setApproveUser(User approveUser) {
+        this.approveUser = approveUser;
     }
 
-    public User getCreator() {
-        return creator;
+    public User getCreateUser() {
+        return createUser;
     }
 
-    public User getApprover() {
-        return approver;
+    public User getApproveUser() {
+        return approveUser;
     }
 
     public String getCategoryName() {
@@ -187,20 +184,20 @@ public class Company extends SerializeBase {
         this.remark = remark;
     }
 
-    public Integer getCreatorId() {
-        return creatorId;
+    public Integer getCreateUid() {
+        return createUid;
     }
 
-    public void setCreatorId(Integer creatorId) {
-        this.creatorId = creatorId;
+    public void setCreateUid(Integer createUid) {
+        this.createUid = createUid;
     }
 
-    public Integer getApproverId() {
-        return approverId;
+    public Integer getApproveUid() {
+        return approveUid;
     }
 
-    public void setApproverId(Integer approverId) {
-        this.approverId = approverId;
+    public void setApproveUid(Integer approveUid) {
+        this.approveUid = approveUid;
     }
 
     public Date getCreateTime() {
@@ -210,4 +207,5 @@ public class Company extends SerializeBase {
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
 }

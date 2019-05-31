@@ -3,12 +3,12 @@
 <mapper namespace="com.lansea.wms.mapper.CompanyMapper">
 
     <sql id="fieldBase">
-        code, category, name, address, contact_name, phone, mobile, email, remark, creator_id, approver_id
+        code, category, name, address, contact_name, phone, mobile, email, remark, create_uid, approve_uid
     </sql>
     <sql id="insertValues">
         #{company.code} , #{company.category} , #{company.name}, #{company.address} , #{company.contactName} ,
         #{company.phone} ,  #{company.mobile} , #{company.email} ,  #{company.remark} ,
-        #{company.creatorId} ,  #{company.approverId}
+        #{company.createUid} ,  #{company.approveUid}
     </sql>
 
     <!-- 更新公司 -->
@@ -24,8 +24,7 @@
             mobile = #{company.mobile} ,
             email = #{company.email} ,
             remark = #{company.remark} ,
-            creator_id = #{company.creatorId} ,
-            approver_id = #{company.approverId}
+            approve_uid = #{company.approveUid}
         where
             id = #{company.id}
     </update>

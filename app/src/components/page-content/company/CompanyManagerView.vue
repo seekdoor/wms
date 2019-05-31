@@ -111,14 +111,14 @@
                 ></el-table-column>
 
                 <el-table-column
-                        prop="creator.realName"
+                        prop="createUser.realName"
                         label="创建人"
                         width="120"
                 ></el-table-column>
 
                 <template slot="operate" slot-scope="{row}">
-                    <el-button-mini icon="edit" type="text"></el-button-mini>
-                    <el-button-mini icon="delete" type="text"></el-button-mini>
+                    <el-button-mini icon="edit" type="text" @click.native="clickRowEdit(row)"></el-button-mini>
+                    <el-button-mini icon="delete" type="text" @click.native="clickRowDelete(row)"></el-button-mini>
                 </template>
 
 

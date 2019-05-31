@@ -63,6 +63,11 @@
             <if test="user.password != null and user.password != ''">
                 password = #{user.password}
             </if>
+            gender = #{user.gender} ,
+            <if test="user.avatar != null and user.avatar != ''">
+                avatar = #{user.avatar} ,
+            </if>
+            role_id = #{user.roleId}
         </set>
         where
         id = #{user.id}

@@ -10,5 +10,6 @@ export default class UserModel {
     phone = '';
     token = '';
     createTime = null;
-
+    gender = 1;
+    roleId = 0;
 }
