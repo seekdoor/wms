@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.CompanyMapper">
+
+    <sql id="fieldBase">
+        code, category, name, address, contact_name, phone, mobile, email, remark, creator_id, approver_id
+    </sql>
+    <sql id="insertValues">
+        #{company.code} , #{company.category} , #{company.name}, #{company.address} , #{company.contactName} ,
+        #{company.phone} ,  #{company.mobile} , #{company.email} ,  #{company.remark} ,
+        #{company.creatorId} ,  #{company.approverId}
+    </sql>
+
+    <!-- 更新公司 -->
+    <update id="update">
+        update company
+        set
+            code = #{company.code} ,
+            category = #{company.category} ,
+            name = #{company.name} ,
+            address = #{company.address} ,
+            contact_name = #{company.contactName} ,
+            phone = #{company.phone} ,
+            mobile = #{company.mobile} ,
+            email = #{company.email} ,
+            remark = #{company.remark} ,
+            creator_id = #{company.creatorId} ,
+            approver_id = #{company.approverId}
+        where
+            id = #{company.id}
+    </update>
+
+    <!-- 插入 -->
+    <insert id="insert">
+        insert into company(
+        <include refid="fieldBase"></include>
+        )
+        values (
+        <include refid="insertValues"></include>
+        )
+    </insert>
+
+    <!-- 条件查询 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.Company">
+
+        select * from company
+        <where>
+            <if test="company.code != null and company.code != ''">
+                code like '%${company.code}%'
+            </if>
+            <if test="company.name != null and company.name != ''">
+                and `name` like '%${company.name}%'
+            </if>
+            <if test="company.category != null and company.category != ''">
+                and category = #{company.category}
+            </if>
+            <if test="company.contactName != null and company.contactName != ''">
+                and contact_name like '%${company.contactName}%'
+            </if>
+            <if test="company.mobile != null and company.mobile != ''">
+                and mobile like '%${company.mobile}%'
+            </if>
+            <if test="company.phone != null and company.phone != ''">
+                and phone like '%${company.phone}%'
+            </if>
+            <if test="company.email != null and company.email != ''">
+                and email like '%${company.email}%'
+            </if>
+        </where>
+        <if test="sort.sortField != null and sort.sortField != ''">
+            order by ${sort.sortField} ${sort.sortOrder}
+        </if>
+
+    </select>
+
+
+</mapper>

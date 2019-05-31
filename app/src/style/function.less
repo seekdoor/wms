@@ -1,0 +1,59 @@
+/**
+  padding & margin 大小生成器
+  @name 名称类似 xg,lg,md,sm,xs
+  @size 长度单位 1px
+ */
+.paddingMarginFun(@name, @size) {
+  .pa-@{name} {
+    padding: @size;
+  }
+  .pt-@{name} {
+    padding-top: @size;
+  }
+  .pb-@{name} {
+    padding-bottom: @size;
+  }
+  .pl-@{name} {
+    padding-left: @size;
+  }
+  .pr-@{name} {
+    padding-right: @size;
+  }
+
+  .ma-@{name} {
+    margin: @size;
+  }
+  .mt-@{name} {
+    margin-top: @size;
+  }
+  .mb-@{name} {
+    margin-bottom: @size;
+  }
+  .ml-@{name} {
+    margin-left: @size;
+  }
+  .mr-@{name} {
+    margin-right: @size;
+  }
+}
+
+/**
+颜色生成
+ */
+.colorFun(@name, @color) {
+  .color-@{name} {
+    color: @color;
+  }
+  .bg-@{name} {
+    background-color: @color;
+  }
+}
+
+/**
+字体大小
+ */
+.fontSizeFun(@name, @size) {
+  .fz-@{name} {
+    font-size: @size;
+  }
+}

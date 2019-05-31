@@ -1,0 +1,257 @@
+@import (reference) "var";
+@import (reference) "function";
+
+/**
+padding & margin size
+ */
+.paddingMarginFun(~'xg', @paddingXg);
+.paddingMarginFun(~'lg', @paddingLg);
+.paddingMarginFun(~'md', @paddingMd);
+.paddingMarginFun(~'sm', @paddingSm);
+.paddingMarginFun(~'xs', @paddingXs);
+
+/**
+display 快捷属性
+ */
+.disp-b {
+  display: block !important;
+}
+
+.disp-ib {
+  display: inline-block !important;
+}
+
+.disp-i {
+  display: inline !important;
+}
+
+.disp-n{
+  display: none !important;
+}
+
+/**
+位置 和显示样式
+ */
+.pos-r {
+  position: relative;
+}
+
+.pos-a {
+  position: absolute;
+}
+
+.pos-f {
+  position: fixed;
+}
+
+.overflow-h {
+  overflow: hidden;
+}
+
+.overflow-x-h {
+  overflow-x: hidden;;
+}
+
+.overflow-y-h {
+  overflow-y: hidden;
+}
+
+.w100p {
+  width: 100%;
+}
+
+.h100p {
+  height: 100%;
+}
+
+.wh100p {
+  .w100p;
+  .h100p;
+}
+
+/**
+flex 布局
+ */
+.flex-box {
+  display: flex;
+
+  &.flex-column {
+    flex-direction: column;
+  }
+
+  &.search-card {
+    flex-wrap: wrap;
+    line-height: 1;
+
+    > * {
+      flex-shrink: 0;
+      margin-right: 20px;
+      display: flex;
+      align-content: center;
+      align-items: center;
+      margin-bottom: 10px;
+
+      > span {
+        flex-shrink: 0;
+        font-size: 12px;
+        color: #3a3a3a;
+        margin-right: 5px;
+      }
+    }
+
+  }
+
+  &.flex-wrap {
+    flex-wrap: wrap;
+  }
+
+  &.flex-wrap-rev {
+    flex-wrap: wrap-reverse;
+  }
+
+  &.same-width {
+    > * {
+      width: 0;
+      flex-grow: 1;
+    }
+  }
+
+  &.flex-center {
+    align-content: center;
+    align-items: center;
+  }
+
+  &.flex-center-j {
+    justify-content: center;
+    justify-items: center;
+  }
+
+  &.flex-center-all {
+    .flex-center;
+    .flex-center-j;
+  }
+
+  > * {
+    &.flex-grow {
+      flex-grow: 1;
+    }
+
+    &.flex-grow-off {
+      flex-grow: 0;
+    }
+
+    &.flex-shrink {
+      flex-shrink: 1;
+    }
+
+    &.flex-shrink-off {
+      flex-shrink: 0;
+    }
+  }
+}
+
+/**
+简单动画 和阴影
+ */
+.trans {
+  transition: .5s;
+
+  &.all * {
+    transition: .5s;
+  }
+}
+
+.text-shadow-white {
+  text-shadow: 0 0 1/100rem #fff;
+}
+
+.shadow-gray {
+  box-shadow: 0 5/100rem 15/100rem rgba(182, 182, 191, 0.7);
+}
+
+/**
+鼠标指针
+ */
+.cursor-p {
+  cursor: pointer;
+}
+
+.cursor-def {
+  cursor: default;
+}
+
+.cursor-dis {
+  cursor: not-allowed;
+}
+
+/**
+字体大小
+ */
+.fontSizeFun(~'xxg', @fontXxg);
+.fontSizeFun(~'xg', @fontXg);
+.fontSizeFun(~'lg', @fontLg);
+.fontSizeFun(~'md', @fontMd);
+.fontSizeFun(~'sm', @fontSm);
+.fontSizeFun(~'xs', @fontXs);
+
+.lh-1 {
+  line-height: 1;
+}
+
+/**
+文本位置
+ */
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.mar-center {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+/**
+分割线
+ */
+
+.divide-line-1px {
+  background-color: @color--silver;
+  height: 1px;
+}
+
+/**
+强制换行
+ */
+.word-wrap {
+  word-wrap: break-word;
+  word-break: break-all;
+}
+
+.one-line-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.multi-line-ellipsis-fun(@lin:2) {
+  .multi-line-ellipsis-@{lin} {
+    display: -webkit-box;
+    -webkit-line-clamp: @lin;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+.multi-line-ellipsis-fun(2);
+.multi-line-ellipsis-fun(3);
+.multi-line-ellipsis-fun(4);
+.multi-line-ellipsis-fun(5);
+

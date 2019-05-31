@@ -1,0 +1,34 @@
+/**
+padding & margin size
+ */
+.pa-xg {
+  padding: 40px;
+}
+.pt-xg {
+  padding-top: 40px;
+}
+.pb-xg {
+  padding-bottom: 40px;
+}
+.pl-xg {
+  padding-left: 40px;
+}
+.pr-xg {
+  padding-right: 40px;
+}
+.ma-xg {
+  margin: 40px;
+}
+.mt-xg {
+  margin-top: 40px;
+}
+.mb-xg {
+  margin-bottom: 40px;
+}
+.ml-xg {
+  margin-left: 40px;
+}
+.mr-xg {
+  margin-right: 40px;
+}
+/*# sourceMappingURL=common.css.map */
