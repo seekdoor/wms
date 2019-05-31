@@ -33,7 +33,7 @@ public class DepartController {
     Result list(Depart depart) {
         pageService.setPaginate();
         List<Depart> list = departMapper.selectWhere(depart, pageService.createSort());
-        return Result.successPage(departService.addUsers(list));
+        return Result.successPage(list);
     }
 
     @GetMapping("/get_by_id")

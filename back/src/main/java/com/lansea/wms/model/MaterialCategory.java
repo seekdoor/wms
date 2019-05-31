@@ -2,11 +2,10 @@ package com.lansea.wms.model;
 
 
 import io.swagger.annotations.ApiModel;
-import io.swagger.models.auth.In;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@ApiModel(value = "MaterialCategory", description = "原料分类")
+@ApiModel(value = "MaterialCategory", description = "原材料分类")
 public class MaterialCategory {
 
     private Integer id;

@@ -12,4 +12,5 @@ export default class UserModel {
     createTime = null;
     gender = 1;
     roleId = 0;
+    roleName = '' ;
 }

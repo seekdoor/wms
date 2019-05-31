@@ -1,12 +1,14 @@
 package com.lansea.wms.service;
 
 import com.lansea.wms.entity.Token;
+import com.lansea.wms.mapper.RoleMapper;
 import com.lansea.wms.mapper.UserMapper;
 import com.lansea.wms.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -17,9 +19,13 @@ public class UserService {
     @Autowired
     HttpServletRequest request;
 
+    @Autowired
+    RoleMapper roleMapper;
+
     /**
      * 刷新用户在数据库中的  token
-     * @param user  用户
+     *
+     * @param user 用户
      */
     public void refreshUserToken(User user) {
         Token token = new Token(user);
@@ -29,9 +35,23 @@ public class UserService {
 
     /**
      * 获取登录用户
+     *
      * @return
      */
     public User getLoginUser() {
         return (User) request.getAttribute("loginUser");
+    }
+
+    /**
+     * 批量隐藏安全字段
+     *
+     * @param users
+     * @return
+     */
+    public List<User> hiddenSecurity(List<User> users) {
+        for (User user : users) {
+            user.hiddenSecurity();
+        }
+        return users;
     }
 }

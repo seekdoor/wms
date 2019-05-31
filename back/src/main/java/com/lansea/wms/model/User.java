@@ -1,9 +1,6 @@
 package com.lansea.wms.model;
 
-import com.alibaba.fastjson.JSONObject;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lansea.wms.entity.ValidClass;
-import com.lansea.wms.service.ParamsService;
 import com.lansea.wms.util.DateUtil;
 import com.lansea.wms.validate.Mobile;
 import com.lansea.wms.validate.Password;
@@ -76,6 +73,8 @@ public class User {
     private String avatar;
 
     private Integer roleId;
+
+    private String roleName;
 
     /**
      * 隐藏安全字段
@@ -161,9 +160,6 @@ public class User {
         this.token = token;
     }
 
-    //public String getCreateTime() {
-    //    return DateUtil.getDateTimeString(createTime);
-    //}
     public Date getCreateTime() {
         return createTime;
     }
@@ -194,5 +190,13 @@ public class User {
 
     public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

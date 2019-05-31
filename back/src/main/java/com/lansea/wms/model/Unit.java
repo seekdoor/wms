@@ -3,15 +3,13 @@ package com.lansea.wms.model;
 import com.lansea.wms.entity.ValidClass;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Repository
-@ApiModel(value = "Unit", description = "单位模型")
+@ApiModel(value = "Unit", description = "单位")
 public class Unit {
 
     @ApiModelProperty(value = "ID")

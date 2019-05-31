@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.AuthMapper">
+
+    <!-- 添加 -->
+    <insert id="insert">
+        insert into auth (pid,name,url) values (#{auth.pid} ,${auth.name} ,${auth.url} );
+    </insert>
+    <!-- 更新 -->
+    <update id="update">
+        update auth
+        <set>
+            pid = #{auth.pid} ,
+            name = #{auth.name} ,
+            url = #{auth.name}
+        </set>
+        where id=#{auth.id}
+    </update>
+
+
+</mapper>

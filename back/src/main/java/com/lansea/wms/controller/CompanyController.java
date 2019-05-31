@@ -40,7 +40,6 @@ public class CompanyController {
     Result list(Company company) {
         pageService.setPaginate();
         List<Company> list = companyMapper.selectWhere(company, pageService.createSort());
-        companyService.addUsers(list);
         return Result.successPage(list);
     }
 

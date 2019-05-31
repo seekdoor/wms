@@ -32,10 +32,27 @@ export default {
      * 合作方接口
      */
     company: {
-        list : ['/company/list', 'get'],
-        add : ['/company/add', 'post'],
-        edit : ['/company/edit', 'post'],
-        delete : ['/company/delete', 'post'],
-        getById : ['/company/get_by_id', 'get'],
+        list: ['/company/list', 'get'],
+        add: ['/company/add', 'post'],
+        edit: ['/company/edit', 'post'],
+        delete: ['/company/delete', 'post'],
+        getById: ['/company/get_by_id', 'get'],
+    },
+
+    role_auth: {
+        // 角色
+        authAll : ['/role_auth/auth_all', 'get'] ,
+        authDelete : ['/role_auth/auth_delete', 'post'] ,
+        authInsert : ['/role_auth/auth_insert', 'post'] ,
+        authUpdate : ['/role_auth/auth_update', 'post'] ,
+        getAuthById : ['/role_auth/get_auth_by_id', 'get'] ,
+        // 权限
+        getRoleById : ['/role_auth/get_role_by_id', 'get'] ,
+        roleAll: ['/role_auth/role_all', 'get'],
+        roleDelete:['/role_auth/role_delete', 'post'],
+        roleInsert:['/role_auth/role_insert', 'post'],
+        roleList:['/role_auth/role_list', 'get'],
+        roleUpdate:['/role_auth/role_update', 'get'],
+
     }
 }

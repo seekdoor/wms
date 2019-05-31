@@ -1,6 +1,6 @@
 <template>
     <div class="CompanyCategorySelector" style="width: 110px;">
-        <el-select :value="value" @input="inputEvent">
+        <el-select :value="value" @input="inputEvent" placeholder="选择分类">
             <el-option label="全部" :value="0" v-if="isFilter"></el-option>
             <el-option :label="category[1]" :value="1"></el-option>
             <el-option :label="category[2]" :value="2"></el-option>
@@ -33,6 +33,7 @@
         },
         methods: {
             reload() {
+                this.inputEvent(this.isFilter ? 0 : null)
             },
             inputEvent(v) {
                 this.$emit('input', v);

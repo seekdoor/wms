@@ -13,17 +13,11 @@ export default class CompanyModel {
     email = '';
     remark = '';
     createUid = 0;
-    approveUid = 0;
+    updateUid = 0;
     createTime = '';
-    createUser = new UserModel;
-    approveUser = new UserModel;
     categoryName = '';
-
-
-    getFilterForm() {
-        this.createUser = null;
-        this.approveUser = null;
-        return this;
-    }
+    createUserName = '';
+    updateUserName = '';
+    updateTime = '';
 
 }

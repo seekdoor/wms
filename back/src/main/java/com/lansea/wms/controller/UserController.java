@@ -8,6 +8,7 @@ import com.lansea.wms.form.UserAddForm;
 import com.lansea.wms.mapper.UserMapper;
 import com.lansea.wms.model.User;
 import com.lansea.wms.service.PageService;
+import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.MD5Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,11 +35,15 @@ public class UserController {
     @Autowired
     HttpServletRequest request;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping(value = "/list")
     @ApiOperation(value = "用户列表", notes = "分页接口")
     Result list(User user) {
         pageService.setPaginate();
         List<User> list = userMapper.selectUserWhere(user, pageService.createSort());
+        userService.hiddenSecurity(list);
         return Result.successPage(list);
     }
 

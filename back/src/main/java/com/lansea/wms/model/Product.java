@@ -2,14 +2,13 @@ package com.lansea.wms.model;
 
 import com.lansea.wms.util.DateUtil;
 import io.swagger.annotations.ApiModel;
-import io.swagger.models.auth.In;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
 @Repository
-@ApiModel(value = "Product", description = "公司产品")
+@ApiModel(value = "Product", description = "产品")
 public class Product {
 
     private Integer id;

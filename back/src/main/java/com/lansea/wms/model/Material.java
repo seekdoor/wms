@@ -2,15 +2,15 @@ package com.lansea.wms.model;
 
 
 import com.lansea.wms.util.DateUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
-import io.swagger.models.auth.In;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
 @Repository
-@ApiModel(value = "Material", description = "物料")
+@ApiModel(value = "Material", description = "成产原料")
 public class Material {
 
     private Integer id;
@@ -20,17 +20,17 @@ public class Material {
     private Integer safeStock;
     private Integer validDay;
     private Integer createUid;
-    private Integer approveUid;
+    private Integer updateUid;
 
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date createTime;
 
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
-    private Date approveTime;
+    private Date updateTime;
 
 
     private User createUser;
-    private User approveUser;
+    private User updateUser;
 
 
     public Integer getId() {
@@ -89,12 +89,12 @@ public class Material {
         this.createUid = createUid;
     }
 
-    public Integer getApproveUid() {
-        return approveUid;
+    public Integer getUpdateUid() {
+        return updateUid;
     }
 
-    public void setApproveUid(Integer approveUid) {
-        this.approveUid = approveUid;
+    public void setUpdateUid(Integer updateUid) {
+        this.updateUid = updateUid;
     }
 
     public Date getCreateTime() {
@@ -105,12 +105,12 @@ public class Material {
         this.createTime = createTime;
     }
 
-    public Date getApproveTime() {
-        return approveTime;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setApproveTime(Date approveTime) {
-        this.approveTime = approveTime;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
     public User getCreateUser() {
@@ -121,11 +121,11 @@ public class Material {
         this.createUser = createUser;
     }
 
-    public User getApproveUser() {
-        return approveUser;
+    public User getUpdateUser() {
+        return updateUser;
     }
 
-    public void setApproveUser(User approveUser) {
-        this.approveUser = approveUser;
+    public void setUpdateUser(User updateUser) {
+        this.updateUser = updateUser;
     }
 }

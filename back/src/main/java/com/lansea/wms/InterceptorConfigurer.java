@@ -17,8 +17,13 @@ public class InterceptorConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/**");
 
         registry.addInterceptor(new TokenInterceptor())
-                .addPathPatterns("/company/**")
-                .addPathPatterns("/user/**");
+                .addPathPatterns("/**")
+                .excludePathPatterns("/log_reg/**")
+                .excludePathPatterns("/")
+                .excludePathPatterns("/v2/**")
+                .excludePathPatterns("/swagger-ui.html")
+                .excludePathPatterns("/swagger-resources/**")
+                .excludePathPatterns("/webjars/**");
     }
 
     @Override

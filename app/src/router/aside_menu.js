@@ -24,6 +24,25 @@ export default [
                 },
             },
             {
+                path: '/RoleManager',
+                component: () => import("@/components/page-content/user/RoleManagerView.vue"),
+                meta: {
+                    title: '角色管理',
+                },
+            },
+        ]
+    },
+
+    {
+        path: '/BaseManager',
+        component: () => import("@/components/page-content/user/UserManagerView.vue"),
+        meta: {
+            title: '基础资料',
+            icon: 'iconfont icon-cubes'
+        },
+        children : [
+
+            {
                 path: '/CompanyManager',
                 component: () => import("@/components/page-content/company/CompanyManagerView.vue"),
                 meta: {

@@ -54,11 +54,14 @@
                 default() {
                     return new PaginateModel()
                 }
+            },
+            defaultShow :{
+                defaultShow: true
             }
         },
         data() {
             return {
-                show: true,
+                show: this.defaultShow,
             }
         },
         mounted() {

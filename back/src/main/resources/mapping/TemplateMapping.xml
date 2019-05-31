@@ -4,7 +4,7 @@
 
     <sql id="sort">
         <if test="sort.sortField != null and sort.sortField != ''">
-            order by ${sort.sortField} ${sort.sortOrder}
+            order by t.${sort.sortField} ${sort.sortOrder}
         </if>
     </sql>
 

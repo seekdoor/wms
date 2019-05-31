@@ -1,21 +1,20 @@
 package com.lansea.wms.model;
 
 import com.lansea.wms.util.DateUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
 @Repository
-@ApiModel(value = "Depart")
+@ApiModel(value = "Depart", description = "公司部门")
 public class Depart {
 
 
     private Integer id;
 
-    @ApiModelProperty(value = "部门编码")
     private String code;
     private String name;
     private Integer createUid;

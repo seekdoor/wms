@@ -65,7 +65,7 @@
                 <el-table-column
                         prop="code"
                         label="编码"
-                        width="200"
+                        width="180"
                         sortable="custom"
                 ></el-table-column>
 
@@ -85,7 +85,7 @@
                 <el-table-column
                         prop="name"
                         label="公司名称"
-                        width="250"
+                        min-width="250"
                         sortable="custom"
                 ></el-table-column>
 
@@ -111,10 +111,13 @@
                 ></el-table-column>
 
                 <el-table-column
-                        prop="createUser.realName"
+                        prop="createUid"
                         label="创建人"
                         width="120"
-                ></el-table-column>
+                        sortable="custom"
+                >
+                    <span slot-scope="{row}">{{ row.createUserName }}</span>
+                </el-table-column>
 
                 <template slot="operate" slot-scope="{row}">
                     <el-button-mini icon="edit" type="text" @click.native="clickRowEdit(row)"></el-button-mini>
@@ -175,7 +178,7 @@
             refreshData() {
                 this.loading = true;
                 this.$ajax.request(Api.company.list, {
-                    ...this.filterForm.getFilterForm(),
+                    ...this.filterForm,
                     ...this.paginate.getJSON(),
                     ...EcUtil.getSortField(this.sortingColumn)
                 }).then(resp => {

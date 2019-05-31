@@ -1,18 +1,27 @@
 package com.lansea.wms.model;
 
+import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.util.DateUtil;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.Min;
 import java.util.Date;
 
 @Repository
-@ApiModel(value = "Role")
+@ApiModel(value = "Role", description = "角色")
 public class Role {
 
+    @Min(value = 1, message = "id非法", groups = {ValidClass.EditForm.class})
     private Integer id;
+
+    @Length(min = 2, max = 40, message = "名称长度为 2-40")
     private String name;
+
+    @Length(max = 400, message = "备注长度为 2-400")
     private String remark;
     private Integer createUid;
     private Integer updateUid;
@@ -23,8 +32,9 @@ public class Role {
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date updateTime;
 
-    private User createUser;
-    private User updateUser;
+    private String createUserName;
+    private String updateUserName;
+
 
     public Integer getId() {
         return id;
@@ -82,19 +92,19 @@ public class Role {
         this.updateTime = updateTime;
     }
 
-    public User getCreateUser() {
-        return createUser;
+    public String getCreateUserName() {
+        return createUserName;
     }
 
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
     }
 
-    public User getUpdateUser() {
-        return updateUser;
+    public String getUpdateUserName() {
+        return updateUserName;
     }
 
-    public void setUpdateUser(User updateUser) {
-        this.updateUser = updateUser;
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
     }
 }

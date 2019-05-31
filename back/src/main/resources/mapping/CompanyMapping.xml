@@ -8,8 +8,67 @@
     <sql id="insertValues">
         #{company.code} , #{company.category} , #{company.name}, #{company.address} , #{company.contactName} ,
         #{company.phone} ,  #{company.mobile} , #{company.email} ,  #{company.remark} ,
-        #{company.createUid} ,  #{company.approveUid}
+        #{company.createUid} ,  #{company.updateUid}
     </sql>
+
+    <!-- 插入 -->
+    <insert id="insert">
+        insert into company(
+        <include refid="fieldBase"></include>
+        )
+        values (
+        <include refid="insertValues"></include>
+        )
+    </insert>
+
+    <sql id="selectBase">
+        select
+        t.*, cu.real_name create_user_name, uu.real_name update_user_name
+        from company t
+        left join user cu on t.create_uid = cu.id
+        left join user uu on t.update_uid = uu.id
+    </sql>
+
+
+
+    <!-- 根据 id 查找-->
+    <select id="findById" resultType="com.lansea.wms.model.Company">
+        <include refid="selectBase"></include>
+        where t.id = #{id}
+    </select>
+
+    <!-- 条件查询 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.Company">
+
+        <include refid="selectBase"></include>
+        <where>
+            <if test="company.code != null and company.code != ''">
+                t.code like '%${company.code}%'
+            </if>
+            <if test="company.name != null and company.name != ''">
+                and t.name like '%${company.name}%'
+            </if>
+            <if test="company.category != null and company.category != ''">
+                and t.category = #{company.category}
+            </if>
+            <if test="company.contactName != null and company.contactName != ''">
+                and t.contact_name like '%${company.contactName}%'
+            </if>
+            <if test="company.mobile != null and company.mobile != ''">
+                and t.mobile like '%${company.mobile}%'
+            </if>
+            <if test="company.phone != null and company.phone != ''">
+                and t.phone like '%${company.phone}%'
+            </if>
+            <if test="company.email != null and company.email != ''">
+                and t.email like '%${company.email}%'
+            </if>
+        </where>
+        <if test="sort.sortField != null and sort.sortField != ''">
+            order by t.${sort.sortField} ${sort.sortOrder}
+        </if>
+
+    </select>
 
     <!-- 更新公司 -->
     <update id="update">
@@ -24,53 +83,12 @@
             mobile = #{company.mobile} ,
             email = #{company.email} ,
             remark = #{company.remark} ,
-            approve_uid = #{company.approveUid}
+            approve_uid = #{company.updateUid}
         where
             id = #{company.id}
     </update>
 
-    <!-- 插入 -->
-    <insert id="insert">
-        insert into company(
-        <include refid="fieldBase"></include>
-        )
-        values (
-        <include refid="insertValues"></include>
-        )
-    </insert>
 
-    <!-- 条件查询 -->
-    <select id="selectWhere" resultType="com.lansea.wms.model.Company">
-
-        select * from company
-        <where>
-            <if test="company.code != null and company.code != ''">
-                code like '%${company.code}%'
-            </if>
-            <if test="company.name != null and company.name != ''">
-                and `name` like '%${company.name}%'
-            </if>
-            <if test="company.category != null and company.category != ''">
-                and category = #{company.category}
-            </if>
-            <if test="company.contactName != null and company.contactName != ''">
-                and contact_name like '%${company.contactName}%'
-            </if>
-            <if test="company.mobile != null and company.mobile != ''">
-                and mobile like '%${company.mobile}%'
-            </if>
-            <if test="company.phone != null and company.phone != ''">
-                and phone like '%${company.phone}%'
-            </if>
-            <if test="company.email != null and company.email != ''">
-                and email like '%${company.email}%'
-            </if>
-        </where>
-        <if test="sort.sortField != null and sort.sortField != ''">
-            order by ${sort.sortField} ${sort.sortOrder}
-        </if>
-
-    </select>
 
 
 </mapper>

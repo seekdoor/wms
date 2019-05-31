@@ -463,7 +463,7 @@ display 快捷属性
   position: fixed;
 }
 .overflow-h {
-  overflow: hidden;
+  overflow: hidden !important;
 }
 .overflow-x-h {
   overflow-x: hidden;

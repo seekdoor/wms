@@ -39,6 +39,13 @@
                             <el-input type="text" v-model="user.email"></el-input>
                         </el-form-item>
                     </el-col>
+                    <el-col :span="8">
+                        <el-form-item label="用户角色" required>
+                            <role-selector
+                                v-model="user.roleId"
+                            ></role-selector>
+                        </el-form-item>
+                    </el-col>
                 </el-row>
                 <el-row :gutter="5">
                     <el-col :span="12">
@@ -72,10 +79,11 @@
     import Api from "@/assets/api/Api";
     import ElButtonSubmit from "@/components/common/button/ElButtonSubmit";
     import DialogUtil from "@/util/DialogUtil";
+    import RoleSelector from "@/components/page-content/enum-selector/RoleSelector";
 
     export default {
         name: "UserAddDialog",
-        components: {ElButtonSubmit},
+        components: {RoleSelector, ElButtonSubmit},
         props: {
             visible: {
                 default: false

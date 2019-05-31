@@ -3,5 +3,8 @@ export default class RoleModel {
     pid = 0;
     name = '';
     remark = '';
-    auth = [];
+    createTime = '' ;
+    updateTime = '' ;
+    createUserName = '';
+    updateUserName = '' ;
 }

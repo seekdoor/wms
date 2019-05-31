@@ -37,7 +37,6 @@ public class Company extends SerializeBase {
     @Length(min = 2, max = 200, message = "公司全称必须为 2 - 200")
     private String name;
 
-    @ApiModelProperty(value = "地址")
     @Length(min = 2, max = 200, message = "地址必须为 2 - 200")
     private String address;
 
@@ -45,55 +44,37 @@ public class Company extends SerializeBase {
     @Length(min = 2, max = 40, message = "联系人长度为 2 - 40")
     private String contactName;
 
-    @ApiModelProperty(value = "电话")
+    @ApiModelProperty(value = "座机")
     private String phone;
 
-    @ApiModelProperty(value = "手机号")
     @NotBlank(message = "手机号不能为空")
     @Mobile
     private String mobile;
-    @ApiModelProperty(value = "邮箱")
     @Email(message = "email格式错误")
     private String email;
 
-    @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "创建人 id")
     private Integer createUid;
 
-    @ApiModelProperty(value = "审批人")
-    private Integer approveUid;
+    private Integer updateUid;
 
-    @ApiModelProperty(value = "创建时间")
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date createTime;
+
+    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    private Date updateTime;
 
     // 扩展字段
 
     @ApiModelProperty(value = "创建人")
-    private User createUser;
+    private String createUserName;
     @ApiModelProperty(value = "审批人")
-    private User approveUser;
+    private String updateUserName;
     @ApiModelProperty(value = "分类名称")
     private String categoryName;
 
 
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
-    }
-
-    public void setApproveUser(User approveUser) {
-        this.approveUser = approveUser;
-    }
-
-    public User getCreateUser() {
-        return createUser;
-    }
-
-    public User getApproveUser() {
-        return approveUser;
-    }
 
     public String getCategoryName() {
         return EnumUtil.valueOf(CompanyCategoryEnum.class, category).getValue();
@@ -192,12 +173,12 @@ public class Company extends SerializeBase {
         this.createUid = createUid;
     }
 
-    public Integer getApproveUid() {
-        return approveUid;
+    public Integer getUpdateUid() {
+        return updateUid;
     }
 
-    public void setApproveUid(Integer approveUid) {
-        this.approveUid = approveUid;
+    public void setUpdateUid(Integer updateUid) {
+        this.updateUid = updateUid;
     }
 
     public Date getCreateTime() {
@@ -208,4 +189,27 @@ public class Company extends SerializeBase {
         this.createTime = createTime;
     }
 
+    public String getCreateUserName() {
+        return createUserName;
+    }
+
+    public void setCreateUserName(String createUserName) {
+        this.createUserName = createUserName;
+    }
+
+    public String getUpdateUserName() {
+        return updateUserName;
+    }
+
+    public void setUpdateUserName(String updateUserName) {
+        this.updateUserName = updateUserName;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 }

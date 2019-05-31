@@ -16,10 +16,14 @@
                 <div class="" style="width: 150px;">
                     <span class="">是否激活</span>
                     <el-select v-model="filterForm.activated">
-                        <el-option label="全部" value="0"></el-option>
-                        <el-option label="未激活" value="1"></el-option>
-                        <el-option label="已激活" value="2"></el-option>
+                        <el-option label="全部" :value="0"></el-option>
+                        <el-option label="未激活" :value="1"></el-option>
+                        <el-option label="已激活" :value="2"></el-option>
                     </el-select>
+                </div>
+                <div class="" style="width: 150px;">
+                    <span class="">角色</span>
+                    <role-selector v-model="filterForm.roleId" :is-filter="true"></role-selector>
                 </div>
             </el-form>
 
@@ -61,6 +65,14 @@
                         width="120"
                         sortable="custom"
                 ></el-table-column>
+                <el-table-column
+                        prop="roleId"
+                        label="角色"
+                        width="120"
+                        sortable="custom"
+                >
+                    <span slot-scope="{row}">{{ row.roleName }}</span>
+                </el-table-column>
                 <el-table-column
                         prop="mobile"
                         label="手机号"
@@ -109,7 +121,7 @@
 
         <user-add-dialog
                 :visible.sync="showAddDialog"
-                :user-id="editUserId"
+                :user-id="editId"
                 @finish="editDialogFinish"
         >
         </user-add-dialog>
@@ -126,25 +138,23 @@
     import EcUtil from "@/util/EcUtil";
     import UserAddDialog from "@/components/page-content/user/dialog/UserAddDialog";
     import DialogUtil from "@/util/DialogUtil";
+    import UserModel from "@/project/model/UserModel";
+    import RoleSelector from "@/components/page-content/enum-selector/RoleSelector";
 
     export default {
         name: "UserManagerView",
-        components: {UserAddDialog, TablePanel, ElButtonCurdGroup, ElButtonMini, SearchCardLayout},
+        components: {RoleSelector, UserAddDialog, TablePanel, ElButtonCurdGroup, ElButtonMini, SearchCardLayout},
         props: {},
         data() {
             return {
                 loading: true,
                 showAddDialog: false,
-                filterForm: {
-                    userName: '',
-                    realName: '',
-                    activated: '0',
-                },
+                filterForm: new UserModel(),
                 data: [],
                 paginate: new PaginateModel(this.refreshData),
                 selectedRow: [],
                 sortingColumn: null,
-                editUserId: 0,
+                editId: 0,
             }
         },
         mounted() {
@@ -172,11 +182,11 @@
                 this.$nextTick(() => this.refreshData());
             },
             clickAddButton() {
-                this.editUserId = 0;
+                this.editId = 0;
                 this.showAddDialog = true;
             },
             clickEditButton() {
-                this.editUserId = this.selectedRow[0].id;
+                this.editId = this.selectedRow[0].id;
                 this.showAddDialog = true;
             },
             clickDeleteButton() {
@@ -199,7 +209,7 @@
                 this.refreshData();
             },
             clickRowEdit(row) {
-                this.editUserId = row.id
+                this.editId = row.id
                 this.showAddDialog = true;
             },
             clickRowDelete(row) {

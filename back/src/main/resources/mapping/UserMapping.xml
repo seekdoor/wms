@@ -3,7 +3,7 @@
 <mapper namespace="com.lansea.wms.mapper.UserMapper">
 
     <sql id="fieldBase">
-        user_name,real_name,email,activated,mobile,phone
+        user_name,real_name,email,activated,mobile,phone,role_id
     </sql>
     <sql id="insertField">
         <include refid="fieldBase"></include>,
@@ -11,7 +11,7 @@
     </sql>
     <sql id="insertValues">
         #{user.userName} ,#{user.realName} , #{user.email}, #{user.activated} ,
-        #{user.mobile} ,#{user.phone} ,#{user.password}
+        #{user.mobile} ,#{user.phone} ,#{user.roleId}, #{user.password}
     </sql>
 
     <!-- 刷新 token -->
@@ -24,10 +24,9 @@
     <!-- 按条件查询用户信息-->
     <select id="selectUserWhere" resultType="com.lansea.wms.model.User">
         select
-        id,
-        <include refid="fieldBase"></include>,
-        create_time
-        from user
+        u.*, r.name role_name
+        from user u
+        left join role r on r.id = u.role_id
         <where>
             <if test="form.userName != null and form.userName != '' ">
                 user_name like '%${form.userName}%'
@@ -38,9 +37,12 @@
             <if test="form.activated != null and form.activated != 0">
                 and activated = #{form.activated}
             </if>
+            <if test="form.roleId != null and form.roleId != 0">
+                and role_id = #{form.roleId}
+            </if>
         </where>
         <if test="sort.sortField != null ">
-            order by ${sort.sortField} ${sort.sortOrder}
+            order by u.${sort.sortField} ${sort.sortOrder}
         </if>
     </select>
 

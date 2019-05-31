@@ -12,7 +12,6 @@ import java.util.List;
 @Mapper
 public interface CompanyMapper {
 
-    @Select("select * from company where id = #{id}")
     Company findById(@Param("id") Integer id);
 
     @Delete("delete from company where id in (${ids})")
