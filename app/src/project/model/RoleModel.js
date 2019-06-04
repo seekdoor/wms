@@ -1,10 +1,16 @@
 export default class RoleModel {
     id = 0;
-    pid = 0;
     name = '';
     remark = '';
-    createTime = '' ;
-    updateTime = '' ;
+    createUid = '';
+    updateUid = '';
+    createTime = '';
+    updateTime = '';
     createUserName = '';
-    updateUserName = '' ;
+    updateUserName = '';
+    /**
+     * 权限列表
+     * @type {Array<AuthModel>}
+     */
+    auths = []
 }

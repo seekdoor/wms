@@ -14,8 +14,7 @@ public interface AuthMapper {
     @Select("select * from auth where id=#{id}")
     Auth findById(@Param("id") Integer id);
 
-    @Select("select * from auth")
-    List<Auth> selectAll();
+    List<Auth> selectAll(@Param("pid") Integer pid);
 
     @Select("select * from auth where name like '%${name}%'")
     List<Auth> selectByName(@Param("name") String name);
@@ -26,5 +25,7 @@ public interface AuthMapper {
 
     @Delete("delete from auth where id in(${ids})")
     Integer deleteByIds(@Param("ids") String ids);
+
+    List<Auth> selectAllByRoleId(@Param("roleId") Integer roleId);
 
 }

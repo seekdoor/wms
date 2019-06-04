@@ -1,12 +1,12 @@
 package com.lansea.wms.model;
 
 import com.lansea.wms.entity.ValidClass;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Min;
+import java.util.List;
 
 @Repository
 @ApiModel(value = "Auth")
@@ -19,6 +19,7 @@ public class Auth {
     private String name;
     @Length(min = 2, max = 100, message = "url长度为 2-100")
     private String url;
+
 
     public Integer getId() {
         return id;
@@ -51,4 +52,5 @@ public class Auth {
     public void setUrl(String url) {
         this.url = url;
     }
+
 }

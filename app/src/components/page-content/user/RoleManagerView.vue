@@ -3,6 +3,7 @@
         <search-card-layout
                 :default-show="false"
                 title="角色查询与操作"
+                @click-search="refreshData"
         >
             <div class="flex-box flex-center search-card">
                 <div class="">
@@ -74,18 +75,24 @@
                         ></el-table-column>
 
                         <template slot="operate" slot-scope="{row}">
-                            <el-button-mini type="text" icon="edit"></el-button-mini>
-                            <el-button-mini type="text" icon="delete"></el-button-mini>
+                            <el-button-mini type="text" icon="edit"
+                                            @click.native="clickRowEditButton(row)"></el-button-mini>
+                            <el-button-mini type="text" icon="delete"
+                                            @click.native="clickRowDeleteButton(row)"></el-button-mini>
                         </template>
                     </table-panel>
                 </div>
                 <div class="flex-shrink-off ml-xs  " style="width: 300px;max-height: 100%;">
-                    <div class=" el-card box-card is-always-shadow pa-xs bg-red" style="max-height: 100%;">
-                        <auth-manager-content ></auth-manager-content>
-                    </div>
+                    <window-card-layout title="权限编辑">
+                        <auth-manager-content></auth-manager-content>
+                    </window-card-layout>
                 </div>
             </div>
-
+            <role-add-dialog
+                    :visible.sync="showAddDialog"
+                    :edit-id="editId"
+                    @finish="addDialogFinish"
+            ></role-add-dialog>
         </div>
     </div>
 </template>
@@ -99,10 +106,17 @@
     import Api from "@/assets/api/Api";
     import ElButtonMini from "@/components/common/button/ElButtonMini";
     import AuthManagerContent from "@/components/page-content/user/content/AuthManagerContent";
+    import WindowCardLayout from "@/components/layout-component/WindowCardLayout";
+    import RoleAddDialog from "@/components/page-content/user/dialog/RoleAddDialog";
+    import EcUtil from "@/util/EcUtil";
+    import DialogUtil from "@/util/DialogUtil";
 
     export default {
         name: "RoleManagerView",
-        components: {AuthManagerContent, ElButtonMini, TablePanel, ElButtonCurdGroup, SearchCardLayout},
+        components: {
+            RoleAddDialog,
+            WindowCardLayout, AuthManagerContent, ElButtonMini, TablePanel, ElButtonCurdGroup, SearchCardLayout
+        },
         props: {},
         data() {
             return {
@@ -128,24 +142,52 @@
                 this.$ajax.request(Api.role_auth.roleList, {
                     ...this.paginate.getJSON(),
                     ...this.filterForm,
+                    ...EcUtil.getSortField(this.sortingColumn)
                 }).then(resp => {
                     this.data = resp.list;
                     this.paginate.setPaginate(resp);
                 }).finally(() => this.loading = false)
             },
             clickAddButton() {
-
+                this.editId = 0;
+                this.showAddDialog = true;
             },
             clickEditButton() {
-
+                this.editId = this.selectedRow[0].id;
+                this.showAddDialog = true;
             },
             clickDeleteButton() {
-
+                this.delete(this.selectedRow);
+            },
+            clickRowEditButton(row) {
+                this.editId = row.id;
+                this.showAddDialog = true;
+            },
+            clickRowDeleteButton(row) {
+                this.delete([row]);
+            },
+            delete(nodes) {
+                DialogUtil.confirm(`
+                    确定删除以下角色？ <br>
+                    [ ${nodes.map(x => x.name).join(',')} ]
+                `).then(() => {
+                    return this.$ajax.request(Api.role_auth.roleDelete, {
+                        ids: nodes.map(x => x.id).join(',')
+                    });
+                }).then(resp => {
+                    DialogUtil.toastSuccess(resp);
+                    this.refreshData();
+                })
             },
             sortChange(column) {
                 this.sortingColumn = column;
                 this.$nextTick(() => this.refreshData());
             },
+
+            addDialogFinish() {
+                this.editId = 0;
+                this.refreshData();
+            }
         },
         watch: {},
         computed: {},

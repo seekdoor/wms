@@ -5,19 +5,19 @@ export default {
     /**
      * 默认节流和防抖动延迟时间
      */
-    defDelay: 100,
+    _defDelay: 100,
     /**
      * 节流阀缓存
      */
-    thrKey: {},
+    _thrKey: {},
     /**
      * 防抖动缓存
      */
-    debKey: {},
+    _debKey: {},
     /**
      * 仅执行一次
      */
-    onceKey: {},
+    _onceKey: {},
 
     /**
      * 一次性执行完成不再执行
@@ -25,8 +25,8 @@ export default {
      * @param callback
      */
     once(key, callback) {
-        if (this.onceKey[key]) return;
-        this.onceKey[key] = true;
+        if (this._onceKey[key]) return;
+        this._onceKey[key] = true;
         callback && callback();
     },
     /**
@@ -35,12 +35,12 @@ export default {
      * @param callback
      * @param delay
      */
-    throttle(key, callback, delay = this.defDelay) {
-        if (this.thrKey[key]) return;
-        this.thrKey[key] = true;
+    throttle(key, callback, delay = this._defDelay) {
+        if (this._thrKey[key]) return;
+        this._thrKey[key] = true;
         callback && callback();
         setTimeout(() => {
-            this.thrKey[key] = false;
+            this._thrKey[key] = false;
         }, delay);
     },
 
@@ -50,9 +50,9 @@ export default {
      * @param callback
      * @param delay
      */
-    debounce(key, callback, delay = this.defDelay + 1) {
-        if (this.debKey[key]) clearTimeout(this.debKey[key]);
-        this.debKey[key] = setTimeout(() => {
+    debounce(key, callback, delay = this._defDelay + 1) {
+        if (this._debKey[key]) clearTimeout(this._debKey[key]);
+        this._debKey[key] = setTimeout(() => {
             callback && callback();
         }, delay);
     },
@@ -75,7 +75,7 @@ export default {
      * @param delay 节流延迟
      * @returns {Function}
      */
-    throttleFunction(func, delay = this.defDelay) {
+    throttleFunction(func, delay = this._defDelay) {
         let isValid = true;
         return (...params) => {
             if (!isValid) return;
@@ -92,7 +92,7 @@ export default {
      * @param delay 防抖延迟
      * @returns {Function}
      */
-    debounceFuntion(func, delay = this.defDelay + 1) {
+    debounceFuntion(func, delay = this._defDelay + 1) {
         let timer;
         return (...params) => {
             clearTimeout(timer);

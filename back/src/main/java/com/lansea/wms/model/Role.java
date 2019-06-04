@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Min;
 import java.util.Date;
+import java.util.List;
 
 @Repository
 @ApiModel(value = "Role", description = "角色")
@@ -34,6 +35,8 @@ public class Role {
 
     private String createUserName;
     private String updateUserName;
+
+    private List<Auth> auths;
 
 
     public Integer getId() {
@@ -106,5 +109,13 @@ public class Role {
 
     public void setUpdateUserName(String updateUserName) {
         this.updateUserName = updateUserName;
+    }
+
+    public List<Auth> getAuths() {
+        return auths;
+    }
+
+    public void setAuths(List<Auth> auths) {
+        this.auths = auths;
     }
 }

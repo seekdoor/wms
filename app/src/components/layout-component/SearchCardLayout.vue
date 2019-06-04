@@ -56,7 +56,7 @@
                 }
             },
             defaultShow :{
-                defaultShow: true
+                default: true
             }
         },
         data() {

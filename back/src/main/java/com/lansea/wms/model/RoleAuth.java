@@ -5,6 +5,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class RoleAuth {
 
+    public RoleAuth() {
+    }
+
+    public RoleAuth(Integer roleId, Integer authId) {
+        this.roleId = roleId;
+        this.authId = authId;
+    }
+
     private Integer roleId;
     private Integer authId;
 

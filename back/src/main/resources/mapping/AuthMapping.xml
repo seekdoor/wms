@@ -4,7 +4,7 @@
 
     <!-- 添加 -->
     <insert id="insert">
-        insert into auth (pid,name,url) values (#{auth.pid} ,${auth.name} ,${auth.url} );
+        insert into auth (pid,name,url) values (#{auth.pid} ,#{auth.name} ,#{auth.url} );
     </insert>
     <!-- 更新 -->
     <update id="update">
@@ -16,6 +16,20 @@
         </set>
         where id=#{auth.id}
     </update>
+    <!-- 查找所有 -->
+    <select id="selectAll" resultType="com.lansea.wms.model.Auth">
+        select * from auth
+        <if test="pid != null">
+            where pid = #{pid}
+        </if>
+    </select>
+    <!-- 根据角色 id 查找权限 -->
+    <select id="selectAllByRoleId" resultType="com.lansea.wms.model.Auth">
+        select t.* from auth t
+        where id in (
+            select r.auth_id from role_auth r where r.role_id = #{roleId}
+        )
+    </select>
 
 
 </mapper>
