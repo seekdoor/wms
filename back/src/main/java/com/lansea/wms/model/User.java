@@ -21,6 +21,22 @@ import java.util.Date;
 @ApiModel(value = "User", description = "用户模型")
 public class User {
 
+    public String getDepartName() {
+        return departName;
+    }
+
+    public void setDepartName(String departName) {
+        this.departName = departName;
+    }
+
+    public Integer getDepartId() {
+        return departId;
+    }
+
+    public void setDepartId(Integer departId) {
+        this.departId = departId;
+    }
+
     //用户登录分组
     public interface Login {
     }
@@ -73,6 +89,10 @@ public class User {
     private String avatar;
 
     private Integer roleId;
+
+    private Integer departId;
+
+    private String departName;
 
     private String roleName;
 

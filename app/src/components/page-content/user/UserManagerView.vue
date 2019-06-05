@@ -102,7 +102,14 @@
                         min-width="200"
                         sortable="custom"
                 ></el-table-column>
-
+                <el-table-column
+                        prop="departId"
+                        label="所属部门"
+                        min-width="200"
+                        sortable="custom"
+                >
+                    <template slot-scope="{row}">{{row.departName}}</template>
+                </el-table-column>
                 <el-table-column
                         prop="createTime"
                         label="创建时间"

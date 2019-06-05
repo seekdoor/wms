@@ -19,7 +19,7 @@ public interface DepartMapper {
 
     Integer update(@Param("depart") Depart depart);
 
-    @Delete("delete from depart where id in (#{ids}")
+    @Delete("delete from depart where id in (#{ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer insert(@Param("depart") Depart depart);

@@ -24,21 +24,22 @@
     <!-- 按条件查询用户信息-->
     <select id="selectUserWhere" resultType="com.lansea.wms.model.User">
         select
-        u.*, r.name role_name
+        u.*, r.name role_name, d.name depart_name
         from user u
         left join role r on r.id = u.role_id
+        left join depart d on d.id = u.depart_id
         <where>
             <if test="form.userName != null and form.userName != '' ">
-                user_name like '%${form.userName}%'
+                u.user_name like '%${form.userName}%'
             </if>
             <if test="form.realName != null and form.realName != '' ">
-                and real_name like '%${form.realName}%'
+                and u.real_name like '%${form.realName}%'
             </if>
             <if test="form.activated != null and form.activated != 0">
-                and activated = #{form.activated}
+                and u.activated = #{form.activated}
             </if>
             <if test="form.roleId != null and form.roleId != 0">
-                and role_id = #{form.roleId}
+                and u.role_id = #{form.roleId}
             </if>
         </where>
         <if test="sort.sortField != null ">

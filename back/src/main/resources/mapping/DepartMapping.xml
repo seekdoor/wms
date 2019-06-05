@@ -43,7 +43,7 @@
     </update>
     <!-- 插入 -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="depart.id">
-        insert into( code, name, create_uid, update_uid, create_time, update_time )
+        insert into depart( code, name, create_uid, update_uid, create_time, update_time )
         values( #{depart.code} , #{depart.name} , #{depart.createUid} ,#{depart.createUid} , now(), now())
     </insert>
 </mapper>

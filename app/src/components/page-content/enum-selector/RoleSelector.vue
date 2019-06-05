@@ -1,6 +1,6 @@
 <template>
     <div class="RoleSelector">
-        <el-select :value="value" @input="change" placeholder="请选择角色">
+        <el-select :value="valueUse" @input="change" placeholder="请选择角色">
             <el-option label="所有角色" :value="0" v-if="isFilter"></el-option>
             <el-option v-for="item in roles"
                     :key="item.id"
@@ -49,7 +49,14 @@
             }
         },
         watch: {},
-        computed: {},
+        computed: {
+            valueUse(){
+                if( this.value ){
+                    return this.value;
+                }
+                return  this.isFilter ? 0 : null;
+            }
+        },
 
     }
 </script>

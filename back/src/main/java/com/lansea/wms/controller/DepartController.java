@@ -7,6 +7,7 @@ import com.lansea.wms.mapper.DepartMapper;
 import com.lansea.wms.model.Depart;
 import com.lansea.wms.service.DepartService;
 import com.lansea.wms.service.PageService;
+import com.lansea.wms.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class DepartController {
     @Autowired
     DepartService departService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/list")
     @ApiOperation(value = "部门列表")
     Result list(Depart depart) {
@@ -51,6 +55,7 @@ public class DepartController {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
+        depart.setCreateUid(userService.getLoginUser().getId());
         departMapper.insert(depart);
         return Result.success("添加部门成功!");
     }
@@ -61,6 +66,7 @@ public class DepartController {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
+        depart.setUpdateUid(userService.getLoginUser().getId());
         departMapper.update(depart);
         return Result.success("修改部门信息成功!");
     }

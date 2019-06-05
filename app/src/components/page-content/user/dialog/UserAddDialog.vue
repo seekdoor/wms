@@ -42,7 +42,7 @@
                     <el-col :span="8">
                         <el-form-item label="用户角色" required>
                             <role-selector
-                                v-model="user.roleId"
+                                    v-model="user.roleId"
                             ></role-selector>
                         </el-form-item>
                     </el-col>

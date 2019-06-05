@@ -2,6 +2,7 @@
     <div class="DepartManagerView flex-box flex-column">
         <search-card-layout
                 @click-search="refreshData"
+                :loading="loading"
         >
             <div class="flex-box search-card">
                 <div class="" style="width: 300px;">
@@ -60,7 +61,7 @@
                     <el-button-mini
                             type="text"
                             icon="delete"
-                            @click.native="clickRowEditButton(row)"
+                            @click.native="clickRowDeleteButton(row)"
                     ></el-button-mini>
                 </template>
             </table-panel>
@@ -154,6 +155,7 @@
                     });
                 }).then(resp => {
                     DialogUtil.toastSuccess(resp);
+                    this.refreshData();
                 })
             },
 
