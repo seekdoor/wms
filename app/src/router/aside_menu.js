@@ -24,10 +24,17 @@ export default [
                 },
             },
             {
+                path: '/DepartManager',
+                component: () => import("@/components/page-content/user/DepartManagerView.vue"),
+                meta: {
+                    title: '部门管理',
+                },
+            },
+            {
                 path: '/RoleManager',
                 component: () => import("@/components/page-content/user/RoleManagerView.vue"),
                 meta: {
-                    title: '角色管理',
+                    title: '角色权限管理',
                 },
             },
         ]

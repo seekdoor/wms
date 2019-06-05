@@ -35,6 +35,39 @@
                         </template>
                     </el-table-column>
                     <slot></slot>
+                    <el-table-column
+                            prop="createUid"
+                            label="创建人"
+                            sortable="custom"
+                            width="100"
+                            v-if="createUserShow"
+                    >
+                        <template slot-scope="{row}">{{ row.createUserName }}</template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="createTime"
+                            label="创建时间"
+                            sortable="custom"
+                            width="140"
+                            v-if="createUserShow"
+                    ></el-table-column>
+                    <el-table-column
+                            prop="updateUid"
+                            label="修改人"
+                            sortable="custom"
+                            width="100"
+                            v-if="updateUserShow"
+                    >
+                        <template slot-scope="{row}">{{ row.updateUserName }}</template>
+                    </el-table-column>
+
+                    <el-table-column
+                            prop="updateTime"
+                            label="修改时间"
+                            sortable="custom"
+                            width="140"
+                            v-if="updateUserShow"
+                    ></el-table-column>
                 </el-table>
                 <div class="flex-box mt-xs flex-center">
                     <div class="flex-grow">
@@ -114,6 +147,12 @@
             },
             columnListWidth: {
                 default: '120'
+            },
+            createUserShow: {
+                default: false,
+            },
+            updateUserShow: {
+                default: false
             }
         },
         data() {

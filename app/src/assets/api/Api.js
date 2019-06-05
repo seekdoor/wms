@@ -41,18 +41,26 @@ export default {
 
     role_auth: {
         // 角色
-        authAll : ['/role_auth/auth_all', 'get'] ,
-        authDelete : ['/role_auth/auth_delete', 'post'] ,
-        authInsert : ['/role_auth/auth_insert', 'post'] ,
-        authUpdate : ['/role_auth/auth_update', 'post'] ,
-        getAuthById : ['/role_auth/get_auth_by_id', 'get'] ,
+        authAll: ['/role_auth/auth_all', 'get'],
+        authDelete: ['/role_auth/auth_delete', 'post'],
+        authInsert: ['/role_auth/auth_insert', 'post'],
+        authUpdate: ['/role_auth/auth_update', 'post'],
+        getAuthById: ['/role_auth/get_auth_by_id', 'get'],
         // 权限
-        getRoleById : ['/role_auth/get_role_by_id', 'get'] ,
+        getRoleById: ['/role_auth/get_role_by_id', 'get'],
         roleAll: ['/role_auth/role_all', 'get'],
-        roleDelete:['/role_auth/role_delete', 'post'],
-        roleInsert:['/role_auth/role_insert', 'post'],
-        roleList:['/role_auth/role_list', 'get'],
-        roleUpdate:['/role_auth/role_update', 'get'],
+        roleDelete: ['/role_auth/role_delete', 'post'],
+        roleInsert: ['/role_auth/role_insert', 'post'],
+        roleList: ['/role_auth/role_list', 'get'],
+        roleUpdate: ['/role_auth/role_update', 'post'],
 
+    },
+    // 部门
+    depart: {
+        list: ['/depart/list', 'get'],
+        getById: ['/depart/get_by_id', 'get'],
+        insert: ['/depart/insert', 'post'],
+        update: ['/depart/update', 'post'],
+        delete: ['/depart/delete', 'post'],
     }
 }

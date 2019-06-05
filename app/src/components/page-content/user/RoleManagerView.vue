@@ -32,6 +32,8 @@
                             operate-width="80"
                             :selectedRow.sync="selectedRow"
                             @sort-change="sortChange"
+                            :create-user-show="true"
+                            :update-user-show="true"
                     >
                         <el-table-column
                                 prop="id"
@@ -42,34 +44,6 @@
                         <el-table-column
                                 prop="name"
                                 label="角色名称"
-                                sortable="custom"
-                                min-width="140"
-                        ></el-table-column>
-                        <el-table-column
-                                prop="createUid"
-                                label="创建人"
-                                sortable="custom"
-                                width="100"
-                        >
-                            <template slot-scope="{row}">{{row.createUserName}}</template>
-                        </el-table-column>
-                        <el-table-column
-                                prop="createTime"
-                                label="创建时间"
-                                sortable="custom"
-                                min-width="140"
-                        ></el-table-column>
-                        <el-table-column
-                                prop="updateUid"
-                                label="修改人"
-                                sortable="custom"
-                                width="100"
-                        >
-                            <template slot-scope="{row}">{{row.updateUserName}}</template>
-                        </el-table-column>
-                        <el-table-column
-                                prop="updateTime"
-                                label="修改时间"
                                 sortable="custom"
                                 min-width="140"
                         ></el-table-column>

@@ -4,6 +4,7 @@
                 :visible="visible"
                 @update:visible="showDialog"
                 width="320px"
+                :title=" editId ? `编辑 ${editId}` : '新增' "
         >
             <el-form label-position="top">
                 <el-form-item label="角色名称">

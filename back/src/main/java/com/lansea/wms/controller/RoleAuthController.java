@@ -15,7 +15,6 @@ import com.lansea.wms.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -73,7 +72,6 @@ public class RoleAuthController {
 
     @PostMapping("/role_insert")
     @ApiOperation(value = "添加角色")
-    @Transactional(rollbackFor = Exception.class)
     Result roleInsert(@Validated @RequestBody Role role, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
@@ -86,8 +84,7 @@ public class RoleAuthController {
 
     @PostMapping("/role_update")
     @ApiOperation(value = "更新角色")
-    @Transactional(rollbackFor = Exception.class)
-    Result roleUpdate(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody Role role, BindingResult result) {
+    Result roleUpdate(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody Role role, BindingResult result) throws Exception {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
@@ -99,7 +96,6 @@ public class RoleAuthController {
 
     @PostMapping("/role_delete")
     @ApiOperation(value = "删除角色")
-    @Transactional(rollbackFor = Exception.class)
     Result roleDelete(@Validated @RequestBody DeleteIdsForm form, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
@@ -145,7 +141,6 @@ public class RoleAuthController {
 
     @PostMapping("/auth_delete")
     @ApiOperation(value = "删除权限")
-    @Transactional(rollbackFor = Exception.class)
     Result authDelete(@Validated @RequestBody DeleteIdsForm form, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);

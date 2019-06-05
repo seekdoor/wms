@@ -28,9 +28,22 @@
                 t.name like '%${depart.name}%'
             </if>
         </where>
-        <if test="sort.sortField != null and sort.sortField != ''">
-            order by t.${sort.sortField} ${sort.sortOrder}
-        </if>
-
+        <include refid="com.lansea.wms.mapper.RoleMapper.sort"></include>
     </select>
+    <!-- 更新 -->
+    <update id="update">
+        update depart
+        <set>
+            code = #{depart.code} ,
+            name = #{depart.name} ,
+            update_uid = #{depart.updateUid} ,
+            update_time = now()
+        </set>
+        where id = #{depart.id}
+    </update>
+    <!-- 插入 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="depart.id">
+        insert into( code, name, create_uid, update_uid, create_time, update_time )
+        values( #{depart.code} , #{depart.name} , #{depart.createUid} ,#{depart.createUid} , now(), now())
+    </insert>
 </mapper>
