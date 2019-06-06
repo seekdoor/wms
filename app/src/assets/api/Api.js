@@ -58,9 +58,19 @@ export default {
     // 部门
     depart: {
         list: ['/depart/list', 'get'],
+        selectAll: ['/depart/select_all', 'get'],
         getById: ['/depart/get_by_id', 'get'],
         insert: ['/depart/insert', 'post'],
         update: ['/depart/update', 'post'],
         delete: ['/depart/delete', 'post'],
+    },
+    // 分类字典
+    category: {
+        delete: ['/category/delete', 'post'],
+        getById: ['/category/get_by_id', 'get'],
+        insert: ['/category/insert', 'post'],
+        list: ['/category/list', 'get'],
+        selectByType: ['/category/select_by_type', 'get'],
+        update: ['/category/update', 'post']
     }
 }

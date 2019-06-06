@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.base.TempMapper">
+
+    <sql id="sort">
+        <if test="sort.sortField != null and sort.sortField != ''">
+            order by t.${sort.sortField} ${sort.sortOrder}
+        </if>
+    </sql>
+
+    <sql id="selectUserWarehouse">
+        select
+        t.*,
+        cu.real_name create_user_name,
+        uu.real_name update_user_name,
+        war.name warehouse_name ,
+        res.name reservoir_name,
+        stk.name stock_name
+        from ${tableName} t
+        left join user cu on t.create_uid = cu.id
+        left join user uu on t.update_uid = uu.id
+        left join warehouse war on t.warehouse_id = war.id
+        left join reservoir res on t.reservoir_id = res.id
+        left join stock stk on t.stock_id = stk.id
+    </sql>
+
+    <sql id="selectUserBase">
+        select
+        t.*, cu.real_name create_user_name, uu.real_name update_user_name
+        <if test="field != null and field != ''">
+            , ${field}
+        </if>
+        from ${tableName} t
+        left join user cu on t.create_uid = cu.id
+        left join user uu on t.update_uid = uu.id
+        <if test="join != null and join != ''">
+            ${join}
+        </if>
+    </sql>
+
+</mapper>

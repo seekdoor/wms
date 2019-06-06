@@ -1,5 +1,6 @@
 package com.lansea.wms.model;
 
+import com.lansea.wms.model.base.BaseUser;
 import com.lansea.wms.util.DateUtil;
 import io.swagger.annotations.ApiModel;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 @Repository
 @ApiModel(value = "Product", description = "产品")
-public class Product {
+public class Product extends BaseUser {
 
     private Integer id;
     private String name;
@@ -20,19 +21,7 @@ public class Product {
     private Integer unitId;
     private Integer createUid;
     private Integer updateUid;
-
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
-    private Date createTime;
-
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
-    private Date updateTime;
     private String remark;
-
-    private User createUser;
-    private User updateUser;
-
-    private Unit unit;
-    private ProductCategory category;
     private Warehouse warehouse;
 
     public Integer getId() {
@@ -91,36 +80,24 @@ public class Product {
         this.unitId = unitId;
     }
 
+    @Override
     public Integer getCreateUid() {
         return createUid;
     }
 
+    @Override
     public void setCreateUid(Integer createUid) {
         this.createUid = createUid;
     }
 
+    @Override
     public Integer getUpdateUid() {
         return updateUid;
     }
 
+    @Override
     public void setUpdateUid(Integer updateUid) {
         this.updateUid = updateUid;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
     }
 
     public String getRemark() {
@@ -129,38 +106,6 @@ public class Product {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public User getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
-    }
-
-    public User getUpdateUser() {
-        return updateUser;
-    }
-
-    public void setUpdateUser(User updateUser) {
-        this.updateUser = updateUser;
-    }
-
-    public Unit getUnit() {
-        return unit;
-    }
-
-    public void setUnit(Unit unit) {
-        this.unit = unit;
-    }
-
-    public ProductCategory getCategory() {
-        return category;
-    }
-
-    public void setCategory(ProductCategory category) {
-        this.category = category;
     }
 
     public Warehouse getWarehouse() {

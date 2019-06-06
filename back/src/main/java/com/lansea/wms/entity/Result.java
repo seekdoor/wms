@@ -26,6 +26,15 @@ public class Result<T> {
     }
 
     /**
+     * 检查是否为成功返回
+     *
+     * @return
+     */
+    public Boolean checkSuccess() {
+        return code.equals(SUCCESS_CODE);
+    }
+
+    /**
      * 返回成功分页信息
      *
      * @param data

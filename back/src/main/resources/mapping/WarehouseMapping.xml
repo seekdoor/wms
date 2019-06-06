@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.WarehouseMapper">
+
+    <sql id="selectUserBase">
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserBase">
+            <property name="tableName" value="warehouse"/>
+        </include>
+    </sql>
+    <!-- 根据 id 查询 -->
+    <select id="findById" resultType="com.lansea.wms.model.Warehouse">
+        <include refid="selectUserBase"></include>
+        where t.id = #{id} and t.is_del is null
+    </select>
+    <!-- 根据条件查询 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.Warehouse">
+        <include refid="selectUserBase"></include>
+        <where>
+            <if test="warehouse.code != null and warehouse.code != ''">
+                t.code like '%${warehouse.code}%'
+            </if>
+            <if test="warehouse.name != null and warehouse.name != ''">
+                and t.name like '%${warehouse.name}%'
+            </if>
+            and t.is_del is null
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
+    </select>
+    <!-- 更新 -->
+    <update id="update">
+        update warehouse
+        <set>
+            code = #{warehouse.code} ,
+            name = #{warehouse.name} ,
+            update_uid = #{warehouse.updateUid} ,
+            update_time = now ,
+        </set>
+        where id = #{warehouse.id}
+    </update>
+
+    <!-- 添加 -->
+    <insert id="insert">
+        insert into warehouse (code, name, create_uid, create_time)
+        values (#{warehouse.code} ,#{warehouse.name} , now());
+    </insert>
+    <!-- 查询所有 -->
+    <select id="selectAll" resultType="com.lansea.wms.model.Warehouse">
+        <include refid="selectUserBase"></include>
+        where t.is_del is null
+    </select>
+
+
+</mapper>

@@ -3,7 +3,7 @@
 <mapper namespace="com.lansea.wms.mapper.UserMapper">
 
     <sql id="fieldBase">
-        user_name,real_name,email,activated,mobile,phone,role_id
+        user_name,real_name,email,activated,mobile,phone,role_id,depart_id
     </sql>
     <sql id="insertField">
         <include refid="fieldBase"></include>,
@@ -11,14 +11,14 @@
     </sql>
     <sql id="insertValues">
         #{user.userName} ,#{user.realName} , #{user.email}, #{user.activated} ,
-        #{user.mobile} ,#{user.phone} ,#{user.roleId}, #{user.password}
+        #{user.mobile} ,#{user.phone} ,#{user.roleId}, #{user.password}, #{user.departId}
     </sql>
 
     <!-- 刷新 token -->
     <update id="refreshToken">
         update user
         set token = #{user.token}
-        where id = #{user.id}
+        where id = #{user.id} and is_del is null
     </update>
 
     <!-- 按条件查询用户信息-->
@@ -41,6 +41,7 @@
             <if test="form.roleId != null and form.roleId != 0">
                 and u.role_id = #{form.roleId}
             </if>
+            and u.is_del is null
         </where>
         <if test="sort.sortField != null ">
             order by u.${sort.sortField} ${sort.sortOrder}
@@ -63,8 +64,9 @@
             activated = #{user.activated} ,
             mobile = #{user.mobile} ,
             phone = #{user.phone},
+            depart_id = #{param1.departId},
             <if test="user.password != null and user.password != ''">
-                password = #{user.password}
+                password = #{user.password},
             </if>
             gender = #{user.gender} ,
             <if test="user.avatar != null and user.avatar != ''">

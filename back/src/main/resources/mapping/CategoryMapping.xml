@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.CategoryMapper">
+
+    <sql id="selectUserBase">
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserBase">
+            <property name="tableName" value="category"/>
+        </include>
+    </sql>
+
+    <!-- 根据 id 查询-->
+    <select id="findById" resultType="com.lansea.wms.model.Category">
+        <include refid="selectUserBase"></include>
+        where t.id = #{id} and t.is_del is null
+    </select>
+    <!-- 按条件查找 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.Category">
+        <include refid="selectUserBase"></include>
+        <where>
+            <if test="category.type != null and category.type != 0">
+                t.type = #{category.type}
+            </if>
+            <if test="category.name != null and category.name != ''">
+                and t.name like '%${category.name}%'
+            </if>
+            and t.is_del is null
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
+    </select>
+    <!-- 根据 type 查询-->
+    <select id="selectByType" resultType="com.lansea.wms.model.Category">
+        <include refid="selectUserBase"></include>
+        where t.type = #{type} and t.is_del is null
+    </select>
+    <!-- 更新 -->
+    <update id="update">
+        update category
+        <set>
+            type = #{category.type} ,
+            name = #{category.name} ,
+            remark = #{category.remark} ,
+            update_uid = #{category.updateUid} ,
+            update_time = now(),
+        </set>
+        where id = #{category.id}
+    </update>
+    <!-- 新增 -->
+    <insert id="insert">
+        insert into category(type, name, remark, create_uid, create_time)
+        values( #{category.type} , #{category.name} , #{category.remark} ,#{category.createUid} , now())
+    </insert>
+
+</mapper>

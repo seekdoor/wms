@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.StockMapper">
+
+    <sql id="selectUserBase">
+    select
+        t.*,
+        cu.real_name create_user_name,
+        uu.real_name update_user_name,
+        war.name warehouse_name ,
+        res.name reservoir_name,
+        from stock t
+        left join user cu on t.create_uid = cu.id
+        left join user uu on t.update_uid = uu.id
+        left join warehouse war on t.warehouse_id = war.id
+        left join reservoir res on t.reservoir_id = res.id
+    </sql>
+    <!-- 根据 id 查询 -->
+    <select id="findById" resultType="com.lansea.wms.model.Stock">
+        <include refid="selectUserBase"></include>
+        where t.id = #{id} and t.is_del is null
+    </select>
+    <!-- 根据条件查询 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.Stock">
+        <include refid="selectUserBase"></include>
+        <where>
+            <if test="stock.code != null and stock.code != ''">
+                t.code like '%${stock.code}%'
+            </if>
+            <if test="stock.name != null and stock.name != ''">
+                and t.name like '%${stock.name}%'
+            </if>
+            and t.is_del is null
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
+    </select>
+    <!-- 更新 -->
+    <update id="update">
+        update stock
+        <set>
+            code = #{reservoir.code} ,
+            name = #{reservoir.name} ,
+            update_uid = #{stock.updateUid} ,
+            update_time = now ,
+        </set>
+        where id = #{stock.id}
+    </update>
+
+    <!-- 添加 -->
+    <insert id="insert">
+        insert into stock (code, name, create_uid, create_time)
+        values (#{stock.code} ,#{stock.name} , now());
+    </insert>
+    <!-- 查询所有 -->
+    <select id="selectAll" resultType="com.lansea.wms.model.Stock">
+        <include refid="selectUserBase"></include>
+        where t.is_del is null
+    </select>
+
+
+</mapper>

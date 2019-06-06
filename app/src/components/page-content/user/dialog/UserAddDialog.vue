@@ -46,6 +46,22 @@
                             ></role-selector>
                         </el-form-item>
                     </el-col>
+
+                </el-row>
+                <el-row :gutter="5">
+                    <el-col :span="12">
+                        <el-form-item label="所在部门">
+                            <depart-selector v-model="user.departId"></depart-selector>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="6">
+                        <el-form-item label="是否激活" required>
+                            <el-select v-model="user.activated">
+                                <el-option :value="1" label="暂不激活"></el-option>
+                                <el-option :value="2" label="激活"></el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
                 </el-row>
                 <el-row :gutter="5">
                     <el-col :span="12">
@@ -80,10 +96,11 @@
     import ElButtonSubmit from "@/components/common/button/ElButtonSubmit";
     import DialogUtil from "@/util/DialogUtil";
     import RoleSelector from "@/components/page-content/enum-selector/RoleSelector";
+    import DepartSelector from "@/components/page-content/enum-selector/DepartSelector";
 
     export default {
         name: "UserAddDialog",
-        components: {RoleSelector, ElButtonSubmit},
+        components: {DepartSelector, RoleSelector, ElButtonSubmit},
         props: {
             visible: {
                 default: false
@@ -94,7 +111,7 @@
         },
         data() {
             return {
-                user: new UserModel()
+                user: new UserModel().setDefaultActivated()
             }
         },
         mounted() {
@@ -108,7 +125,7 @@
             },
             refreshUser() {
                 if (!this.userId) {
-                    this.user = new UserModel;
+                    this.user = new UserModel().setDefaultActivated();
                     return;
                 }
                 this.$ajax.request(Api.user.getUserById, {

@@ -2,6 +2,7 @@ export default class UserModel {
 
     id = 0;
     userName = '';
+    realName = '';
     email = '';
     password = '';
     rePassword = '';
@@ -15,4 +16,9 @@ export default class UserModel {
     roleName = '';
     departId = 0;
     departName = '';
+
+    setDefaultActivated(v = 1) {
+        this.activated = v;
+        return this;
+    }
 }

@@ -2,11 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.lansea.wms.mapper.RoleMapper">
 
-    <sql id="sort">
-        <if test="sort.sortField != null and sort.sortField != ''">
-            order by t.${sort.sortField} ${sort.sortOrder}
-        </if>
-    </sql>
 
     <sql id="selectBase">
         select
@@ -37,7 +32,7 @@
                 t.name like '%${role.name}%'
             </if>
         </where>
-        <include refid="sort"></include>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
     </select>
     <!-- 更新 -->
     <update id="update">

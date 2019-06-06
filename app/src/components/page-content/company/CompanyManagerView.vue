@@ -15,7 +15,10 @@
                 </div>
                 <div class="" style="width: 150px;">
                     <span class="">分类</span>
-                    <company-category-selector v-model="filterForm.category"></company-category-selector>
+                    <company-selector
+                            v-model="filterForm.category"
+                            :is-filter="true"
+                    ></company-selector>
                 </div>
                 <div class="" style="width: 200px;">
                     <span class="">联系人姓名</span>
@@ -53,6 +56,8 @@
                     operate-width="65"
                     :selected-row.sync="selectedRow"
                     @sort-change="sortChange"
+                    :update-user-show="true"
+                    :create-user-show="true"
             >
 
                 <el-table-column
@@ -110,15 +115,6 @@
                         sortable="custom"
                 ></el-table-column>
 
-                <el-table-column
-                        prop="createUid"
-                        label="创建人"
-                        width="120"
-                        sortable="custom"
-                >
-                    <span slot-scope="{row}">{{ row.createUserName }}</span>
-                </el-table-column>
-
                 <template slot="operate" slot-scope="{row}">
                     <el-button-mini icon="edit" type="text" @click.native="clickRowEdit(row)"></el-button-mini>
                     <el-button-mini icon="delete" type="text" @click.native="clickRowDelete(row)"></el-button-mini>
@@ -147,10 +143,12 @@
     import CompanyAddDialog from "@/components/page-content/company/dialog/CompanyAddDialog";
     import DialogUtil from "@/util/DialogUtil";
     import CompanyCategorySelector from "@/components/page-content/company/comp/CompanyCategorySelector";
+    import CompanySelector from "@/components/page-content/enum-selector/CompanySelector";
 
     export default {
         name: "CompanyManagerView",
         components: {
+            CompanySelector,
             CompanyCategorySelector,
             CompanyAddDialog, ElButtonMini, TablePanel, ElButtonCurdGroup, SearchCardLayout
         },

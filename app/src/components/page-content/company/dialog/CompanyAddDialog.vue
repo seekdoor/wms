@@ -18,10 +18,10 @@
                     </el-col>
                     <el-col :span="6">
                         <el-form-item label="分类">
-                            <company-category-selector
+                            <company-selector
                                     v-model="company.category"
                                     :is-filter="false"
-                            ></company-category-selector>
+                            ></company-selector>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -88,10 +88,11 @@
     import ElButtonSubmit from "@/components/common/button/ElButtonSubmit";
     import Api from "@/assets/api/Api";
     import DialogUtil from "@/util/DialogUtil";
+    import CompanySelector from "@/components/page-content/enum-selector/CompanySelector";
 
     export default {
         name: "CompanyAddDialog",
-        components: {ElButtonSubmit, CompanyCategorySelector},
+        components: {CompanySelector, ElButtonSubmit, CompanyCategorySelector},
         props: {
             visible: {
                 default: false

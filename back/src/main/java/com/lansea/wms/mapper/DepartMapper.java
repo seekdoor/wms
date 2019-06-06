@@ -3,10 +3,7 @@ package com.lansea.wms.mapper;
 
 import com.lansea.wms.entity.Sort;
 import com.lansea.wms.model.Depart;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -19,8 +16,11 @@ public interface DepartMapper {
 
     Integer update(@Param("depart") Depart depart);
 
-    @Delete("delete from depart where id in (#{ids})")
+    @Update("update depart set is_del = now() where id in (#{ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer insert(@Param("depart") Depart depart);
+
+    @Select("select * from depart")
+    List<Depart> selectAll();
 }

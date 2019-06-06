@@ -43,6 +43,12 @@ public class DepartController {
         return Result.successPage(list);
     }
 
+    @GetMapping("/select_all")
+    @ApiOperation(value = "所有部门")
+    Result selectAll() {
+        return Result.success(departMapper.selectAll());
+    }
+
     @GetMapping("/get_by_id")
     @ApiOperation(value = "根据id查找部门")
     Result getById(Integer id) {

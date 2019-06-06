@@ -15,7 +15,7 @@ export default [
             title: '系统管理',
             icon: 'iconfont icon-cog'
         },
-        children : [
+        children: [
             {
                 path: '/UserManager',
                 component: () => import("@/components/page-content/user/UserManagerView.vue"),
@@ -47,13 +47,19 @@ export default [
             title: '基础资料',
             icon: 'iconfont icon-cubes'
         },
-        children : [
-
+        children: [
             {
                 path: '/CompanyManager',
                 component: () => import("@/components/page-content/company/CompanyManagerView.vue"),
                 meta: {
                     title: '合作方管理',
+                },
+            },
+            {
+                path: '/CategoryManager',
+                component: () => import("@/components/page-content/company/CategoryManagerView.vue"),
+                meta: {
+                    title: '分类字典管理',
                 },
             },
         ]

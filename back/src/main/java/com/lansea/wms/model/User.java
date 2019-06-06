@@ -88,8 +88,10 @@ public class User {
 
     private String avatar;
 
+    @Min(value = 1, message = "请选择角色")
     private Integer roleId;
 
+    @Min(value = 1, message = "请选择部门")
     private Integer departId;
 
     private String departName;

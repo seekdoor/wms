@@ -32,7 +32,7 @@ public interface UserMapper {
     Integer changePassword(@Param("user") User user);
 
     // 批量删除
-    @Delete("delete from user where id in (${ids})")
+    @Update("update user where is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
 }
