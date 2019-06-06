@@ -23,4 +23,6 @@ public interface ReservoirMapper {
     Integer insert(@Param("reservoir") Reservoir reservoir);
 
     List<Reservoir> selectAll();
+
+    List<Reservoir> selectByWarehouseId(@Param("warehouseId") Integer warehouseId);
 }

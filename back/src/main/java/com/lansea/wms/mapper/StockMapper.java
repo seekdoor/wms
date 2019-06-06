@@ -23,4 +23,6 @@ public interface StockMapper {
     Integer insert(@Param("stock") Stock stock);
 
     List<Stock> selectAll();
+
+    List<Stock> selectByReservoirId(@Param("reservoirId") Integer reservoirId);
 }

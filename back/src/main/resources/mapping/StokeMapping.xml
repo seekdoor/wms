@@ -56,6 +56,11 @@
         <include refid="selectUserBase"></include>
         where t.is_del is null
     </select>
+    <!-- 根据 库位id 查询 -->
+    <select id="selectByReservoirId" resultType="com.lansea.wms.model.Stock">
+        <include refid="selectUserBase"></include>
+        where t.reservoir_id = #{reservoirId} and t.is_del is null
+    </select>
 
 
 </mapper>

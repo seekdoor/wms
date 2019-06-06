@@ -45,7 +45,7 @@
     </update>
 
     <!-- 添加 -->
-    <insert id="insert">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="reservoir.id">
         insert into reservoir (code, name, create_uid, create_time)
         values (#{reservoir.code} ,#{reservoir.name} , now());
     </insert>
@@ -53,6 +53,11 @@
     <select id="selectAll" resultType="com.lansea.wms.model.Reservoir">
         <include refid="selectUserBase"></include>
         where t.is_del is null
+    </select>
+    <!-- 根据仓库id获取列表 -->
+    <select id="selectByWarehouseId" resultType="com.lansea.wms.model.Reservoir">
+        <include refid="selectUserBase"></include>
+        where t.warehouse = #{warehouseId} and t.is_del = null
     </select>
 
 
