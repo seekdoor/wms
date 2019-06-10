@@ -17,7 +17,7 @@ public interface StockMapper {
 
     Integer update(@Param("stock") Stock stock);
 
-    @Update("update stock set is_del = now() where id in (#{ids})")
+    @Update("update stock set is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer insert(@Param("stock") Stock stock);

@@ -17,7 +17,7 @@ public interface ReservoirMapper {
 
     Integer update(@Param("reservoir") Reservoir reservoir);
 
-    @Update("update reservoir set is_del = now() where id in (#{ids})")
+    @Update("update reservoir set is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer insert(@Param("reservoir") Reservoir reservoir);

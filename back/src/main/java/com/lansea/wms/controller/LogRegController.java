@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,7 +28,7 @@ public class LogRegController {
 
     @PostMapping(value = "/login")
     @ApiOperation(value = "用户登录")
-    Result login(@Validated({User.Login.class}) User userForm, BindingResult bindingResult) {
+    Result login(@Validated({User.Login.class}) @RequestBody User userForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return Result.errorByBindingResult(bindingResult);
         }

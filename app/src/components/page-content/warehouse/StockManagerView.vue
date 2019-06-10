@@ -89,9 +89,7 @@
                         :show-overflow-tooltip="true"
                         sortable="custom"
                         width="200"
-                >
-                    <template slot-scope="{row}">{{ row.reservoirName }}</template>
-                </el-table-column>
+                ></el-table-column>
 
                 <template slot="operate" slot-scope="{row}">
                     <el-button-mini
@@ -144,6 +142,7 @@
         },
         methods: {
             reload() {
+                this.refreshData();
             },
             refreshData() {
                 this.loading = true;
