@@ -7,7 +7,7 @@
         t.*,
         cu.real_name create_user_name,
         uu.real_name update_user_name,
-        war.name warehouse_name ,
+        war.name warehouse_name
         from reservoir t
         left join user cu on t.create_uid = cu.id
         left join user uu on t.update_uid = uu.id
@@ -28,6 +28,9 @@
             <if test="reservoir.name != null and reservoir.name != ''">
                 and t.name like '%${reservoir.name}%'
             </if>
+            <if test="reservoir.warehouseId != null and reservoir.warehouseId != 0">
+                and t.warehouse_id = #{reservoir.warehouseId}
+            </if>
             and t.is_del is null
         </where>
         <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
@@ -38,16 +41,18 @@
         <set>
             code = #{reservoir.code} ,
             name = #{reservoir.name} ,
+            remark = #{reservoir.remark} ,
+            warehouse_id = #{reservoir.warehouseId} ,
             update_uid = #{reservoir.updateUid} ,
-            update_time = now ,
+            update_time = now(),
         </set>
         where id = #{reservoir.id}
     </update>
 
     <!-- 添加 -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="reservoir.id">
-        insert into reservoir (code, name, create_uid, create_time)
-        values (#{reservoir.code} ,#{reservoir.name} , now());
+        insert into reservoir (code, name, remark, warehouse_id, create_uid, create_time)
+        values (#{reservoir.code} ,#{reservoir.name} , #{reservoir.remark} , #{reservoir.warehouseId} , #{reservoir.createUid} , now());
     </insert>
     <!-- 查询所有 -->
     <select id="selectAll" resultType="com.lansea.wms.model.Reservoir">

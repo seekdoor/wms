@@ -27,6 +27,8 @@ public class Reservoir extends BaseUser {
     @RemarkValidate
     private String remark;
 
+    private String warehouseName;
+
     public Integer getId() {
         return id;
     }
@@ -65,5 +67,13 @@ public class Reservoir extends BaseUser {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getWarehouseName() {
+        return warehouseName;
+    }
+
+    public void setWarehouseName(String warehouseName) {
+        this.warehouseName = warehouseName;
     }
 }

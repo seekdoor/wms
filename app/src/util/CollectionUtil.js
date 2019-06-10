@@ -198,6 +198,23 @@ export default {
         }
         let t = coll1.length > coll2.length ? coll2 : coll1;
         return this.diff(m, t);
+    },
+    /**
+     * 将两个有所属关系的列表合并为树状结构
+     * @param parentList
+     * @param childList
+     * @param childKey
+     * @param idKey
+     * @param pid
+     * @returns {Array|*[]}
+     */
+    listToTreeByTwoList(parentList = [], childList = [], pid = 'id', childKey = 'children', idKey = 'id') {
+        if (!childList.length) return parentList;
+        return parentList.map(p => {
+            let c = {};
+            c[childKey] = childList.filter(ch => ch[pid] === p[idKey]);
+            return Object.assign(p, c);
+        });
     }
 
 }

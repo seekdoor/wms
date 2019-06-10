@@ -8,7 +8,7 @@
         cu.real_name create_user_name,
         uu.real_name update_user_name,
         war.name warehouse_name ,
-        res.name reservoir_name,
+        res.name reservoir_name
         from stock t
         left join user cu on t.create_uid = cu.id
         left join user uu on t.update_uid = uu.id
@@ -30,6 +30,12 @@
             <if test="stock.name != null and stock.name != ''">
                 and t.name like '%${stock.name}%'
             </if>
+            <if test="stock.warehouseId != null and stock.warehouseId != 0">
+                and t.warehouse_id = #{stock.warehouseId}
+            </if>
+            <if test="stock.reservoirId != null and stock.reservoirId != 0">
+                and t.reservoir_id = #{stock.reservoirId}
+            </if>
             and t.is_del is null
         </where>
         <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
@@ -40,16 +46,19 @@
         <set>
             code = #{reservoir.code} ,
             name = #{reservoir.name} ,
+            remark = #{stock.remark} ,
+            warehous_id = #{stock.warehouseId} ,
+            revervoir_id = #{stock.reservoirId} ,
             update_uid = #{stock.updateUid} ,
-            update_time = now ,
+            update_time = now() ,
         </set>
         where id = #{stock.id}
     </update>
 
     <!-- 添加 -->
     <insert id="insert">
-        insert into stock (code, name, create_uid, create_time)
-        values (#{stock.code} ,#{stock.name} , now());
+        insert into stock (code, name, remark, warehouse_id, revervoir_id, create_uid, create_time)
+        values (#{stock.code} ,#{stock.name} , ${stock.remark} ,#{stock.warehouseId} ,#{stock.reservoirId} , now());
     </insert>
     <!-- 查询所有 -->
     <select id="selectAll" resultType="com.lansea.wms.model.Stock">

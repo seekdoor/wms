@@ -21,7 +21,7 @@ public interface CategoryMapper {
 
     Integer insert(@Param("category") Category category);
 
-    @Update("update category set is_del = now() where id in (#{ids})")
+    @Update("update category set is_del = now() where id in (${ids})")
     Integer delete(@Param("ids") String ids);
 
 }

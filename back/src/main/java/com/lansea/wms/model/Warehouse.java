@@ -3,6 +3,7 @@ package com.lansea.wms.model;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.model.base.BaseUser;
 import com.lansea.wms.validate.CodeValidate;
+import com.lansea.wms.validate.RemarkValidate;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Repository;
@@ -21,6 +22,9 @@ public class Warehouse extends BaseUser {
 
     @Length(min = 2, max = 40, message = "仓库名称长度必须为 2-40")
     private String name;
+
+    @RemarkValidate
+    private String remark;
 
 
     public Integer getId() {
@@ -45,5 +49,13 @@ public class Warehouse extends BaseUser {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

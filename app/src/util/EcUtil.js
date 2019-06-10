@@ -39,7 +39,6 @@ export default {
      * @returns {{sortOrder: string, sortField: *}|{}}
      */
     getSortField(column) {
-        console.log(column);
         if (!column) return {};
         return {
             'sortField': StringUtil.toLine(column.prop),

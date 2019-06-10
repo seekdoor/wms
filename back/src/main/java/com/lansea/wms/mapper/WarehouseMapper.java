@@ -16,10 +16,11 @@ public interface WarehouseMapper {
 
     Integer update(@Param("warehouse") Warehouse warehouse);
 
-    @Update("update warehouse set is_del = now() where id in (#{ids})")
+    @Update("update warehouse set is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer insert(@Param("warehouse") Warehouse warehouse);
 
     List<Warehouse> selectAll();
+
 }

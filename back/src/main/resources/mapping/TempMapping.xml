@@ -8,34 +8,42 @@
         </if>
     </sql>
 
-    <sql id="selectUserWarehouse">
-        select
-        t.*,
-        cu.real_name create_user_name,
-        uu.real_name update_user_name,
+    <sql id="selectUserFields">
+        t.*, cu.real_name create_user_name, uu.real_name update_user_name
+    </sql>
+    <sql id="selectUserJoin">
+        left join user cu on t.create_uid = cu.id
+        left join user uu on t.update_uid = uu.id
+    </sql>
+
+
+    <sql id="selectWareFields">
         war.name warehouse_name ,
         res.name reservoir_name,
         stk.name stock_name
-        from ${tableName} t
-        left join user cu on t.create_uid = cu.id
-        left join user uu on t.update_uid = uu.id
+    </sql>
+    <sql id="selectWareJoin">
         left join warehouse war on t.warehouse_id = war.id
         left join reservoir res on t.reservoir_id = res.id
         left join stock stk on t.stock_id = stk.id
     </sql>
 
+    <sql id="selectUserWarehouse">
+        select
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserFields"></include>
+        ,
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectWareFields"></include>
+        from ${tableName} t
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectWareJoin"></include>
+    </sql>
+
     <sql id="selectUserBase">
         select
-        t.*, cu.real_name create_user_name, uu.real_name update_user_name
-        <if test="field != null and field != ''">
-            , ${field}
-        </if>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserFields"></include>
         from ${tableName} t
-        left join user cu on t.create_uid = cu.id
-        left join user uu on t.update_uid = uu.id
-        <if test="join != null and join != ''">
-            ${join}
-        </if>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
     </sql>
+
 
 </mapper>

@@ -62,6 +62,27 @@ export default [
                     title: '分类字典管理',
                 },
             },
+            {
+                path: '/WarehouseManager',
+                component: () => import("@/components/page-content/warehouse/WarehouseManagerView.vue"),
+                meta: {
+                    title: '仓库管理',
+                },
+            },
+            {
+                path: '/ReservoirManager',
+                component: () => import("@/components/page-content/warehouse/ReservoirManagerView.vue"),
+                meta: {
+                    title: '仓位管理',
+                },
+            },
+            {
+                path: '/StockManager',
+                component: () => import("@/components/page-content/warehouse/StockManagerView.vue"),
+                meta: {
+                    title: '货架管理',
+                },
+            },
         ]
     },
 

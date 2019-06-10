@@ -5,6 +5,7 @@ import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.model.base.BaseUser;
 import com.lansea.wms.validate.CodeValidate;
 import com.lansea.wms.validate.NameValidate;
+import com.lansea.wms.validate.RemarkValidate;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Min;
@@ -26,6 +27,9 @@ public class Stock extends BaseUser {
 
     @Min(value = 1, message = "请选择库区")
     private Integer reservoirId;
+
+    @RemarkValidate
+    private String remark;
 
     private String warehouseName;
     private String reservoirName;
@@ -85,5 +89,13 @@ public class Stock extends BaseUser {
 
     public void setReservoirName(String reservoirName) {
         this.reservoirName = reservoirName;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

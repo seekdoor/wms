@@ -16,7 +16,7 @@ public interface DepartMapper {
 
     Integer update(@Param("depart") Depart depart);
 
-    @Update("update depart set is_del = now() where id in (#{ids})")
+    @Update("update depart set is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer insert(@Param("depart") Depart depart);

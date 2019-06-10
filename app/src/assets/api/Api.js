@@ -72,5 +72,27 @@ export default {
         list: ['/category/list', 'get'],
         selectByType: ['/category/select_by_type', 'get'],
         update: ['/category/update', 'post']
+    },
+    warehouse: {
+        resAllByWarehouseId: ['/warehouse/res_all_by_warehouse_id', 'get'],
+        resDelete: ['/warehouse/res_delete', 'post'],
+        resGetById: ['/warehouse/res_get_by_id', 'get'],
+        resInsert: ['/warehouse/res_insert', 'post'],
+        resList: ['/warehouse/res_list', 'get'],
+        resUpdate: ['/warehouse/res_update', 'post'],
+        stockAllByReservoirId: ['/warehouse/stock_all_by_reservoir_id', 'get'],
+        stockDelete: ['/warehouse/stock_delete', 'post'],
+        stockGetById: ['/warehouse/stock_get_by_id', 'get'],
+        stockInsert: ['/warehouse/stock_insert', 'post'],
+        stockList: ['/warehouse/stock_list', 'get'],
+        stockUpdate: ['/warehouse/stock_update', 'post'],
+        warDelete: ['/warehouse/war_delete', 'post'],
+        warGetById: ['/warehouse/war_get_by_id', 'get'],
+        warInsert: ['/warehouse/war_insert', 'post'],
+        warList: ['/warehouse/war_list', 'get'],
+        warUpdate: ['/warehouse/war_update', 'post'],
+        warSelectAll: ['/warehouse/war_select_all', 'get'],
+        resSelectAll: ['/warehouse/res_select_all', 'get'],
+        stockSelectAll: ['/warehouse/stock_select_all', 'get'],
     }
 }

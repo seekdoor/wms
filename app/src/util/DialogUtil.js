@@ -13,7 +13,7 @@ export default {
      * @private
      */
     _messageFormat(message) {
-        if( typeof message === 'undefined'){
+        if (typeof message === 'undefined') {
             return '消息内容未定义！';
         }
         if (typeof message === 'string') {

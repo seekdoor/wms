@@ -32,16 +32,17 @@
         <set>
             code = #{warehouse.code} ,
             name = #{warehouse.name} ,
+            remark = #{warehouse.remark} ,
             update_uid = #{warehouse.updateUid} ,
-            update_time = now ,
+            update_time = now() ,
         </set>
         where id = #{warehouse.id}
     </update>
 
     <!-- 添加 -->
     <insert id="insert">
-        insert into warehouse (code, name, create_uid, create_time)
-        values (#{warehouse.code} ,#{warehouse.name} , now());
+        insert into warehouse (code, name, remark, create_uid, create_time)
+        values (#{warehouse.code} ,#{warehouse.name} , #{warehouse.remark} , #{warehouse.createUid}, now());
     </insert>
     <!-- 查询所有 -->
     <select id="selectAll" resultType="com.lansea.wms.model.Warehouse">
