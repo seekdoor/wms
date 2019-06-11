@@ -36,6 +36,33 @@
                     </el-table-column>
                     <slot></slot>
                     <el-table-column
+                            prop="warehouseId"
+                            label="仓库"
+                            sortable="custom"
+                            width="140"
+                            v-if="showAllWarehouse || showWarehouse"
+                    >
+                        <template slot-scope="{row}">{{ row.warehouseName }}</template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="reservoirId"
+                            label="库区"
+                            sortable="custom"
+                            width="140"
+                            v-if="showAllWarehouse || showReservoir"
+                    >
+                        <template slot-scope="{row}">{{ row.reservoirName }}</template>
+                    </el-table-column>
+                    <el-table-column
+                            prop="stockId"
+                            label="货架"
+                            sortable="custom"
+                            width="140"
+                            v-if="showAllWarehouse || showStock"
+                    >
+                        <template slot-scope="{row}">{{ row.stockName }}</template>
+                    </el-table-column>
+                    <el-table-column
                             prop="createUid"
                             label="创建人"
                             sortable="custom"
@@ -152,6 +179,18 @@
                 default: false,
             },
             updateUserShow: {
+                default: false
+            },
+            showAllWarehouse: {
+                default: false,
+            },
+            showWarehouse: {
+                default: false,
+            },
+            showReservoir: {
+                default: false,
+            },
+            showStock: {
                 default: false
             }
         },

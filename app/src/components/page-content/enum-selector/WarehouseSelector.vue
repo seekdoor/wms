@@ -32,7 +32,7 @@
             visible: {
                 default: true
             },
-            width :{
+            width: {
                 default: '200px'
             }
         },
@@ -78,11 +78,17 @@
                     CollectionUtil.listToTreeByTwoList(this.reservoirs, this.stocks, 'reservoirId'),
                     'warehouseId'
                 );
+                if (this.isFilter) {
+                    this.tree = [{
+                        id: 0,
+                        name: '全部'
+                    }].concat(this.tree);
+                }
                 this.refreshSelect();
             },
 
             refreshSelect() {
-                this.selectArray = CollectionUtil.getTreeRoute(this.tree, x => x.id === this.value);
+                this.selectArray = CollectionUtil.getTreeRoute(this.tree, x => x.id === this.value, 'id', 'children', this.level);
             },
 
             itemChange(nodes) {

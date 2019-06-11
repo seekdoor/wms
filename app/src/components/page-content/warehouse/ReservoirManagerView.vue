@@ -53,14 +53,14 @@
 
                 <el-table-column
                         prop="code"
-                        label="库位编码"
+                        label="库区编码"
                         sortable="custom"
                         width="120"
                 ></el-table-column>
 
                 <el-table-column
                         prop="name"
-                        label="库位名称"
+                        label="库区名称"
                         sortable="custom"
                         width="160"
                 ></el-table-column>
@@ -180,7 +180,7 @@
             },
             delete(nodes) {
                 DialogUtil.confirm(`
-                    确定删除以下库位吗？ <br>
+                    确定删除以下库区吗？ <br>
                     [ ${nodes.map(x => x.name).join(',')} ]
                 `).then(() => {
                     return this.$ajax.request(Api.warehouse.resDelete, {

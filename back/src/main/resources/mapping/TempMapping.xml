@@ -28,14 +28,22 @@
         left join stock stk on t.stock_id = stk.id
     </sql>
 
-    <sql id="selectUserWarehouse">
-        select
+    <sql id="selectUserWarehouseField">
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserFields"></include>
         ,
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectWareFields"></include>
-        from ${tableName} t
+    </sql>
+
+    <sql id="selectUserWarehouseJoin">
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectWareJoin"></include>
+    </sql>
+
+    <sql id="selectUserWarehouse">
+        select
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
+        from ${tableName} t
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseJoin"></include>
     </sql>
 
     <sql id="selectUserBase">
@@ -45,5 +53,16 @@
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
     </sql>
 
+    <sql id="whereWarehouse">
+        <if test="param1.warehouseId != null and param1.warehouseId != 0">
+            and t.warehouse_id = #{param1.warehouseId}
+        </if>
+        <if test="param1.reservoirId != null and param1.reservoirId != 0">
+            and t.reservoir_id = #{param1.reservoirId}
+        </if>
+        <if test="param1.stockId != null and param1.stockId != 0">
+            and t.stock_id = #{param1.stockId}
+        </if>
+    </sql>
 
 </mapper>

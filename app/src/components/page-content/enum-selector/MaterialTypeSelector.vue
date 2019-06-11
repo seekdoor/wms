@@ -1,20 +1,15 @@
 <template>
     <div class="CategoryTypeSelector">
-        <el-select :value="valueUse" @input="change" placeholder="选择分类">
+        <el-select :value="valueUse" @input="change" splaceholder="选择类别">
             <el-option label="全部" :value="0" v-if="isFilter"></el-option>
-            <el-option :label="category[1]" :value="1" ></el-option>
-            <el-option :label="category[2]" :value="2" ></el-option>
-            <el-option :label="category[3]" :value="3" ></el-option>
-            <el-option :label="category[4]" :value="4" ></el-option>
-            <el-option :label="category[5]" :value="5" ></el-option>
-            <el-option :label="category[6]" :value="6" ></el-option>
-            <el-option :label="category[7]" :value="7" ></el-option>
+            <el-option :label="types[1]" :value="1"></el-option>
+            <el-option :label="types[2]" :value="2"></el-option>
         </el-select>
     </div>
 </template>
 
 <script>
-    import CategoryTypeEnum from "@/project/enum/CategoryTypeEnum";
+    import MaterialTypeEnum from "@/project/enum/MaterialTypeEnum";
 
     export default {
         name: "CategoryTypeSelector",
@@ -29,7 +24,7 @@
         },
         data() {
             return {
-                category: CategoryTypeEnum
+                types: MaterialTypeEnum
             }
         },
         mounted() {

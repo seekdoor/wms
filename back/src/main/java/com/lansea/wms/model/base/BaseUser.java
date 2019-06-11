@@ -1,6 +1,8 @@
 package com.lansea.wms.model.base;
 
 
+import com.lansea.wms.model.User;
+import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,15 @@ public class BaseUser {
 
     private String createUserName;
     private String updateUserName;
+
+
+    public void setCreateUidToLoginUser(UserService userService) {
+        setCreateUid(userService.getLoginUser().getId());
+    }
+
+    public void setUpdateUidToLoginUser(UserService userService) {
+        setUpdateUid(userService.getLoginUser().getId());
+    }
 
     public Integer getCreateUid() {
         return createUid;

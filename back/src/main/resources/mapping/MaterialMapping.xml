@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.MaterialMapper">
+
+    <sql id="selectBase">
+        select
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserFields"></include>
+        ,
+        cc.name category_name , cun.name unit_name
+        from material t
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
+        left join category cc on cc.id = t.category_id
+        left join category cun on cun.id = t.unit_id
+    </sql>
+
+    <!-- 条件查询 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.Material">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="material.code != null and material.code != ''">
+                t.code like '%${material.code}%'
+            </if>
+            <if test="material.name != null and material.name != ''">
+                and t.name like '%${material.name}%'
+            </if>
+            <if test="material.categoryId != null and material.categoryId != 0">
+                and t.category_id = #{material.categoryId}
+            </if>
+            <if test="material.unitId != null and material.unitId != 0">
+                and t.unit_id = #{material.unitId}
+            </if>
+            <if test="material.type != null and material.type != 0">
+                and t.type = #{material.type}
+            </if>
+            and t.is_del is null
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
+    </select>
+    <!-- 根据 id 查询-->
+    <select id="findById" resultType="com.lansea.wms.model.Material">
+        <include refid="selectBase"></include>
+        where t.id = #{id} and t.is_del is null
+    </select>
+    <!-- 新增 -->
+    <insert id="insert">
+        insert into material(
+        code, name ,category_id,unit_id,safe_num,valid_day,remark,create_uid,create_time,type
+        )
+        values(
+        #{material.code} ,#{material.name} ,#{material.categoryId} ,#{material.unitId} ,#{material.safeNum} ,#{material.validDay} ,
+        #{material.remark} ,#{material.createUid} , now(), #{material.type}
+        )
+    </insert>
+    <!-- 更新 -->
+    <update id="update">
+        update material
+        <set>
+            code = #{material.code} ,
+            name = #{material.name} ,
+            category_id = #{material.categoryId} ,
+            unit_id = #{material.unitId} ,
+            safe_num = #{material.safeNum} ,
+            valid_day = #{material.validDay} ,
+            remark = #{material.remark} ,
+            update_uid = #{material.updateUid} ,
+            update_time = now()
+        </set>
+        where id = #{material.id}
+    </update>
+</mapper>

@@ -49,6 +49,20 @@ export default [
         },
         children: [
             {
+                path: '/MaterialManager',
+                component: () => import("@/components/page-content/material/MaterialManagerView.vue"),
+                meta: {
+                    title: '物料管理',
+                },
+            },
+            {
+                path: '/ProductManager',
+                component: () => import("@/components/page-content/material/ProductManagerView.vue"),
+                meta: {
+                    title: '产品管理',
+                },
+            },
+            {
                 path: '/CompanyManager',
                 component: () => import("@/components/page-content/company/CompanyManagerView.vue"),
                 meta: {
@@ -62,6 +76,16 @@ export default [
                     title: '分类字典管理',
                 },
             },
+        ]
+    },
+
+    {
+        path: '/WarehouseManager',
+        meta: {
+            title: '库房信息管理',
+            icon: 'iconfont icon-box-open'
+        },
+        children: [
             {
                 path: '/WarehouseManager',
                 component: () => import("@/components/page-content/warehouse/WarehouseManagerView.vue"),
@@ -73,7 +97,7 @@ export default [
                 path: '/ReservoirManager',
                 component: () => import("@/components/page-content/warehouse/ReservoirManagerView.vue"),
                 meta: {
-                    title: '仓位管理',
+                    title: '库区管理',
                 },
             },
             {
@@ -81,6 +105,23 @@ export default [
                 component: () => import("@/components/page-content/warehouse/StockManagerView.vue"),
                 meta: {
                     title: '货架管理',
+                },
+            },
+        ]
+    },
+
+    {
+        path: '/InOutManager',
+        meta: {
+            title: '出入库管理',
+            icon: 'iconfont icon-exchange-alt'
+        },
+        children: [
+            {
+                path: '/WarehouseManager',
+                component: () => import("@/components/page-content/warehouse/WarehouseManagerView.vue"),
+                meta: {
+                    title: '仓库管理',
                 },
             },
         ]

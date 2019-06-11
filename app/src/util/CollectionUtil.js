@@ -115,16 +115,19 @@ export default {
      * @param find
      * @param key
      * @param childKey
+     * @param deep
+     * @param nowDeep
      * @returns {Array}
      */
-    getTreeRoute(tree, find, key = 'id', childKey = 'children') {
+    getTreeRoute(tree, find, key = 'id', childKey = null, deep = null, nowDeep = 0) {
         let ret = [];
+        childKey = childKey || 'children';
         tree.forEach(x => {
-            let is = find(x);
+            let is = (deep === null || deep === nowDeep + 1) && find(x);
             if (is) {
                 ret.push(x[key]);
             } else if (x[childKey] && x[childKey].length) {
-                let r = this.getTreeRoute(x[childKey], find, key, childKey);
+                let r = this.getTreeRoute(x[childKey], find, key, childKey, deep, nowDeep + 1);
                 if (r.length) {
                     ret = [x[key], ...r];
                 }

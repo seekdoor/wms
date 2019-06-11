@@ -52,20 +52,24 @@
             },
             refreshList() {
                 this.$ajax.request(Api.category.selectByType, {
-                    type: 0
+                    type: this.type
                 }).then(resp => {
                     this.categories = resp;
                 })
             }
         },
-        watch: {},
+        watch: {
+            type(){
+                this.refreshList();
+            }
+        },
         computed: {
             valueUse() {
                 if (this.value) {
                     return this.value;
                 }
                 return this.isFilter ? 0 : null;
-            }
+            },
         },
 
     }

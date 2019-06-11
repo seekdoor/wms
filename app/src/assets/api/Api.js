@@ -94,5 +94,13 @@ export default {
         warSelectAll: ['/warehouse/war_select_all', 'get'],
         resSelectAll: ['/warehouse/res_select_all', 'get'],
         stockSelectAll: ['/warehouse/stock_select_all', 'get'],
+    },
+    material: {
+        list: ['/material/list', 'get'],
+        delete: ['/material/delete', 'post'],
+        getById: ['/material/get_by_id', 'get'],
+        insert: ['/material/insert', 'post'],
+        update: ['/material/update', 'post'],
     }
+
 }

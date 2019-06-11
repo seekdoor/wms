@@ -46,6 +46,29 @@ public class Result<T> {
     }
 
     /**
+     * 删除数据
+     *
+     * @param num
+     * @param name
+     * @param <T>
+     * @return
+     */
+    public static <T> Result successDelete(Integer num, String name) {
+        return success("成功删除" + num + "条" + name);
+    }
+
+    /**
+     * 删除数据
+     *
+     * @param num
+     * @param <T>
+     * @return
+     */
+    public static <T> Result successDelete(Integer num) {
+        return successDelete(num, "数据");
+    }
+
+    /**
      * 快速返回失败结果
      *
      * @param <T>  泛类型

@@ -1,26 +1,33 @@
 <template>
-    <div class="StockManagerView flex-box flex-column">
+    <div class="MaterialManagerContent flex-box flex-column">
         <search-card-layout
                 @click-search="refreshData"
                 :loading="loading"
         >
             <div class="flex-box search-card">
                 <div class="">
-                    <span>货架编号</span>
+                    <span>{{ nameText }}编号</span>
                     <el-input v-model="filterForm.code"></el-input>
                 </div>
                 <div class="">
-                    <span>货架名称</span>
+                    <span>{{ nameText }}名称</span>
                     <el-input v-model="filterForm.name"></el-input>
                 </div>
-                <div class="">
-                    <span>所属位置</span>
-                    <warehouse-selector
-                            width="300px"
-                            :level="2"
-                            @change="warehouseSelectorChange"
+                <div class="" style="width: 200px;">
+                    <span>{{ nameText }}分类</span>
+                    <category-selector
+                            :type="categoryType"
+                            v-model="filterForm.categoryId"
                             :is-filter="true"
-                    ></warehouse-selector>
+                    ></category-selector>
+                </div>
+                <div class="" style="width: 130px;">
+                    <span>单位</span>
+                    <category-selector
+                            :type="1"
+                            v-model="filterForm.unitId"
+                            :is-filter="true"
+                    ></category-selector>
                 </div>
             </div>
             <el-button-curd-group
@@ -32,7 +39,6 @@
                     @click-delete="clickDeleteButton"
             ></el-button-curd-group>
         </search-card-layout>
-
         <div class="flex-grow">
             <table-panel
                     :loading="loading"
@@ -53,42 +59,56 @@
 
                 <el-table-column
                         prop="code"
-                        label="货架编号"
+                        :label="`${nameText}编号`"
                         sortable="custom"
-                        width="120"
+                        width="140"
                 ></el-table-column>
 
                 <el-table-column
                         prop="name"
-                        label="货架名称"
+                        :label="`${nameText}名称`"
                         sortable="custom"
                         width="160"
                 ></el-table-column>
 
                 <el-table-column
-                        prop="warehouseId"
-                        label="所属仓库"
+                        prop="categoryId"
+                        :label="`${nameText}分类`"
                         sortable="custom"
-                        width="160"
+                        width="140"
                 >
-                    <template slot-scope="{row}">{{ row.warehouseName }}</template>
+                    <template slot-scope="{row}">{{ row.categoryName }}</template>
                 </el-table-column>
 
                 <el-table-column
-                        prop="reservoirId"
-                        label="所属仓位"
+                        prop="unitId"
+                        label="单位"
                         sortable="custom"
-                        width="160"
+                        width="80"
                 >
-                    <template slot-scope="{row}">{{ row.reservoirName }}</template>
+                    <template slot-scope="{row}">{{ row.unitName }}</template>
+                </el-table-column>
+
+                <el-table-column
+                        prop="safeNum"
+                        label="安全数量"
+                        sortable="custom"
+                        width="100"
+                ></el-table-column>
+
+                <el-table-column
+                        prop="validDay"
+                        label="有效天数"
+                        sortable="custom"
+                        width="100"
+                >
+                    <template slot-scope="{row}">{{ row.validDay || "永久有效"}}</template>
                 </el-table-column>
 
                 <el-table-column
                         prop="remark"
                         label="备注"
-                        :show-overflow-tooltip="true"
-                        sortable="custom"
-                        width="200"
+                        width="160"
                 ></el-table-column>
 
                 <template slot="operate" slot-scope="{row}">
@@ -105,38 +125,49 @@
                 </template>
             </table-panel>
         </div>
-
-        <stock-add-dialog
-            :edit-id="editId"
-            @finish="refreshData"
-            :visible.sync="showAddDialog"
-        ></stock-add-dialog>
-
+        <material-add-dialog
+                :edit-id="editId"
+                :visible.sync="showAddDialog"
+                @finish="refreshData"
+                :category-type="categoryType"
+                :type="type"
+        ></material-add-dialog>
     </div>
 </template>
 
 <script>
-    import SearchCardLayout from "@/components/layout-component/SearchCardLayout";
     import DialogUtil from "@/util/DialogUtil";
-    import Api from "@/assets/api/Api";
     import EcUtil from "@/util/EcUtil";
+    import Api from "@/assets/api/Api";
+    import SearchCardLayout from "@/components/layout-component/SearchCardLayout";
     import ElButtonCurdGroup from "@/components/common/button/ElButtonCurdGroup";
-    import StockModel from "@/project/model/StockModel";
-    import PaginateModel from "@/project/model/PaginateModel";
-    import WarehouseSelector from "@/components/page-content/enum-selector/WarehouseSelector";
-    import ElButtonMini from "@/components/common/button/ElButtonMini";
     import TablePanel from "@/components/layout-component/TablePanel";
-    import StockAddDialog from "@/components/page-content/warehouse/dialog/StockAddDialog";
+    import ElButtonMini from "@/components/common/button/ElButtonMini";
+    import MaterialModel from "@/project/model/MaterialModel";
+    import PaginateModel from "@/project/model/PaginateModel";
+    import MaterialAddDialog from "@/components/page-content/material/dialog/MaterialAddDialog";
+    import CategorySelector from "@/components/page-content/enum-selector/CategorySelector";
 
     export default {
-        name: "StockManagerView",
-        components: {StockAddDialog, TablePanel, ElButtonMini, WarehouseSelector, ElButtonCurdGroup, SearchCardLayout},
-        props: {},
+        name: "MaterialManagerContent",
+        components: {
+            CategorySelector,
+            MaterialAddDialog,
+            ElButtonMini,
+            TablePanel,
+            ElButtonCurdGroup,
+            SearchCardLayout
+        },
+        props: {
+            type: {
+                default: 1
+            },
+        },
         data() {
             return {
                 loading: false,
                 showAddDialog: false,
-                filterForm: new StockModel(),
+                filterForm: new MaterialModel(),
                 data: [],
                 paginate: new PaginateModel(this.refreshData),
                 selectedRow: [],
@@ -153,10 +184,11 @@
             },
             refreshData() {
                 this.loading = true;
-                this.$ajax.request(Api.warehouse.stockList, {
+                this.filterForm.type = this.type ;
+                this.$ajax.request(Api.material.list, {
                     ...EcUtil.getSortField(this.sortingColumn),
                     ...this.paginate.getJSON(),
-                    ...this.filterForm
+                    ...this.filterForm,
                 }).then(resp => {
                     this.data = resp.list;
                     this.paginate.setPaginate(resp);
@@ -188,10 +220,10 @@
             },
             delete(nodes) {
                 DialogUtil.confirm(`
-                    确定删除以下货架吗？ <br>
+                    确定删除以下部门吗？ <br>
                     [ ${nodes.map(x => x.name).join(',')} ]
                 `).then(() => {
-                    return this.$ajax.request(Api.warehouse.stockDelete, {
+                    return this.$ajax.request(Api.material.delete, {
                         ids: nodes.map(x => x.id).join(',')
                     });
                 }).then(resp => {
@@ -199,29 +231,16 @@
                     this.refreshData();
                 })
             },
-            warehouseSelectorChange(routeIds) {
-                switch (routeIds.length) {
-                    case 0 :
-                        this.filterForm.warehouseId = 0;
-                        this.filterForm.reservoirId = 0;
-                        break;
-                    case 1:
-                        this.filterForm.warehouseId = routeIds[0];
-                        this.filterForm.reservoirId = 0;
-                        break;
-                    case 2:
-                        this.filterForm.warehouseId = routeIds[0];
-                        this.filterForm.reservoirId = routeIds[1];
-                        break;
-                    default:
-                        this.filterForm.warehouseId = 0;
-                        this.filterForm.reservoirId = 0;
-                        break;
-                }
-            }
         },
         watch: {},
-        computed: {},
+        computed: {
+            categoryType() {
+                return this.type === 1 ? 2 : 7;
+            },
+            nameText() {
+                return this.type === 1 ? '物料' : '产品'
+            }
+        },
 
     }
 </script>
@@ -229,6 +248,6 @@
 <style lang="less" scoped>
     @import (reference) "~style/all.less";
 
-    .StockManagerView {
+    .MaterialManagerContent {
     }
 </style>

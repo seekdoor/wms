@@ -1,28 +1,30 @@
 <template>
-    <div class="ReservoirAddDialog">
+    <div class="StockAddDialog">
         <el-dialog
                 :visible="visible"
                 @update:visible="showDialog"
                 width="300px"
-                :title="editId? `编辑 ${reservoirs.id}` : `新增`"
+                :title="editId? `编辑 ${stock.id}` : `新增`"
         >
             <el-form label-position="top">
-                <el-form-item label="库区编号">
-                    <el-input type="text" v-model="reservoirs.code"></el-input>
+                <el-form-item label="仓位编号">
+                    <el-input type="text" v-model="stock.code"></el-input>
                 </el-form-item>
-                <el-form-item label="库区名称">
-                    <el-input type="text" v-model="reservoirs.name"></el-input>
+                <el-form-item label="仓位名称">
+                    <el-input type="text" v-model="stock.name"></el-input>
                 </el-form-item>
                 <el-form-item label="所属仓库">
                     <warehouse-selector
-                            :level="1"
+                            width="100%"
+                            :level="2"
                             :is-filter="false"
                             :visible="visible"
-                            v-model="reservoirs.warehouseId"
+                            :value="stock.reservoirId"
+                            @change="warehouseSelectorChange"
                     ></warehouse-selector>
                 </el-form-item>
                 <el-form-item label="备注">
-                    <el-input type="textarea" v-model="reservoirs.remark"></el-input>
+                    <el-input type="textarea" v-model="stock.remark"></el-input>
                 </el-form-item>
             </el-form>
             <div class="mt-md">
@@ -45,9 +47,10 @@
     import DialogUtil from "@/util/DialogUtil";
     import ReservoirModel from "@/project/model/ReservoirModel";
     import WarehouseSelector from "@/components/page-content/enum-selector/WarehouseSelector";
+    import StockModel from "@/project/model/StockModel";
 
     export default {
-        name: "ReservoirAddDialog",
+        name: "StockAddDialog",
         components: {WarehouseSelector, ElButtonSubmit},
         props: {
             visible: {
@@ -59,7 +62,7 @@
         },
         data() {
             return {
-                reservoirs: new ReservoirModel(),
+                stock: new StockModel(),
                 loading: false,
             }
         },
@@ -74,25 +77,29 @@
             },
             refreshData() {
                 if (!this.editId) {
-                    return this.reservoirs = new ReservoirModel();
+                    return this.stock = new StockModel();
                 }
                 this.loading = true;
-                this.$ajax.request(Api.warehouse.resGetById, {
+                this.$ajax.request(Api.warehouse.stockGetById, {
                     id: this.editId,
                 }).then(resp => {
-                    this.reservoirs = resp;
+                    this.stock = resp;
                 }).finally(() => this.loading = false)
             },
             clickSubmit() {
-                let api = this.editId ? Api.warehouse.resUpdate : Api.warehouse.resInsert;
+                let api = this.editId ? Api.warehouse.stockUpdate : Api.warehouse.stockInsert;
                 this.loading = true;
-                this.$ajax.request(api, this.reservoirs)
+                this.$ajax.request(api, this.stock)
                     .then(resp => {
                         DialogUtil.toastSuccess(resp);
                         this.showDialog(false);
                         this.$emit("finish");
                     }).finally(() => this.loading = false)
             },
+            warehouseSelectorChange(nodesIds) {
+                this.stock.warehouseId = nodesIds[0];
+                this.stock.reservoirId = nodesIds[1];
+            }
         },
         watch: {
             visible(v) {
@@ -109,6 +116,6 @@
 <style lang="less" scoped>
     @import (reference) "~style/all.less";
 
-    .ReservoirAddDialog {
+    .StockAddDialog {
     }
 </style>

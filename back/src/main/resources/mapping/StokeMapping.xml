@@ -44,11 +44,11 @@
     <update id="update">
         update stock
         <set>
-            code = #{reservoir.code} ,
-            name = #{reservoir.name} ,
+            code = #{stock.code} ,
+            name = #{stock.name} ,
             remark = #{stock.remark} ,
-            warehous_id = #{stock.warehouseId} ,
-            revervoir_id = #{stock.reservoirId} ,
+            warehouse_id = #{stock.warehouseId} ,
+            reservoir_id = #{stock.reservoirId} ,
             update_uid = #{stock.updateUid} ,
             update_time = now() ,
         </set>
@@ -57,8 +57,8 @@
 
     <!-- 添加 -->
     <insert id="insert">
-        insert into stock (code, name, remark, warehouse_id, revervoir_id, create_uid, create_time)
-        values (#{stock.code} ,#{stock.name} , ${stock.remark} ,#{stock.warehouseId} ,#{stock.reservoirId} , now());
+        insert into stock (code, name, remark, warehouse_id, reservoir_id, create_uid, create_time)
+        values (#{stock.code} ,#{stock.name} , #{stock.remark} ,#{stock.warehouseId} ,#{stock.reservoirId} , #{stock.createUid} , now())
     </insert>
     <!-- 查询所有 -->
     <select id="selectAll" resultType="com.lansea.wms.model.Stock">
@@ -68,7 +68,9 @@
     <!-- 根据 库位id 查询 -->
     <select id="selectByReservoirId" resultType="com.lansea.wms.model.Stock">
         <include refid="selectUserBase"></include>
-        where t.reservoir_id = #{reservoirId} and t.is_del is null
+        where
+        t.reservoir_id = #{reservoirId}
+        and t.is_del is null
     </select>
 
 
