@@ -1,7 +1,6 @@
 package com.lansea.wms.model.base;
 
 
-import com.lansea.wms.model.User;
 import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -15,10 +14,10 @@ public class BaseUser {
     private Integer createUid;
     private Integer updateUid;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date createTime;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date updateTime;
 
     private String createUserName;

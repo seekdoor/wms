@@ -59,10 +59,10 @@ public class Company extends SerializeBase {
 
     private Integer updateUid;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date createTime;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date updateTime;
 
     // 扩展字段

@@ -2,7 +2,6 @@ package com.lansea.wms.model;
 
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.util.DateUtil;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,10 +25,10 @@ public class Depart {
     private Integer createUid;
     private Integer updateUid;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date createTime;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date updateTime;
 
     private String createUserName;

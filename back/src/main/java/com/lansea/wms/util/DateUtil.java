@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 
 public class DateUtil {
 
-    public static final String DATE_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final String DATE_TIME_FORMAT = "yyyy-MM-dd hh:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd";
 
     public static String getDateTimeString(Timestamp timestamp) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");

@@ -4,6 +4,7 @@
             <el-option label="全部" :value="0" v-if="isFilter"></el-option>
             <el-option :label="types[1]" :value="1"></el-option>
             <el-option :label="types[2]" :value="2"></el-option>
+            <el-option :label="types[3]" :value="3"></el-option>
         </el-select>
     </div>
 </template>

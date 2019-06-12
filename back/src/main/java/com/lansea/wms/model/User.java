@@ -66,7 +66,7 @@ public class User {
     private String token;
 
     @ApiModelProperty(value = "创建时间")
-    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date createTime;
 
 
