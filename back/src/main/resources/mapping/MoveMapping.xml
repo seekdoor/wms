@@ -4,12 +4,87 @@
 
     <sql id="selectBase">
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
+        ,
+        mtl.id material_id ,
+        mtl.code material_code,
+        mtl.name material_name,
+        ity.warehouse_id,
+        ity.reservoir_id,
+        ity.stock_id,
+        ity_c.warehouse_id warehouse_id_to,
+        ity_c.reservoir_id reservoir_id_to,
+        ity_c.stock_id stock_id_to,
+        war_t.name warehouse_name_to,
+        res_t.name reservoir_name_to,
+        stk_t.name stock_name_to ,
+        ( select name from category where id = mtl.category_id ) material_category_name ,
+        ( select name from category where id = mtl.unit_id ) material_unit_name
         from move t
-
-        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseJoin"></include>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
         left join inventory ity on ity.id = t.inventory_id
+        left join inventory ity_t on ity_t.id = t.inventory_tid
         left join material mtl on mtl.id = ity.material_id
+        left join warehouse war on ity.warehouse_id = war.id
+        left join reservoir res on ity.reservoir_id = res.id
+        left join stock stk on ity.stock_id = stk.id
+        left join warehouse war_t on ity_t.warehouse_id = war_t.id
+        left join reservoir res_t on ity_t.reservoir_id = res_t.id
+        left join stock stk_t on ity_t.stock_id = stk_t.id
     </sql>
-
-    <select id="selectWhere" resultType="com.lansea.wms.model.Move"></select>
+    <select id="selectWhere" resultType="com.lansea.wms.model.Move">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="move.type != null and move.type != 0">
+                and t.type = #{param1.type}
+            </if>
+            <if test="move.companyId != null and move.companyId != 0">
+                and t.company_id = #{param1.companyId}
+            </if>
+            <if test="move.startTime != null and move.startTime != ''">
+                and t.happen_date >= #{param1.startTime}
+            </if>
+            <if test="move.endTime != null and move.endTime != ''">
+                and t.happen_date &lt; #{param1.endTime}
+            </if>
+            <if test="move.status != null and move.status != 0">
+                and t.status &lt; #{param1.status}
+            </if>
+            <if test="param1.warehouseId != null and param1.warehouseId != 0">
+                and ity.warehouse_id = #{param1.warehouseId}
+            </if>
+            <if test="param1.reservoirId != null and param1.reservoirId != 0">
+                and ity.reservoir_id = #{param1.reservoirId}
+            </if>
+            <if test="param1.stockId != null and param1.stockId != 0">
+                and ity.stock_id = #{param1.stockId}
+            </if>
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sortNoT"></include>
+    </select>
+    <select id="findById" resultType="com.lansea.wms.model.Move">
+        <include refid="selectBase"></include>
+        where id = #{id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="move.id">
+        insert into move (
+        type, inventory_id, inventory_tid, company_id, stock_entry_id, happen_date, create_uid, create_time
+        )
+        values(
+        #{param1.type} ,#{move.inventoryId} ,#{move.inventoryTid} ,#{move.companyId} ,#{move.stockEntryId} ,
+        #{move.happenDate} ,#{move.createUid} ,#{move.createTime}
+        )
+    </insert>
+    <update id="update">
+        update move
+        set
+            type = #{param1.type} ,
+            inventory_id = #{param1.inventoryId} ,
+            inventory_tid = #{param1.inventoryTid} ,
+            company_id = #{move.companyId} ,
+            stock_entry_id = #{move.stockEntryId} ,
+            status = #{move.status} ,
+            update_uid = #{move.updateUid} ,
+            update_time = now()
+        where id = #{move.id}
+    </update>
 </mapper>
