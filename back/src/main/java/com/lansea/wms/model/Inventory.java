@@ -31,6 +31,7 @@ public class Inventory extends BaseWarehouseAndUser {
 
     @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
     private Date lastOutTime;
+
     private BigDecimal lastInQuantity;
     private BigDecimal lastOutQuantity;
 

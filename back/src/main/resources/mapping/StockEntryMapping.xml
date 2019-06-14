@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.StockEntryMapper">
+
+    <sql id="selectBase">
+        select
+        t.* ,
+        ( select count(id) num from move where move.stock_entry_id = t.id ) moveCount
+        from stock_entry t
+    </sql>
+
+
+    <!-- 新增 -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+
+        insert into stock_entry (
+            number, order_number, category_id, company_id, status, type, remark, create_uid, create_time
+        )
+        values(
+            #{form.number} ,#{form.orderNumber} ,#{form.categoryId} ,#{form.companyId} , 1, #{form.type} ,
+            #{form.remark} ,#{param1.createUid} , now()
+         )
+    </insert>
+    <!-- 修改 -->
+    <update id="update">
+        update stock_entry
+        <set>
+            order_number = #{form.orderNumber} ,
+            category_id = #{form.categoryId} ,
+            company_id = #{form.companyId} ,
+            type = #{form.type} ,
+            remark = #{form.remark} ,
+            update_uid = #{form.updateUid} ,
+            update_time = now() ,
+        </set>
+        where id = #{form.id}
+    </update>
+    <!-- 条件查询 -->
+    <select id="selectWhere" resultType="com.lansea.wms.model.StockEntry">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="form.number != null and form.number != ''">
+                and number like '%${form.number}%'
+            </if>
+            <if test="form.orderNumber != null and form.orderNumber != ''">
+                and order_number like '%${form.orderNumber}%'
+            </if>
+            <if test="form.categoryId != null and form.categoryId != 0">
+                and category_id = #{form.categoryId}
+            </if>
+            <if test="form.companyId != null and form.companyId != 0">
+                and company_id = #{form.companyId}
+            </if>
+            <if test="form.status != null and form.status != 0">
+                and status = #{form.status}
+            </if>
+            <if test="form.type != null and form.type != 0">
+                and type = #{form.type}
+            </if>
+        </where>
+    </select>
+</mapper>
