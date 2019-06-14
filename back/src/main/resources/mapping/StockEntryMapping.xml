@@ -59,4 +59,8 @@
             </if>
         </where>
     </select>
+    <select id="findById" resultType="com.lansea.wms.model.StockEntry">
+        <include refid="selectBase"></include>
+        where id = #{id}
+    </select>
 </mapper>

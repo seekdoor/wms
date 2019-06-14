@@ -20,4 +20,6 @@ public interface StockEntryMapper {
 
     List<StockEntry> selectWhere(@Param("form") StockEntry form, @Param("sort") Sort sort);
 
+    StockEntry findById(@Param("id") Integer id);
+
 }

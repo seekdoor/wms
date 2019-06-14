@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.InventoryMapper">
+
+    <sql id="selectBase">
+        select
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
+        ,
+        mtl.code material_code,
+        mtl.name material_name
+        from inventory t
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseJoin"></include>
+        left join material mtl on mtl.id = t.material_id
+    </sql>
+    <select id="selectWhere" resultType="com.lansea.wms.model.Inventory">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="form.materialCode != null and form.materialCode != ''">
+                and mtl.code like '%{$form.materialCode}%'
+            </if>
+            <if test="form.materialName != null and form.materialName != ''">
+                and mtl.name like '%{$form.materialName}%'
+            </if>
+            <include refid="com.lansea.wms.mapper.base.TempMapper.whereWarehouse"></include>
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sortNoT"></include>
+    </select>
+    <select id="findById" resultType="com.lansea.wms.model.Inventory">
+        <include refid="selectBase"></include>
+        where id = #{id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into inventory(
+        material_id,  last_in_time, last_in_quantity,  create_uid, create_time, warehouse_id, reservoir_id, stock_id
+        )
+        values(
+        #{form.materialId} ,#{form.lastInTime} ,#{form.lastInQuantity} ,#{param1.createUid} ,#{param1.createTime} ,
+        #{form.warehouseId} ,#{form.reservoirId} ,#{form.stockId}
+        )
+    </insert>
+    <update id="update">
+        update inventory
+        <set>
+            quantity = #{form.quantity} ,
+            last_in_time = #{param1.lastInTime} ,
+            last_out_time = #{form.lastOutTime} ,
+            last_in_quantity = #{param1.lastInQuantity} ,
+            last_out_quantity = #{form.lastOutQuantity}
+        </set>
+        where id = #{param1.id}
+    </update>
+
+
+</mapper>

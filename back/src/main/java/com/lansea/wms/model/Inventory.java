@@ -39,6 +39,7 @@ public class Inventory extends BaseWarehouseAndUser {
     private String materialCode;
     private String materialName;
 
+
     public Integer getId() {
         return id;
     }
