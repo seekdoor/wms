@@ -4,8 +4,11 @@ import com.lansea.wms.controller.base.BaseController;
 import com.lansea.wms.entity.Result;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.form.DeleteIdsForm;
+import com.lansea.wms.mapper.NumberCreateMapper;
 import com.lansea.wms.mapper.StockEntryMapper;
+import com.lansea.wms.model.NumberCreate;
 import com.lansea.wms.model.StockEntry;
+import com.lansea.wms.service.NumberCreateService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +41,9 @@ public class StockEntryController extends BaseController {
         return Result.success(stockEntryMapper.findById(id));
     }
 
+    @Autowired
+    NumberCreateService numberCreateService;
+
     @PostMapping(value = "/insert")
     @ApiOperation(value = "新增出库单")
     Result insert(@Validated @RequestBody StockEntry stockEntry, BindingResult result) {
@@ -45,6 +51,9 @@ public class StockEntryController extends BaseController {
             return Result.errorByBindingResult(result);
         }
         stockEntry.setCreateUidToLoginUser(userService);
+        stockEntry.setNumber(numberCreateService.create(
+                stockEntry.getType() == 1 ? "stock_in" : "stock_out"
+        ));
         stockEntryMapper.insert(stockEntry);
         return Result.success("新增成功");
     }

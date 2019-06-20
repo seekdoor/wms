@@ -72,4 +72,10 @@ public class MaterialController extends BaseController {
         return Result.successDelete(num, "物料信息");
     }
 
+    @GetMapping(value = "/select_by_types")
+    @ApiOperation(value = "根据物料类型获取列表")
+    Result selectByType(String types) {
+        return Result.success(materialMapper.selectByTypes(types));
+    }
+
 }

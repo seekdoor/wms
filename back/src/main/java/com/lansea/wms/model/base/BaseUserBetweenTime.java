@@ -1,7 +1,6 @@
 package com.lansea.wms.model.base;
 
 
-import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -11,10 +10,10 @@ import java.util.Date;
 @Component
 public class BaseUserBetweenTime extends BaseUser {
 
-    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date startTime;
 
-    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
+    @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date endTime;
 
     public Date getStartTime() {

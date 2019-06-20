@@ -86,6 +86,16 @@
         where
             id = #{company.id}
     </update>
+    <!-- 根据 category 查询所有-->
+    <select id="selectByCategory" resultType="com.lansea.wms.model.Company">
+        select * from company
+        <where>
+            <if test="category != null and category != 0">
+                and category = category
+            </if>
+            and is_del is null
+        </where>
+    </select>
 
 
 </mapper>

@@ -12,6 +12,7 @@ public class WmsApplication {
 
     public static void main(String[] args) {
         ApplicationContext app = SpringApplication.run(WmsApplication.class, args);
+        System.out.println("可访问网站地址：http://localhost:9102/");
     }
 
 }

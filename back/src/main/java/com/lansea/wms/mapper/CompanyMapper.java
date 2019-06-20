@@ -22,4 +22,6 @@ public interface CompanyMapper {
 
     List<Company> selectWhere(@Param("company") Company company, @Param("sort") Sort sort);
 
+    List<Company> selectByCategory(@Param("category") Integer category);
+
 }

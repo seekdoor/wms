@@ -1,16 +1,24 @@
 <template>
     <div class="CompanySelector">
-        <el-select :value="valueUse" @input="change" placeholder="选择分类">
-            <el-option label="全部" :value="0" v-if="isFilter"></el-option>
-            <el-option :label="category[1]" :value="1"></el-option>
-            <el-option :label="category[2]" :value="2"></el-option>
-            <el-option :label="category[3]" :value="3"></el-option>
+        <el-select
+                :value="valueUse"
+                @input="change"
+                filterable
+                :placeholder="placeholder"
+                :filter-method="filterMethod"
+        >
+            <el-option :label="filterAllText" :value="0" v-if="isFilter"></el-option>
+            <el-option v-for="item in companiesFilter"
+                       :key="item.id"
+                       :label="item.name"
+                       :value="item.id"
+            ></el-option>
         </el-select>
     </div>
 </template>
 
 <script>
-    import CompanyEnum from "@/project/enum/CompanyEnum";
+    import Api from "@/assets/api/Api";
 
     export default {
         name: "CompanySelector",
@@ -21,11 +29,22 @@
             },
             isFilter: {
                 default: false
+            },
+            category: {
+                default: 0
+            },
+            placeholder: {
+                default: '请选择'
+            },
+            filterAllText: {
+                default: '全部'
             }
         },
         data() {
             return {
-                category: CompanyEnum
+                companies: [],
+                filterString: '',
+                pinyinMatch: require('pinyin-match')
             }
         },
         mounted() {
@@ -33,19 +52,42 @@
         },
         methods: {
             reload() {
+                this.refreshList();
                 this.change(this.isFilter ? 0 : null);
             },
             change(v) {
                 this.$emit('input', v);
             },
+            refreshList() {
+                this.$ajax.request(Api.company.selectByCategory, {
+                    category: this.category
+                }).then(resp => {
+                    this.companies = resp;
+                })
+            },
+            filterMethod(a) {
+                this.filterString = a;
+            }
         },
-        watch: {},
+        watch: {
+            type() {
+                this.refreshList();
+            }
+        },
         computed: {
             valueUse() {
                 if (this.value) {
                     return this.value;
                 }
                 return this.isFilter ? 0 : null;
+            },
+            companiesFilter() {
+                if (this.filterString === '') {
+                    return this.companies;
+                }
+                return this.companies.filter(x => {
+                    return this.pinyinMatch.match(x.name, this.filterString)
+                })
             }
         },
 

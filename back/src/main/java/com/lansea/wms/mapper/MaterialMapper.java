@@ -22,4 +22,6 @@ public interface MaterialMapper {
 
     @Delete("update material set is_del = now() where id in (${ids})")
     Integer delete(@Param("ids") String ids);
+
+    List<Material> selectByTypes(@Param("types") String types);
 }

@@ -118,10 +118,10 @@ export default [
         },
         children: [
             {
-                path: '/WarehouseManager',
-                component: () => import("@/components/page-content/warehouse/WarehouseManagerView.vue"),
+                path: '/StockInManager',
+                component: () => import("@/components/page-content/stock-entry/StockEntryManagerView.vue"),
                 meta: {
-                    title: '仓库管理',
+                    title: '入库管理',
                 },
             },
         ]

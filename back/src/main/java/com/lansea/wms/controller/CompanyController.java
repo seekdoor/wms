@@ -83,4 +83,10 @@ public class CompanyController {
         return Result.success("成功删除 " + num + "条记录");
     }
 
+    @GetMapping("/select_by_category")
+    @ApiOperation(value = "根据 category 获取所有公司")
+    Result selectByCategory(Integer category) {
+        return Result.success(companyMapper.selectByCategory(category));
+    }
+
 }

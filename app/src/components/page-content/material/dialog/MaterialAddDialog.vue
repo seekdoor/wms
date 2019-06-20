@@ -17,7 +17,7 @@
 
                 <el-row :gutter="10">
                     <el-col :span="24">
-                        <el-form-item :label="`${nameText}物料名称`" :required="true">
+                        <el-form-item :label="`${nameText}名称`" :required="true">
                             <el-input type="text" v-model="material.name"></el-input>
                         </el-form-item>
                     </el-col>

@@ -36,10 +36,16 @@ export default {
      * 将 ElementUI table 组件的 column 属性
      * 转换成 排序格式字段
      * @param column
+     * @param prefix
      * @returns {{sortOrder: string, sortField: *}|{}}
      */
-    getSortField(column) {
+    getSortField(column, prefix = '') {
         if (!column) return {};
+        if (prefix !== '') {
+            if (!column.includes('.')) {
+                column = prefix + '.' + column;
+            }
+        }
         return {
             'sortField': StringUtil.toLine(column.prop),
             'sortOrder': column.order === 'ascending' ? 'asc' : 'desc'

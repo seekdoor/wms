@@ -3,6 +3,7 @@
 <mapper namespace="com.lansea.wms.mapper.MoveMapper">
 
     <sql id="selectBase">
+        select
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
         ,
         mtl.id material_id ,
@@ -11,9 +12,9 @@
         ity.warehouse_id,
         ity.reservoir_id,
         ity.stock_id,
-        ity_c.warehouse_id warehouse_id_to,
-        ity_c.reservoir_id reservoir_id_to,
-        ity_c.stock_id stock_id_to,
+        ity_t.warehouse_id warehouse_id_to,
+        ity_t.reservoir_id reservoir_id_to,
+        ity_t.stock_id stock_id_to,
         war_t.name warehouse_name_to,
         res_t.name reservoir_name_to,
         stk_t.name stock_name_to ,
@@ -23,7 +24,7 @@
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
         left join inventory ity on ity.id = t.inventory_id
         left join inventory ity_t on ity_t.id = t.inventory_tid
-        left join material mtl on mtl.id = ity.material_id
+        left join material mtl on mtl.id = t.material_id
         left join warehouse war on ity.warehouse_id = war.id
         left join reservoir res on ity.reservoir_id = res.id
         left join stock stk on ity.stock_id = stk.id
@@ -58,12 +59,13 @@
             <if test="param1.stockId != null and param1.stockId != 0">
                 and ity.stock_id = #{param1.stockId}
             </if>
+            and t.is_del is null
         </where>
         <include refid="com.lansea.wms.mapper.base.TempMapper.sortNoT"></include>
     </select>
     <select id="findById" resultType="com.lansea.wms.model.Move">
         <include refid="selectBase"></include>
-        where id = #{id}
+        where t.id = #{id} and t.is_del is null
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="move.id">
         insert into move (
@@ -76,7 +78,7 @@
     </insert>
     <update id="update">
         update move
-        set
+        <set>
             type = #{param1.type} ,
             inventory_id = #{param1.inventoryId} ,
             inventory_tid = #{param1.inventoryTid} ,
@@ -85,6 +87,11 @@
             status = #{move.status} ,
             update_uid = #{move.updateUid} ,
             update_time = now()
+        </set>
         where id = #{move.id}
     </update>
+    <select id="selectByStockEntryId" resultType="com.lansea.wms.model.Move">
+        <include refid="selectBase"></include>
+        where t.stock_entry_id = #{stockEntryId} and t.is_del is null
+    </select>
 </mapper>

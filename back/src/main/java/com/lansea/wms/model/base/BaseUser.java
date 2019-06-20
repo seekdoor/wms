@@ -1,6 +1,7 @@
 package com.lansea.wms.model.base;
 
 
+import com.lansea.wms.entity.SerializeBase;
 import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 @Component
-public class BaseUser {
+public class BaseUser extends SerializeBase {
 
     private Integer createUid;
     private Integer updateUid;

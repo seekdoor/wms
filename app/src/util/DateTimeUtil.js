@@ -6,8 +6,18 @@ export default {
      * @param format
      * @returns {string}
      */
-    tsFormat(ts, format = '%Y-%m-%d %H:%i:%s',) {
+    tsFormat(ts, format = '%Y-%m-%d %H:%i:%s') {
         let time = new Date(ts * 1000);
+        return this.dateTimeFormat(time, format);
+    },
+
+    /**
+     * 时间格式化
+     * @param time
+     * @param format
+     * @returns {string}
+     */
+    dateTimeFormat(time, format = '%Y-%m-%d %H:%i:%s') {
         format = format.replace('%Y', time.getFullYear());
         format = format.replace('%m', this.padStartZero(time.getMonth() + 1));
         format = format.replace('%d', this.padStartZero(time.getDate()));
@@ -15,6 +25,16 @@ export default {
         format = format.replace('%i', this.padStartZero(time.getMinutes()));
         format = format.replace('%s', this.padStartZero(time.getSeconds()));
         return format;
+    },
+
+    /**
+     * 时间格式化
+     * @param time
+     * @param format
+     * @returns {string}
+     */
+    dateFormat(time, format = '%Y-%m-%d') {
+        return this.dateTimeFormat(time, format);
     },
 
     /**

@@ -21,4 +21,6 @@ public interface MoveMapper {
     @Update("update move set is_del = now() where id in (${ids})")
     Integer delete(@Param("ids") String ids);
 
+    List<Move> selectByStockEntryId(@Param("stockEntryId") Integer stockEntryId);
+
 }

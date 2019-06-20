@@ -67,4 +67,9 @@
         </set>
         where id = #{material.id}
     </update>
+    <!-- 根据物料类型 获取内容 -->
+    <select id="selectByTypes" resultType="com.lansea.wms.model.Material">
+        <include refid="selectBase"></include>
+        where t.type in (${types}) and t.is_del is null
+    </select>
 </mapper>

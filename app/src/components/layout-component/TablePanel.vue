@@ -9,6 +9,7 @@
                         :max-height="height"
                         v-loading="loading"
                         border
+                        :height="fixHeight"
                         style="width: 100%;"
                         @selection-change="handleSelectionChange"
                         ref="table"
@@ -38,7 +39,7 @@
                     <el-table-column
                             prop="warehouseId"
                             label="仓库"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="140"
                             v-if="showAllWarehouse || showWarehouse"
                     >
@@ -47,7 +48,7 @@
                     <el-table-column
                             prop="reservoirId"
                             label="库区"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="140"
                             v-if="showAllWarehouse || showReservoir"
                     >
@@ -56,7 +57,7 @@
                     <el-table-column
                             prop="stockId"
                             label="货架"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="140"
                             v-if="showAllWarehouse || showStock"
                     >
@@ -65,7 +66,7 @@
                     <el-table-column
                             prop="createUid"
                             label="创建人"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="100"
                             v-if="createUserShow"
                     >
@@ -74,14 +75,14 @@
                     <el-table-column
                             prop="createTime"
                             label="创建时间"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="140"
                             v-if="createUserShow"
                     ></el-table-column>
                     <el-table-column
                             prop="updateUid"
                             label="修改人"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="100"
                             v-if="updateUserShow"
                     >
@@ -91,7 +92,7 @@
                     <el-table-column
                             prop="updateTime"
                             label="修改时间"
-                            sortable="custom"
+                            :sortable="sortable"
                             width="140"
                             v-if="updateUserShow"
                     ></el-table-column>
@@ -123,7 +124,7 @@
                         </el-popover>
                         <slot name="buttons"></slot>
                     </div>
-                    <div class="">
+                    <div class="" v-if="showPaginate">
                         <el-pagination-use
                                 :paginate="paginate"
                         ></el-pagination-use>
@@ -192,6 +193,15 @@
             },
             showStock: {
                 default: false
+            },
+            showPaginate: {
+                default: true
+            },
+            fixHeight: {
+                default: null
+            },
+            sortable:{
+                default : 'custom'
             }
         },
         data() {
@@ -217,7 +227,7 @@
                 if (ElementUtil.isHidden(this.$refs.container)) return;
                 this.height = 0;
                 this.$nextTick(() => {
-                    this.height = this.$refs.container.offsetHeight - 70;
+                    this.height = this.fixHeight ? this.fixHeight : this.$refs.container.offsetHeight - 70;
                 });
             },
             handleSelectionChange(nodes) {

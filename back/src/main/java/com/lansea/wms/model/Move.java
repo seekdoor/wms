@@ -1,12 +1,12 @@
 package com.lansea.wms.model;
 
 
-import com.lansea.wms.model.base.BaseUser;
 import com.lansea.wms.model.base.BaseUserBetweenTime;
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Repository
@@ -14,24 +14,26 @@ public class Move extends BaseUserBetweenTime {
 
     private Integer id;
     private Integer type;
+    private Integer materialId;
     private Integer inventoryId;
     private Integer inventoryTid;
     private Integer companyId;
     private Integer stockEntryId;
+    private BigDecimal planQuantity;
+    private BigDecimal quantity;
 
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
     private Date happenDate;
 
     private Integer status;
 
-    private String materialId;
     private String materialCode;
     private String materialName;
     private String materialCategoryName;
     private String materialUnitName;
 
 
-    private String warehouseId;
+    private Integer warehouseId;
     private Integer reservoirId;
     private Integer stockId;
 
@@ -40,7 +42,7 @@ public class Move extends BaseUserBetweenTime {
     private String stockName;
 
 
-    private String warehouseIdTo;
+    private Integer warehouseIdTo;
     private Integer reservoirIdTo;
     private Integer stockIdTo;
 
@@ -90,6 +92,14 @@ public class Move extends BaseUserBetweenTime {
         this.companyId = companyId;
     }
 
+    public Integer getStockEntryId() {
+        return stockEntryId;
+    }
+
+    public void setStockEntryId(Integer stockEntryId) {
+        this.stockEntryId = stockEntryId;
+    }
+
     public Date getHappenDate() {
         return happenDate;
     }
@@ -106,19 +116,11 @@ public class Move extends BaseUserBetweenTime {
         this.status = status;
     }
 
-    public Integer getStockEntryId() {
-        return stockEntryId;
-    }
-
-    public void setStockEntryId(Integer stockEntryId) {
-        this.stockEntryId = stockEntryId;
-    }
-
-    public String getMaterialId() {
+    public Integer getMaterialId() {
         return materialId;
     }
 
-    public void setMaterialId(String materialId) {
+    public void setMaterialId(Integer materialId) {
         this.materialId = materialId;
     }
 
@@ -154,6 +156,30 @@ public class Move extends BaseUserBetweenTime {
         this.materialUnitName = materialUnitName;
     }
 
+    public Integer getWarehouseId() {
+        return warehouseId;
+    }
+
+    public void setWarehouseId(Integer warehouseId) {
+        this.warehouseId = warehouseId;
+    }
+
+    public Integer getReservoirId() {
+        return reservoirId;
+    }
+
+    public void setReservoirId(Integer reservoirId) {
+        this.reservoirId = reservoirId;
+    }
+
+    public Integer getStockId() {
+        return stockId;
+    }
+
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
+    }
+
     public String getWarehouseName() {
         return warehouseName;
     }
@@ -176,6 +202,30 @@ public class Move extends BaseUserBetweenTime {
 
     public void setStockName(String stockName) {
         this.stockName = stockName;
+    }
+
+    public Integer getWarehouseIdTo() {
+        return warehouseIdTo;
+    }
+
+    public void setWarehouseIdTo(Integer warehouseIdTo) {
+        this.warehouseIdTo = warehouseIdTo;
+    }
+
+    public Integer getReservoirIdTo() {
+        return reservoirIdTo;
+    }
+
+    public void setReservoirIdTo(Integer reservoirIdTo) {
+        this.reservoirIdTo = reservoirIdTo;
+    }
+
+    public Integer getStockIdTo() {
+        return stockIdTo;
+    }
+
+    public void setStockIdTo(Integer stockIdTo) {
+        this.stockIdTo = stockIdTo;
     }
 
     public String getWarehouseNameTo() {
@@ -202,51 +252,19 @@ public class Move extends BaseUserBetweenTime {
         this.stockNameTo = stockNameTo;
     }
 
-    public String getWarehouseId() {
-        return warehouseId;
+    public BigDecimal getPlanQuantity() {
+        return planQuantity;
     }
 
-    public void setWarehouseId(String warehouseId) {
-        this.warehouseId = warehouseId;
+    public void setPlanQuantity(BigDecimal planQuantity) {
+        this.planQuantity = planQuantity;
     }
 
-    public Integer getReservoirId() {
-        return reservoirId;
+    public BigDecimal getQuantity() {
+        return quantity;
     }
 
-    public void setReservoirId(Integer reservoirId) {
-        this.reservoirId = reservoirId;
-    }
-
-    public Integer getStockId() {
-        return stockId;
-    }
-
-    public void setStockId(Integer stockId) {
-        this.stockId = stockId;
-    }
-
-    public String getWarehouseIdTo() {
-        return warehouseIdTo;
-    }
-
-    public void setWarehouseIdTo(String warehouseIdTo) {
-        this.warehouseIdTo = warehouseIdTo;
-    }
-
-    public Integer getReservoirIdTo() {
-        return reservoirIdTo;
-    }
-
-    public void setReservoirIdTo(Integer reservoirIdTo) {
-        this.reservoirIdTo = reservoirIdTo;
-    }
-
-    public Integer getStockIdTo() {
-        return stockIdTo;
-    }
-
-    public void setStockIdTo(Integer stockIdTo) {
-        this.stockIdTo = stockIdTo;
+    public void setQuantity(BigDecimal quantity) {
+        this.quantity = quantity;
     }
 }

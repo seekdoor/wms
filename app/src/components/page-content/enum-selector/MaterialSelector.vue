@@ -1,0 +1,82 @@
+<template>
+    <div class="MaterialSelector">
+        <el-cascader
+                :options="materialTree"
+                :show-all-levels="true"
+                :props="{'value': 'id', 'label' : 'name'}"
+                :value="value"
+                @input="change"
+        ></el-cascader>
+    </div>
+</template>
+
+<script>
+    import Api from "@/assets/api/Api";
+
+    export default {
+        name: "MaterialSelector",
+        components: {},
+        props: {
+            types: {
+                default: ''
+            },
+            value: {
+                default: []
+            }
+        },
+        data() {
+            return {
+                materials: []
+            }
+        },
+        mounted() {
+            this.reload();
+        },
+        methods: {
+            reload() {
+                this.refreshList();
+            },
+            refreshList() {
+                this.$ajax.request(Api.material.selectByType, {
+                    types: this.types
+                }).then(resp => {
+                    this.materials = resp;
+                });
+            },
+            change(a) {
+                if (!a) return;
+                this.$emit('input', a[a.length - 1]);
+            }
+        },
+        watch: {},
+        computed: {
+            materialTree() {
+                let tree = [];
+                this.materials.forEach(m => {
+                    let fn = tree.find(f => {
+                        return m.categoryId === f.id
+                    });
+                    if (fn) {
+                        fn.children.push(m);
+                    } else {
+                        let f = {
+                            id: m.categoryId,
+                            name: m.categoryName,
+                            children: [m]
+                        };
+                        tree.push(f);
+                    }
+                });
+                return tree;
+            }
+        },
+
+    }
+</script>
+
+<style lang="less" scoped>
+    @import (reference) "~style/all.less";
+
+    .MaterialSelector {
+    }
+</style>

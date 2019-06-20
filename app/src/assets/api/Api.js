@@ -37,6 +37,7 @@ export default {
         edit: ['/company/edit', 'post'],
         delete: ['/company/delete', 'post'],
         getById: ['/company/get_by_id', 'get'],
+        selectByCategory: ['/company/select_by_category', 'get']
     },
 
     role_auth: {
@@ -101,6 +102,17 @@ export default {
         getById: ['/material/get_by_id', 'get'],
         insert: ['/material/insert', 'post'],
         update: ['/material/update', 'post'],
+        selectByType: ['/material/select_by_types', 'get']
+    },
+    stockEntry: {
+        delete: ['/stock_entry/delete', 'post'],
+        getById: ['/stock_entry/get_by_id', 'get'],
+        insert: ['/stock_entry/insert', 'post'],
+        list: ['/stock_entry/list', 'get'],
+        update: ['/stock_entry/update', 'post']
+    },
+    move: {
+        selectByStockEntryId: ['/move/select_by_stock_entry_id', 'get']
     }
 
 }
