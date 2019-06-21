@@ -69,11 +69,13 @@
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="move.id">
         insert into move (
-        type, inventory_id, inventory_tid, company_id, stock_entry_id, happen_date, create_uid, create_time
+        type, inventory_id, inventory_tid, company_id, stock_entry_id, happen_date, create_uid, create_time,
+        material_id, `number` , plan_quantity, quantity
         )
         values(
         #{param1.type} ,#{move.inventoryId} ,#{move.inventoryTid} ,#{move.companyId} ,#{move.stockEntryId} ,
-        #{move.happenDate} ,#{move.createUid} ,#{move.createTime}
+        #{move.happenDate} ,#{move.createUid} , now() , #{move.materialId},#{move.number},
+        #{move.planQuantity} ,#{move.quantity}
         )
     </insert>
     <update id="update">
@@ -85,8 +87,11 @@
             company_id = #{move.companyId} ,
             stock_entry_id = #{move.stockEntryId} ,
             status = #{move.status} ,
+            material_id = #{move.materialId} ,
             update_uid = #{move.updateUid} ,
-            update_time = now()
+            update_time = now(),
+            plan_quantity = #{move.planQuantity} ,
+            quantity = #{move.quantity} ,
         </set>
         where id = #{move.id}
     </update>
@@ -94,4 +99,9 @@
         <include refid="selectBase"></include>
         where t.stock_entry_id = #{stockEntryId} and t.is_del is null
     </select>
+    <update id="updateStatusByStockEntry">
+        update move
+        set status = #{param1.status}
+        where stock_entry_id = #{param1.id}
+    </update>
 </mapper>

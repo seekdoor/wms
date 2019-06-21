@@ -35,6 +35,9 @@
             },
             loading: {
                 default: false
+            },
+            iconColorClass:{
+                default : ''
             }
         },
         data() {
@@ -62,7 +65,7 @@
                 if (colors[this.icon]) {
                     ret = colors[this.icon].concat([]);
                 }
-                ret[1] = this.disabled ? 'color-gray' : 'color-black';
+                ret[1] = this.disabled ? 'color-gray' : ( this.iconColorClass || 'color-black');
                 return ret.join(' ');
             },
             buttonStyle() {

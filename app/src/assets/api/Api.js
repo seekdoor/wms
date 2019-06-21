@@ -109,10 +109,15 @@ export default {
         getById: ['/stock_entry/get_by_id', 'get'],
         insert: ['/stock_entry/insert', 'post'],
         list: ['/stock_entry/list', 'get'],
-        update: ['/stock_entry/update', 'post']
+        update: ['/stock_entry/update', 'post'],
+        update_status: ['/stock_entry/update_status', 'post'],
     },
     move: {
-        selectByStockEntryId: ['/move/select_by_stock_entry_id', 'get']
+        selectByStockEntryId: ['/move/select_by_stock_entry_id', 'get'],
+        insert: ['/move/insert', 'post'],
+        delete: ['/move/delete', 'post'],
+        getById: ['/move/get_by_id', 'get'],
+        update: ['/move/update', 'post'],
     }
 
 }

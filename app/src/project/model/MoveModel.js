@@ -33,4 +33,7 @@ export default class MoveModel extends BaseUser {
     reservoirNameTo = '';
     stockNameTo = '';
 
+    planQuantity = 0;
+    quantity = 0;
+
 }

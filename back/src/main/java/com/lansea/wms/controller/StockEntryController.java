@@ -9,6 +9,7 @@ import com.lansea.wms.mapper.StockEntryMapper;
 import com.lansea.wms.model.NumberCreate;
 import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.NumberCreateService;
+import com.lansea.wms.service.StockEntryService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,6 +78,18 @@ public class StockEntryController extends BaseController {
         }
         Integer num = stockEntryMapper.delete(form.getIds());
         return Result.successDelete(num);
+    }
+
+    @Autowired
+    StockEntryService stockEntryService;
+
+    @PostMapping(value = "/update_status")
+    @ApiOperation(value = "审批")
+    Result updateStatus(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockEntry stockEntry, BindingResult result) {
+        if (result.hasErrors()) {
+            return Result.errorByBindingResult(result);
+        }
+        stockEntryService.approve(stockEntry);
     }
 
 }

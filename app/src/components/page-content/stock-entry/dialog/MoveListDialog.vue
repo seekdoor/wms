@@ -1,11 +1,17 @@
 <template>
     <div class="MoveListDialog">
         <el-dialog
-                width="600px"
+                width="1000px"
                 :visible="visible"
                 @update:visible="showDialog"
                 :title="title"
         >
+            <div class="mb-xs fz-xs title-text-block">
+                <span>{{ typeText }}单号：{{ stockEntry.number }}</span>
+                <span>订单号：{{ stockEntry.number }}</span>
+                <span>{{ typeText }}类型：{{ stockEntry.categoryName }}</span>
+                <span>公司名称：{{ stockEntry.companyName }}</span>
+            </div>
             <div class="mb-xs">
                 <el-button-curd-group
                         slot="buttons"
@@ -24,14 +30,35 @@
                         :selectedRow.sync="selectedRow"
                         :create-user-show="true"
                         :update-user-show="true"
+                        :show-all-warehouse="true"
                         :show-paginate="false"
-                        :fix-height="400"
+                        :fix-height="360"
                         :sortable="null"
+                        :show-index="false"
+                        ref="table"
                 >
                     <el-table-column
-                            prop="id"
-                            label="ID"
-                            width="80"
+                            prop="materialName"
+                            label="物品名称"
+                            width="160"
+                    ></el-table-column>
+
+                    <el-table-column
+                            prop="planQuantity"
+                            label="计划数量"
+                            width="100"
+                    ></el-table-column>
+
+                    <el-table-column
+                            prop="quantity"
+                            label="实际数量"
+                            width="100"
+                    ></el-table-column>
+
+                    <el-table-column
+                            prop="materialUnitName"
+                            label="单位"
+                            width="70"
                     ></el-table-column>
 
                     <template slot="operate" slot-scope="{row}">
@@ -40,11 +67,22 @@
                                 icon="delete"
                                 @click.native="clickRowDeleteButton(row)"
                         ></el-button-mini>
+                        <el-button-mini
+                                type="text"
+                                icon="edit"
+                                @click.native="clickRowEditButton(row)"
+                        ></el-button-mini>
                     </template>
                 </table-panel>
             </div>
 
         </el-dialog>
+        <move-add-dialog
+                :visible.sync="showAddDialog"
+                :edit-id="editId"
+                :stock-entry="stockEntry"
+                @finish="refreshData"
+        ></move-add-dialog>
     </div>
 </template>
 
@@ -55,16 +93,22 @@
     import Api from "@/assets/api/Api";
     import ElButtonCurdGroup from "@/components/common/button/ElButtonCurdGroup";
     import DialogUtil from "@/util/DialogUtil";
+    import MoveAddDialog from "@/components/page-content/stock-entry/dialog/MoveAddDialog";
 
     export default {
         name: "MoveListDialog",
-        components: {ElButtonCurdGroup, ElButtonMini, TablePanel},
+        components: {MoveAddDialog, ElButtonCurdGroup, ElButtonMini, TablePanel},
         props: {
             visible: {
                 default: false
             },
             stockEntry: {
-                default: new StockEntryModel()
+                default() {
+                    return new StockEntryModel();
+                }
+            },
+            type: {
+                default: 1
             }
         },
         data() {
@@ -114,10 +158,10 @@
             },
             delete(nodes) {
                 DialogUtil.confirm(`
-                    确定删除以下出库信息吗？ <br>
-                    [ ${nodes.map(x => x.id).join(',')} ]
+                    确定删除以下${this.typeText}信息吗？ <br>
+                    [ ${nodes.map(x => x.materialName).join(',')} ]
                 `).then(() => {
-                    return this.$ajax.request(Api.depart.delete, {
+                    return this.$ajax.request(Api.move.delete, {
                         ids: nodes.map(x => x.id).join(',')
                     });
                 }).then(resp => {
@@ -135,7 +179,10 @@
         },
         computed: {
             title() {
-                return `单号 ${this.stockEntry.number}`
+                return `${this.typeText}单明细 ${this.stockEntry.number}`
+            },
+            typeText() {
+                return this.type === 1 ? '入库' : '出库';
             }
         },
 

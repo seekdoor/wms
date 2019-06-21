@@ -8,6 +8,25 @@ export default {
      */
     deepClone(obj) {
         return JSON.parse(JSON.stringify(obj))
+    },
+
+    /**
+     * 将字典转换成 list
+     * @param dict
+     * @param idKey
+     * @param labelKey
+     * @returns {Array}
+     */
+    dict2List(dict = {}, idKey = 'id', labelKey = 'label') {
+        let ret = [];
+        for (let i in dict) {
+            let D = dict[i];
+            let c = {};
+            c[idKey] = i;
+            c[labelKey] = D;
+            ret.push(c);
+        }
+        return ret;
     }
 
 }

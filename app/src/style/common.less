@@ -25,7 +25,7 @@ display 快捷属性
   display: inline !important;
 }
 
-.disp-n{
+.disp-n {
   display: none !important;
 }
 
@@ -255,3 +255,13 @@ flex 布局
 .multi-line-ellipsis-fun(4);
 .multi-line-ellipsis-fun(5);
 
+.title-text-block {
+  > span {
+    display: inline-block;
+    .fz-xs;
+
+    &:not(:first-of-type) {
+      .ml-md;
+    }
+  }
+}

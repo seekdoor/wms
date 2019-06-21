@@ -22,4 +22,6 @@ public interface StockEntryMapper {
 
     StockEntry findById(@Param("id") Integer id);
 
+    Integer updateStatus(@Param("form") StockEntry form);
+
 }

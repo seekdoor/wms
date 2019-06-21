@@ -6,7 +6,7 @@
         select
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserFields"></include>
         ,
-        ( select count(id) num from move where move.stock_entry_id = t.id ) moveCount,
+        ( select count(id) num from move where move.stock_entry_id = t.id and move.is_del is null ) moveCount,
         cpy.name companyName ,
         cty.name categoryName
         from stock_entry t
@@ -77,4 +77,9 @@
         <include refid="selectBase"></include>
         where t.id = #{id} and t.is_del is null
     </select>
+    <update id="updateStatus">
+        update stock_entry
+        set status = #{form.status}
+        where id = #{form.id}
+    </update>
 </mapper>

@@ -27,14 +27,14 @@
     </select>
     <select id="findById" resultType="com.lansea.wms.model.Inventory">
         <include refid="selectBase"></include>
-        where id = #{id}
+        where t.id = #{id} and t.is_del is null
     </select>
-    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    <insert id="insert" useGeneratedKeys="true" keyProperty="form.id">
         insert into inventory(
         material_id,  last_in_time, last_in_quantity,  create_uid, create_time, warehouse_id, reservoir_id, stock_id
         )
         values(
-        #{form.materialId} ,#{form.lastInTime} ,#{form.lastInQuantity} ,#{param1.createUid} ,#{param1.createTime} ,
+        #{form.materialId} ,#{form.lastInTime} ,#{form.lastInQuantity} ,#{param1.createUid} ,now() ,
         #{form.warehouseId} ,#{form.reservoirId} ,#{form.stockId}
         )
     </insert>
@@ -45,10 +45,25 @@
             last_in_time = #{param1.lastInTime} ,
             last_out_time = #{form.lastOutTime} ,
             last_in_quantity = #{param1.lastInQuantity} ,
-            last_out_quantity = #{form.lastOutQuantity}
+            last_out_quantity = #{form.lastOutQuantity},
+            update_uid = #{form.updateUid} ,
+            update_time = now(),
+            material_id = #{form.materialId} ,
         </set>
         where id = #{param1.id}
     </update>
+    <select id="findByMove" resultType="com.lansea.wms.model.Inventory">
+        select * from inventory
+        where
+        warehouse_id = #{move.warehouseId}
+        and reservoir_id = #{move.reservoirId}
+        and stock_id = #{move.stockId}
+        and material_id = #{move.materialId}
+        and is_del is null
+    </select>
+    <delete id="selectMoveCountByInventory">
+        select count(*) from move where inventory_id = #{inventory.id} and is_del is null
+    </delete>
 
 
 </mapper>

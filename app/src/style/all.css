@@ -654,6 +654,13 @@ flex 布局
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+.title-text-block > span {
+  display: inline-block;
+  font-size: 12px;
+}
+.title-text-block > span:not(:first-of-type) {
+  margin-left: 20px;
+}
 html,
 body {
   margin: 0 !important;

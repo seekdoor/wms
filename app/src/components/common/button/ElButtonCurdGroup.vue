@@ -5,6 +5,7 @@
             <el-button-mini icon="edit" @click.native="$emit('click-edit')" :disabled="editDisabled">编辑</el-button-mini>
             <el-button-mini icon="delete" @click.native="$emit('click-delete')" :disabled="deleteDisabled">删除</el-button-mini>
         </el-button-group>
+        <slot></slot>
     </div>
 </template>
 

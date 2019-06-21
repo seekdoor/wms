@@ -20,11 +20,13 @@
                             type="index"
                             fixed="left"
                             :index="rowIndex"
+                            v-if="showIndex"
                     ></el-table-column>
                     <el-table-column
                             type="selection"
                             width="43"
                             fixed="left"
+                            v-if="showSelection"
                     ></el-table-column>
                     <el-table-column
                             label="操作"
@@ -200,8 +202,14 @@
             fixHeight: {
                 default: null
             },
-            sortable:{
-                default : 'custom'
+            sortable: {
+                default: 'custom'
+            },
+            showIndex: {
+                default: true,
+            },
+            showSelection: {
+                default: true
             }
         },
         data() {
@@ -235,6 +243,9 @@
                 this.$emit('selection-change', nodes)
             },
             rowIndex(index) {
+                if (!this.showPaginate) {
+                    return index + 1;
+                }
                 return this.paginate.startRow + index;
             },
             selectRows() {
@@ -257,6 +268,9 @@
                 document.querySelectorAll("." + this.columns[0].id).forEach(t => {
                     t.style.visiblity = 'hidden';
                 });
+            },
+            doLayOut(){
+                this.$refs.table.doLayout();
             }
         },
 

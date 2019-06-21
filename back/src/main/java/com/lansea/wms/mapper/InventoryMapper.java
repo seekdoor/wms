@@ -1,6 +1,7 @@
 package com.lansea.wms.mapper;
 
 import com.lansea.wms.model.Inventory;
+import com.lansea.wms.model.Move;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -20,5 +21,9 @@ public interface InventoryMapper {
 
     @Update("update inventory set is_del = now() where id in (${ids})")
     Integer delete(@Param("ids") String ids);
+
+    Inventory findByMove(@Param("move") Move move);
+
+    Integer selectMoveCountByInventory(@Param("inventory") Inventory inventory);
 
 }

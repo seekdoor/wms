@@ -17,13 +17,20 @@
                     <span>公司名称</span>
                     <el-input v-model="filterForm.companyName"></el-input>
                 </div>
-                <div class="">
+                <div class="" style="width: 200px;">
                     <span>{{ titleText }}单分类</span>
                     <category-selector
                             v-model="filterForm.categoryId"
                             :type="categoryType"
                             :is-filter="true"
                     ></category-selector>
+                </div>
+                <div class="" style="width: 200px;">
+                    <span>审批状态</span>
+                    <approve-selector
+                            v-model="filterForm.status"
+                            :is-filter="true"
+                    ></approve-selector>
                 </div>
                 <div class="">
                     <span>创建时间</span>
@@ -41,7 +48,23 @@
                     @click-add="clickAddButton"
                     @click-edit="clickEditButton"
                     @click-delete="clickDeleteButton"
-            ></el-button-curd-group>
+            >
+                <el-button-group class="ml-xs">
+                    <el-button-mini
+                            icon="iconfont icon-check-circle"
+                            :disabled="approveEnable"
+                    >审批通过
+                    </el-button-mini>
+                    <el-button-mini
+                            icon="iconfont icon-times-circle"
+                            icon-color-class="color-red"
+                            :disabled="approveEnable"
+                    >驳回
+                    </el-button-mini>
+                </el-button-group>
+            </el-button-curd-group>
+
+
         </search-card-layout>
 
         <div class="flex-grow">
@@ -103,7 +126,13 @@
                                 icon="iconfont icon-plus-circle"
                                 @click.native="clickRowAddMoveButton(row)"
                         ></el-button-mini>
-                        {{row.moveCount}}
+                        <el-button-mini
+                                type="text"
+                                title="预览查看"
+                                icon="iconfont icon-th-list"
+                                @click.native="clickRowPreviewButton(row)"
+                        ></el-button-mini>
+                        <span class="ml-xs">{{row.moveCount}}</span>
                     </template>
                 </el-table-column>
 
@@ -146,12 +175,14 @@
         <move-list-dialog
                 :visible.sync="showMoveListDialog"
                 :stock-entry="selectStockEntry"
+                :type="type"
         ></move-list-dialog>
 
         <move-add-dialog
                 :visible.sync="showMoveAddDialog"
                 :edit-id="0"
                 :stock-entry="selectStockEntry"
+                @finish="refreshData"
         ></move-add-dialog>
     </div>
 </template>
@@ -171,10 +202,12 @@
     import StockEntryAddDialog from "@/components/page-content/stock-entry/dialog/StockEntryAddDialog";
     import MoveListDialog from "@/components/page-content/stock-entry/dialog/MoveListDialog";
     import MoveAddDialog from "@/components/page-content/stock-entry/dialog/MoveAddDialog";
+    import ApproveSelector from "@/components/page-content/enum-selector/ApproveSelector";
 
     export default {
         name: "StockEntryManagerView",
         components: {
+            ApproveSelector,
             MoveAddDialog,
             MoveListDialog,
             StockEntryAddDialog,
@@ -252,7 +285,7 @@
                 this.selectStockEntry = row;
                 this.showMoveListDialog = true;
             },
-            clickRowAddMoveButton(row){
+            clickRowAddMoveButton(row) {
                 this.selectStockEntry = row;
                 this.showMoveAddDialog = true;
             },
@@ -277,6 +310,10 @@
             },
             categoryType() {
                 return this.type === 1 ? 3 : 4;
+            },
+            approveEnable() {
+                if (this.selectedRow.length !== 1) return true;
+                return this.selectedRow[0].status !== 1;
             }
         },
 

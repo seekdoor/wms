@@ -1,25 +1,38 @@
 package com.lansea.wms.model;
 
 
+import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.model.base.BaseUserBetweenTime;
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Repository
 public class Move extends BaseUserBetweenTime {
 
+    @Min(value = 1, message = "id 非法", groups = {ValidClass.EditForm.class})
     private Integer id;
+
+    private String number;
     private Integer type;
+
+    @Min(value = 1,message = "请选择物料")
     private Integer materialId;
     private Integer inventoryId;
     private Integer inventoryTid;
     private Integer companyId;
     private Integer stockEntryId;
+
+    @DecimalMin(value = "0.01", message = "请填写计划数量")
     private BigDecimal planQuantity;
+
+    @DecimalMin(value = "0.01", message = "请填写实际数量")
     private BigDecimal quantity;
 
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)
@@ -266,5 +279,13 @@ public class Move extends BaseUserBetweenTime {
 
     public void setQuantity(BigDecimal quantity) {
         this.quantity = quantity;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 }

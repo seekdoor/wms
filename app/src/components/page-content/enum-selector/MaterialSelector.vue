@@ -1,10 +1,11 @@
 <template>
     <div class="MaterialSelector">
         <el-cascader
+                :style="{'width' : width}"
                 :options="materialTree"
                 :show-all-levels="true"
                 :props="{'value': 'id', 'label' : 'name'}"
-                :value="value"
+                :value="valueUse"
                 @input="change"
         ></el-cascader>
     </div>
@@ -21,7 +22,10 @@
                 default: ''
             },
             value: {
-                default: []
+                default: 0
+            },
+            width: {
+                default: '200px'
             }
         },
         data() {
@@ -68,6 +72,11 @@
                     }
                 });
                 return tree;
+            },
+            valueUse() {
+                let c = this.materials.find(x => x.id === this.value);
+                if (!c) return [];
+                return [c.categoryId, c.id];
             }
         },
 

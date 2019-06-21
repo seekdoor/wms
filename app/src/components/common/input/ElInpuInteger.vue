@@ -13,6 +13,9 @@
         props: {
             value: {
                 default: 0
+            },
+            isFloat: {
+                default: false
             }
         },
         data() {
@@ -29,9 +32,19 @@
         },
         watch: {
             valueUse(v) {
-                let c = (v + '').match(/[1-9]\d{0,8}/);
+                let regex = new RegExp('[1-9]\\d{0,8}');
+                if (this.isFloat) {
+                    regex = new RegExp('^\\d{1,8}\\.{0,1}\\d{0,2}');
+                }
+                let c = (v + '').match(regex);
                 this.valueUse = c ? c[0] : 0;
+                if (this.valueUse.length > 1 && [...this.valueUse][1] !== '.' && [...this.valueUse][0] === '0') {
+                    this.valueUse = this.valueUse.slice(1);
+                }
                 this.$emit('input', this.valueUse);
+            },
+            value(v) {
+                this.valueUse = v;
             }
         },
         computed: {},

@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 public class BaseService {
 
     @Autowired
-    PageService pageService;
+    protected PageService pageService;
 
     @Autowired
-    UserService userService;
+    protected UserService userService;
 }
