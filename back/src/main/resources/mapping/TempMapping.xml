@@ -25,7 +25,10 @@
     <sql id="selectWareFields">
         war.name warehouse_name ,
         res.name reservoir_name,
-        stk.name stock_name
+        stk.name stock_name,
+        war.code warehouse_code,
+        res.code reservoir_code,
+        stk.code stock_code
     </sql>
     <sql id="selectWareJoin">
         left join warehouse war on t.warehouse_id = war.id

@@ -8,11 +8,14 @@
         ,
         ( select count(id) num from move where move.stock_entry_id = t.id and move.is_del is null ) moveCount,
         cpy.name companyName ,
-        cty.name categoryName
+        cpy.code companyCode,
+        cty.name categoryName,
+        appr_u.real_name approve_user_name
         from stock_entry t
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
         left join company cpy on cpy.id = t.company_id
         left join category cty on cty.id = t.category_id
+        left join `user` appr_u on appr_u.id = t.approve_uid
     </sql>
 
 
@@ -79,7 +82,19 @@
     </select>
     <update id="updateStatus">
         update stock_entry
-        set status = #{form.status}
+        <set>
+            status = #{form.status},
+            <if test="param1.status == 3 or param1.status == 4">
+                approve_uid = #{param1.approveUid} ,
+                approve_time = now(),
+            </if>
+            <if test="param1.status == 3">
+                reject_remark = '',
+            </if>
+            <if test="param1.status == 4">
+                reject_remark = #{param1.rejectRemark} ,
+            </if>
+        </set>
         where id = #{form.id}
     </update>
 </mapper>

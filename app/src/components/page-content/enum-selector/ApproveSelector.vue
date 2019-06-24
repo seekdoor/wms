@@ -23,11 +23,14 @@
             },
             isFilter: {
                 default: false
+            },
+            isStockIn: {
+                default: true,
             }
         },
         data() {
             return {
-                status: ApproveEnum.list()
+                status: ApproveEnum.list(this.isStockIn)
             }
         },
         mounted() {

@@ -10,4 +10,8 @@ export default class BaseWarehouseAndUser extends BaseUser {
     reservoirName = '';
     stockName = '';
 
+    warehouseCode = '';
+    reservoirCode = '';
+    stockCode = '';
+
 }

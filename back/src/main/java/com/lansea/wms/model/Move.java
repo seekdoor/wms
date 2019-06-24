@@ -22,7 +22,7 @@ public class Move extends BaseUserBetweenTime {
     private String number;
     private Integer type;
 
-    @Min(value = 1,message = "请选择物料")
+    @Min(value = 1, message = "请选择物料")
     private Integer materialId;
     private Integer inventoryId;
     private Integer inventoryTid;
@@ -40,11 +40,19 @@ public class Move extends BaseUserBetweenTime {
 
     private Integer status;
 
+    private Integer approveUid;
+
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
+    private Date approveTime;
+
+    private String approveUserName;
+
+    private String rejectRemark;
+
     private String materialCode;
     private String materialName;
     private String materialCategoryName;
     private String materialUnitName;
-
 
     private Integer warehouseId;
     private Integer reservoirId;
@@ -54,6 +62,9 @@ public class Move extends BaseUserBetweenTime {
     private String reservoirName;
     private String stockName;
 
+    private String warehouseCode;
+    private String reservoirCode;
+    private String stockCode;
 
     private Integer warehouseIdTo;
     private Integer reservoirIdTo;
@@ -287,5 +298,61 @@ public class Move extends BaseUserBetweenTime {
 
     public void setNumber(String number) {
         this.number = number;
+    }
+
+    public Integer getApproveUid() {
+        return approveUid;
+    }
+
+    public void setApproveUid(Integer approveUid) {
+        this.approveUid = approveUid;
+    }
+
+    public Date getApproveTime() {
+        return approveTime;
+    }
+
+    public void setApproveTime(Date approveTime) {
+        this.approveTime = approveTime;
+    }
+
+    public String getApproveUserName() {
+        return approveUserName;
+    }
+
+    public void setApproveUserName(String approveUserName) {
+        this.approveUserName = approveUserName;
+    }
+
+    public String getRejectRemark() {
+        return rejectRemark;
+    }
+
+    public void setRejectRemark(String rejectRemark) {
+        this.rejectRemark = rejectRemark;
+    }
+
+    public String getWarehouseCode() {
+        return warehouseCode;
+    }
+
+    public void setWarehouseCode(String warehouseCode) {
+        this.warehouseCode = warehouseCode;
+    }
+
+    public String getReservoirCode() {
+        return reservoirCode;
+    }
+
+    public void setReservoirCode(String reservoirCode) {
+        this.reservoirCode = reservoirCode;
+    }
+
+    public String getStockCode() {
+        return stockCode;
+    }
+
+    public void setStockCode(String stockCode) {
+        this.stockCode = stockCode;
     }
 }

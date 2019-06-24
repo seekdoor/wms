@@ -18,6 +18,7 @@
         war_t.name warehouse_name_to,
         res_t.name reservoir_name_to,
         stk_t.name stock_name_to ,
+        appr_u.real_name approve_user_name,
         ( select name from category where id = mtl.category_id ) material_category_name ,
         ( select name from category where id = mtl.unit_id ) material_unit_name
         from move t
@@ -31,6 +32,7 @@
         left join warehouse war_t on ity_t.warehouse_id = war_t.id
         left join reservoir res_t on ity_t.reservoir_id = res_t.id
         left join stock stk_t on ity_t.stock_id = stk_t.id
+        left join `user` appr_u on appr_u.id = t.approve_uid
     </sql>
     <select id="selectWhere" resultType="com.lansea.wms.model.Move">
         <include refid="selectBase"></include>
@@ -86,7 +88,6 @@
             inventory_tid = #{param1.inventoryTid} ,
             company_id = #{move.companyId} ,
             stock_entry_id = #{move.stockEntryId} ,
-            status = #{move.status} ,
             material_id = #{move.materialId} ,
             update_uid = #{move.updateUid} ,
             update_time = now(),
@@ -101,7 +102,36 @@
     </select>
     <update id="updateStatusByStockEntry">
         update move
-        set status = #{param1.status}
+        <set>
+            status = #{param1.status},
+            <if test="param1.status == 3 or param1.status == 4">
+                approve_uid = #{param1.approveUid} ,
+                approve_time = now(),
+            </if>
+            <if test="param1.status == 3">
+                reject_remark = '',
+            </if>
+            <if test="param1.status == 4">
+                reject_remark = #{param1.rejectRemark} ,
+            </if>
+        </set>
         where stock_entry_id = #{param1.id}
+    </update>
+    <update id="updateStatusByMove">
+        update move
+        <set>
+            status = #{param1.status}
+            <if test="param1.status == 3 or param1.status == 4">
+                approve_uid = #{param1.approveUid} ,
+                approve_time = now()
+            </if>
+            <if test="param1.status == 3">
+                reject_remark = '',
+            </if>
+            <if test="param1.status == 4">
+                reject_remark = #{param1.rejectRemark} ,
+            </if>
+        </set>
+        where id = #{param1.id}
     </update>
 </mapper>

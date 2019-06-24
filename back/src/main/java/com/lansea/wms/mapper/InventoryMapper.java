@@ -2,6 +2,7 @@ package com.lansea.wms.mapper;
 
 import com.lansea.wms.model.Inventory;
 import com.lansea.wms.model.Move;
+import com.lansea.wms.model.StockEntry;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
@@ -25,5 +26,7 @@ public interface InventoryMapper {
     Inventory findByMove(@Param("move") Move move);
 
     Integer selectMoveCountByInventory(@Param("inventory") Inventory inventory);
+
+    Integer finishByMove(@Param("move") Move move, @Param("isTid") Boolean isTid);
 
 }

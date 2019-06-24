@@ -19,11 +19,13 @@ public interface MoveMapper {
 
     Integer update(@Param("move") Move move);
 
-    @Update("update move set is_del = now() where id in (${ids})")
+    @Update("update move set is_del = now() where id in (${ids}) and status in (1,4)")
     Integer delete(@Param("ids") String ids);
 
     List<Move> selectByStockEntryId(@Param("stockEntryId") Integer stockEntryId);
 
     Integer updateStatusByStockEntry(@Param("stockEntry") StockEntry stockEntry);
+
+    Integer updateStatusByMove(@Param("move") Move move);
 
 }

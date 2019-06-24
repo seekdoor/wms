@@ -15,7 +15,7 @@ public interface StockEntryMapper {
 
     Integer update(@Param("form") StockEntry form);
 
-    @Update("update stock_entry set is_del = now() where id in (${ids}) ")
+    @Update("update stock_entry set is_del = now() where id in (${ids}) and status in (1,4) ")
     Integer delete(@Param("ids") String ids);
 
     List<StockEntry> selectWhere(@Param("form") StockEntry form, @Param("sort") Sort sort);

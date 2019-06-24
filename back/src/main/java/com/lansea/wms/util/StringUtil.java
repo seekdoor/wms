@@ -52,4 +52,13 @@ public class StringUtil {
         return pad(str, pad, len, false);
     }
 
+    /**
+     * 检查字符串是否为空
+     * @param str
+     * @return
+     */
+    public static boolean isBlank(String str) {
+        return str == null || str.equals("");
+    }
+
 }

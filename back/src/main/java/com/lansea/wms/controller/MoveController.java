@@ -5,7 +5,9 @@ import com.lansea.wms.entity.Result;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.form.DeleteIdsForm;
 import com.lansea.wms.mapper.MoveMapper;
+import com.lansea.wms.mapper.StockEntryMapper;
 import com.lansea.wms.model.Move;
+import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.MoveService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,11 +38,17 @@ public class MoveController extends BaseController {
         );
     }
 
+    @Autowired
+    StockEntryMapper stockEntryMapper;
+
     @PostMapping(value = "/insert")
     @ApiOperation(value = "新增出入库信息")
     Result insert(@Validated @RequestBody Move move, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
+        }
+        if (moveService.checkApproved(move)) {
+            return Result.error("订单已被审批!");
         }
         moveService.insertMove(move);
         return Result.success("添加成功");
@@ -67,6 +75,9 @@ public class MoveController extends BaseController {
     Result update(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody Move move, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
+        }
+        if (moveService.checkApproved(move)) {
+            return Result.error("订单已被审批!");
         }
         moveService.updateMove(move);
         return Result.success("修改成功");

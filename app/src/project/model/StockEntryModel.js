@@ -16,6 +16,13 @@ export default class StockEntryModel extends BaseUserBetweenTime {
 
     cateogryName = '';
     companyName = '';
+    companyCode = '';
+
+    approveUid = 0;
+    approveTime = '';
+    approveUserName = '';
+
+    rejectRemark = '';
 
     constructor(type = 0) {
         super();

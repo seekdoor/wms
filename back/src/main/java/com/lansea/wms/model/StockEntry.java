@@ -2,13 +2,20 @@ package com.lansea.wms.model;
 
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.model.base.BaseUserBetweenTime;
+import com.lansea.wms.util.DateUtil;
 import org.hibernate.validator.constraints.Length;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import java.util.Date;
 
 @Repository
 public class StockEntry extends BaseUserBetweenTime {
+
+    public interface RejectRemarkForm {
+    }
 
     @Min(value = 1, message = "id 非法", groups = {ValidClass.EditForm.class})
     private Integer id;
@@ -28,10 +35,21 @@ public class StockEntry extends BaseUserBetweenTime {
     private Integer type;
     private String remark;
 
+    private Integer approveUid;
+
+    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
+    private Date approveTime;
+
+    private String approveUserName;
+
+    private String rejectRemark;
+
     private Integer moveCount;
 
     private String categoryName;
     private String companyName;
+    private String companyCode;
+
 
     public Integer getId() {
         return id;
@@ -119,5 +137,45 @@ public class StockEntry extends BaseUserBetweenTime {
 
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
+    }
+
+    public String getCompanyCode() {
+        return companyCode;
+    }
+
+    public void setCompanyCode(String companyCode) {
+        this.companyCode = companyCode;
+    }
+
+    public Integer getApproveUid() {
+        return approveUid;
+    }
+
+    public void setApproveUid(Integer approveUid) {
+        this.approveUid = approveUid;
+    }
+
+    public Date getApproveTime() {
+        return approveTime;
+    }
+
+    public void setApproveTime(Date approveTime) {
+        this.approveTime = approveTime;
+    }
+
+    public String getApproveUserName() {
+        return approveUserName;
+    }
+
+    public void setApproveUserName(String approveUserName) {
+        this.approveUserName = approveUserName;
+    }
+
+    public String getRejectRemark() {
+        return rejectRemark;
+    }
+
+    public void setRejectRemark(String rejectRemark) {
+        this.rejectRemark = rejectRemark;
     }
 }

@@ -734,4 +734,15 @@ a:active {
   font-size: 12px !important;
   height: 25px;
 }
+.el-dialog.full-height-dialog {
+  height: 90vh !important;
+  margin-top: 5vh !important;
+  margin-bottom: 0 !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.el-dialog.full-height-dialog .el-dialog__body {
+  flex-grow: 1;
+}
 /*# sourceMappingURL=all.css.map */

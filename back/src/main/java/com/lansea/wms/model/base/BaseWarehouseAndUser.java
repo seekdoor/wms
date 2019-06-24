@@ -18,6 +18,9 @@ public class BaseWarehouseAndUser extends BaseUser {
     private String reservoirName;
     private String stockName;
 
+    private String warehouseCode;
+    private String reservoirCode;
+    private String stockCode;
 
     public Integer getWarehouseId() {
         return warehouseId;
@@ -65,5 +68,29 @@ public class BaseWarehouseAndUser extends BaseUser {
 
     public void setStockName(String stockName) {
         this.stockName = stockName;
+    }
+
+    public String getWarehouseCode() {
+        return warehouseCode;
+    }
+
+    public void setWarehouseCode(String warehouseCode) {
+        this.warehouseCode = warehouseCode;
+    }
+
+    public String getReservoirCode() {
+        return reservoirCode;
+    }
+
+    public void setReservoirCode(String reservoirCode) {
+        this.reservoirCode = reservoirCode;
+    }
+
+    public String getStockCode() {
+        return stockCode;
+    }
+
+    public void setStockCode(String stockCode) {
+        this.stockCode = stockCode;
     }
 }

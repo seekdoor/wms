@@ -64,6 +64,39 @@
     <delete id="selectMoveCountByInventory">
         select count(*) from move where inventory_id = #{inventory.id} and is_del is null
     </delete>
+    <update id="finishByMove">
+        update inventory
+        <set>
+            <if test="move.type == 1">
+                quantity = quantity + #{move.quantity} ,
+                last_in_quantity = #{move.quantity} ,
+                last_in_time = now(),
+            </if>
+            <if test="move.type == 2 ">
+                quantity = quantity - #{move.quantity} ,
+                last_out_quantity = #{move.quantity} ,
+                last_in_time = now(),
+            </if>
+            <if test="move.type == 3 and isTid">
+                quantity = quantity + #{move.quantity} ,
+                last_in_quantity = #{move.quantity} ,
+                last_in_time = now(),
+            </if>
+            <if test="move.type == 3 and !isTid">
+                quantity = quantity - #{move.quantity} ,
+                last_out_quantity = #{move.quantity} ,
+                last_out_time = now(),
+            </if>
+        </set>
+        <where>
+            <if test="isTid">
+                id = #{move.inventoryTid}
+            </if>
+            <if test="!isTid">
+                id = #{move.inventoryId}
+            </if>
+        </where>
+    </update>
 
 
 </mapper>

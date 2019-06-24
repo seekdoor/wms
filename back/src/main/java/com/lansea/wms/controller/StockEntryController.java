@@ -4,12 +4,11 @@ import com.lansea.wms.controller.base.BaseController;
 import com.lansea.wms.entity.Result;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.form.DeleteIdsForm;
-import com.lansea.wms.mapper.NumberCreateMapper;
 import com.lansea.wms.mapper.StockEntryMapper;
-import com.lansea.wms.model.NumberCreate;
 import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.NumberCreateService;
 import com.lansea.wms.service.StockEntryService;
+import com.lansea.wms.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,7 +45,7 @@ public class StockEntryController extends BaseController {
     NumberCreateService numberCreateService;
 
     @PostMapping(value = "/insert")
-    @ApiOperation(value = "新增出库单")
+    @ApiOperation(value = "新增出入库单")
     Result insert(@Validated @RequestBody StockEntry stockEntry, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
@@ -83,13 +82,61 @@ public class StockEntryController extends BaseController {
     @Autowired
     StockEntryService stockEntryService;
 
-    @PostMapping(value = "/update_status")
-    @ApiOperation(value = "审批")
-    Result updateStatus(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockEntry stockEntry, BindingResult result) {
+    @PostMapping(value = "/submit")
+    @ApiOperation(value = "/提交审核")
+    Result submit(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockEntry form, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
+        StockEntry stockEntry = stockEntryMapper.findById(form.getId());
+        Integer oldStatus = stockEntry.getStatus();
+        if (oldStatus != 1 && oldStatus != 4) {
+            return Result.error("非法！！");
+        }
+        stockEntryService.submit(stockEntry);
+        return Result.success("提交成功");
+    }
+
+    @PostMapping(value = "/approve")
+    @ApiOperation(value = "审批")
+    Result approve(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockEntry form, BindingResult result) {
+        if (result.hasErrors()) {
+            return Result.errorByBindingResult(result);
+        }
+        StockEntry stockEntry = stockEntryMapper.findById(form.getId());
+        if (stockEntry.getMoveCount().equals(0)) {
+            return Result.error("请添加订单明细！");
+        }
+        Integer oldStatus = stockEntry.getStatus();
+        if (!oldStatus.equals(2)) {
+            return Result.error("订单状态错误！");
+        }
+        Integer nowStatus = form.getStatus();
+        if (!nowStatus.equals(3) && !nowStatus.equals(4)) {
+            return Result.error("非法！！");
+        }
+        if (nowStatus == 4 && StringUtil.isBlank(form.getRejectRemark())) {
+            return Result.error("驳回理由不能为空");
+        } else {
+            stockEntry.setRejectRemark(form.getRejectRemark());
+        }
+        stockEntry.setStatus(form.getStatus());
         stockEntryService.approve(stockEntry);
+        return Result.success("完成审批");
+    }
+
+    @PostMapping(value = "/finish")
+    @ApiOperation(value = "完成订单")
+    Result finish(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockEntry form, BindingResult result) {
+        if (result.hasErrors()) {
+            return Result.errorByBindingResult(result);
+        }
+        StockEntry stockEntry = stockEntryMapper.findById(form.getId());
+        if (!stockEntry.getStatus().equals(3)) {
+            return Result.error("审批尚未通过！");
+        }
+        stockEntryService.finish(stockEntry);
+        return Result.success("完成订单");
     }
 
 }

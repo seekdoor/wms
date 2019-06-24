@@ -110,7 +110,9 @@ export default {
         insert: ['/stock_entry/insert', 'post'],
         list: ['/stock_entry/list', 'get'],
         update: ['/stock_entry/update', 'post'],
-        update_status: ['/stock_entry/update_status', 'post'],
+        approve: ['/stock_entry/approve', 'post'],
+        finish: ['/stock_entry/finish', 'post'],
+        submit: ['/stock_entry/submit', 'post'],
     },
     move: {
         selectByStockEntryId: ['/move/select_by_stock_entry_id', 'get'],

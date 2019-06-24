@@ -5,6 +5,7 @@
                 :visible="visible"
                 @update:visible="showDialog"
                 :title="title"
+                @closed="$emit('close')"
         >
             <div class="mb-xs fz-xs title-text-block">
                 <span>{{ typeText }}单号：{{ stockEntry.number }}</span>
@@ -15,8 +16,9 @@
             <div class="mb-xs">
                 <el-button-curd-group
                         slot="buttons"
-                        :delete-disabled="!selectedRow.length"
-                        :edit-disabled="selectedRow.length !== 1"
+                        :add-disabled="!canEdit"
+                        :delete-disabled="!selectedRow.length || !canEdit"
+                        :edit-disabled="selectedRow.length !== 1 || !canEdit"
                         @click-add="clickAddButton"
                         @click-edit="clickEditButton"
                         @click-delete="clickDeleteButton"
@@ -64,13 +66,15 @@
                     <template slot="operate" slot-scope="{row}">
                         <el-button-mini
                                 type="text"
-                                icon="delete"
-                                @click.native="clickRowDeleteButton(row)"
+                                icon="edit"
+                                @click.native="clickRowEditButton(row)"
+                                v-if="canEdit"
                         ></el-button-mini>
                         <el-button-mini
                                 type="text"
-                                icon="edit"
-                                @click.native="clickRowEditButton(row)"
+                                icon="delete"
+                                @click.native="clickRowDeleteButton(row)"
+                                v-if="canEdit"
                         ></el-button-mini>
                     </template>
                 </table-panel>
@@ -183,6 +187,9 @@
             },
             typeText() {
                 return this.type === 1 ? '入库' : '出库';
+            },
+            canEdit() {
+                return [1, 4].includes(this.stockEntry.status);
             }
         },
 

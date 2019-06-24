@@ -4,8 +4,10 @@ package com.lansea.wms.service;
 import com.lansea.wms.form.DeleteIdsForm;
 import com.lansea.wms.mapper.InventoryMapper;
 import com.lansea.wms.mapper.MoveMapper;
+import com.lansea.wms.mapper.StockEntryMapper;
 import com.lansea.wms.model.Inventory;
 import com.lansea.wms.model.Move;
+import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -65,5 +67,50 @@ public class MoveService extends BaseService {
         return move;
     }
 
+
+    /**
+     * 完成出入库
+     *
+     * @param move 出入库记录
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void finish(Move move) {
+        move.setStatus(5);
+        moveMapper.updateStatusByMove(move);
+        inventoryService.finishByMove(move);
+    }
+
+    @Autowired
+    StockEntryMapper stockEntryMapper;
+
+    /**
+     * 出入库所属订单是否已经审批
+     *
+     * @param move 出入库
+     * @return
+     */
+    public boolean checkApproved(Move move) {
+        if (move.getStockEntryId() > 0) {
+            StockEntry stockEntry = stockEntryMapper.findById(move.getStockEntryId());
+            Integer seStatus = stockEntry.getStatus();
+            return seStatus != 1 && seStatus != 4;
+        }
+        return false;
+    }
+
+    /**
+     * 检查是否可以删除
+     *
+     * @param move 出入库记录
+     * @return
+     */
+    public boolean checkCanDelete(Move move) {
+        if (move.getStockEntryId() > 0) {
+            StockEntry stockEntry = stockEntryMapper.findById(move.getStockEntryId());
+            Integer seStatus = stockEntry.getStatus();
+            return seStatus == 1;
+        }
+        return false;
+    }
 
 }

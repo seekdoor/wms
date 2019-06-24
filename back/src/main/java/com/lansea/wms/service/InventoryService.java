@@ -7,6 +7,7 @@ import com.lansea.wms.model.Move;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -73,5 +74,18 @@ public class InventoryService extends BaseService {
         return inventory;
     }
 
+    /**
+     * 根据 move 完成
+     * 完成后增加仓库累计信息
+     *
+     * @param move
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public void finishByMove(Move move) {
+        inventoryMapper.finishByMove(move, false);
+        if (move.getType().equals(3)) {
+            inventoryMapper.finishByMove(move, true);
+        }
+    }
 
 }

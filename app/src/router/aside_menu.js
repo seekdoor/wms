@@ -124,6 +124,13 @@ export default [
                     title: '入库管理',
                 },
             },
+            {
+                path: '/StockOutManager',
+                component: () => import("@/components/page-content/stock-entry/StockEntryOutManagerView.vue"),
+                meta: {
+                    title: '出库管理',
+                },
+            },
         ]
     },
 
