@@ -24,6 +24,8 @@ export default class StockEntryModel extends BaseUserBetweenTime {
 
     rejectRemark = '';
 
+    deliveryId = 0;
+
     constructor(type = 0) {
         super();
         this.type = type;

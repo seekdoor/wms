@@ -8,14 +8,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Repository;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Repository
 public class StockEntry extends BaseUserBetweenTime {
 
-    public interface RejectRemarkForm {
-    }
 
     @Min(value = 1, message = "id 非法", groups = {ValidClass.EditForm.class})
     private Integer id;
@@ -44,12 +41,25 @@ public class StockEntry extends BaseUserBetweenTime {
 
     private String rejectRemark;
 
+    private Integer deliveryId;
+
     private Integer moveCount;
 
     private String categoryName;
     private String companyName;
     private String companyCode;
 
+
+    public Integer getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(Integer deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public interface RejectRemarkForm {
+    }
 
     public Integer getId() {
         return id;

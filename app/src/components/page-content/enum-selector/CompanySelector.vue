@@ -53,7 +53,7 @@
         methods: {
             reload() {
                 this.refreshList();
-                this.change(this.isFilter ? 0 : null);
+                this.change(0);
             },
             change(v) {
                 this.$emit('input', v);

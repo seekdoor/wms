@@ -36,4 +36,6 @@ export default class MoveModel extends BaseUser {
     planQuantity = 0;
     quantity = 0;
 
+    deliveryId = 0;
+
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.DeliveryMapper">
+
+    <sql id="selectBase">
+        select
+        t.*,
+        se.number stock_entry_number ,
+        cpy.code company_code,
+        cpy.name compay_name,
+        cpy.address company_address,
+        cpy.contact_name company_user_name ,
+        cpy.phone company_phone,
+        cpy.mobile company_mobile,
+        cpy.email company_email,
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserFields"></include>
+        from delivery t
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserJoin"></include>
+        left join stock_entry se on se.id = t.stock_entry_id
+        left join company cyp on cpy.id = t.company_id
+    </sql>
+
+
+    <select id="selectWhere" resultType="com.lansea.wms.model.Delivery">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="form.companyId != null and form.companyId != 0">
+                and t.company_id = #{form.companyId}
+            </if>
+            <if test="form.number != null and form.number != ''">
+                and t.number like '${form.companyId}%'
+            </if>
+            and t.is_del is null
+        </where>
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="form.id">
+        insert into delivery( stock_entry_id, company_id, number, create_uid, create_time, remark )
+        values (#{form.stockEntryId} , #{form.companyId} ,#{param1.number} ,#{param1.createUid} ,now(), #{form.remark} )
+    </insert>
+    <update id="update">
+        update delivery
+        <set>
+            stock_entry_id = #{form.stockEntryId} ,
+            company_id = #{form.companyId} ,
+            number = #{form.number} ,
+            update_uid = #{form.updateUid} ,
+            update_time = now() ,
+            remark = #{form.remark} ,
+        </set>
+        where id = #{param1.id} and is_del is null
+    </update>
+    <select id="findById" resultType="com.lansea.wms.model.Delivery">
+        <include refid="selectBase"></include>
+        where t.id = #{id} and is_del is null
+    </select>
+</mapper>

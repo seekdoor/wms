@@ -49,6 +49,8 @@ public class Move extends BaseUserBetweenTime {
 
     private String rejectRemark;
 
+    private Integer deliveryId;
+
     private String materialCode;
     private String materialName;
     private String materialCategoryName;
@@ -354,5 +356,13 @@ public class Move extends BaseUserBetweenTime {
 
     public void setStockCode(String stockCode) {
         this.stockCode = stockCode;
+    }
+
+    public Integer getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(Integer deliveryId) {
+        this.deliveryId = deliveryId;
     }
 }

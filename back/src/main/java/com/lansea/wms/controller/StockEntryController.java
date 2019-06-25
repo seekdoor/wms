@@ -4,10 +4,13 @@ import com.lansea.wms.controller.base.BaseController;
 import com.lansea.wms.entity.Result;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.form.DeleteIdsForm;
+import com.lansea.wms.form.StockEntryDeliveryFinishForm;
+import com.lansea.wms.mapper.DeliveryMapper;
 import com.lansea.wms.mapper.StockEntryMapper;
 import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.NumberCreateService;
 import com.lansea.wms.service.StockEntryService;
+import com.lansea.wms.service.ValidateService;
 import com.lansea.wms.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -93,6 +96,9 @@ public class StockEntryController extends BaseController {
         if (oldStatus != 1 && oldStatus != 4) {
             return Result.error("非法！！");
         }
+        if (stockEntry.getMoveCount() < 1) {
+            return Result.error("请添加明细！");
+        }
         stockEntryService.submit(stockEntry);
         return Result.success("提交成功");
     }
@@ -137,6 +143,34 @@ public class StockEntryController extends BaseController {
         }
         stockEntryService.finish(stockEntry);
         return Result.success("完成订单");
+    }
+
+    @Autowired
+    DeliveryMapper deliveryMapper;
+
+    @PostMapping(value = "/delivery_finish")
+    @ApiOperation(value = "完成并发货")
+    Result deliveryFinish(@RequestBody StockEntryDeliveryFinishForm form) {
+
+        String sRes = validateService.validate(form.getStockEntry());
+        if (sRes != null) {
+            return Result.error(sRes);
+        }
+        StockEntry stockEntry = stockEntryMapper.findById(form.getStockEntry().getId());
+        if( stockEntry.getStatus() != 3){
+            return Result.error("请审核完成后重试！");
+        }
+        if (form.getNeedDelivery() == 1) {
+            form.getDelivery().setStockEntryId(form.getStockEntry().getId());
+            String res = validateService.validate(form.getDelivery());
+            if (res != null) {
+                return Result.error(res);
+            }
+            stockEntryService.deliveryFinish(form);
+        } else {
+            stockEntryService.finish(form.getStockEntry());
+        }
+        return Result.success("完成发货成功");
     }
 
 }

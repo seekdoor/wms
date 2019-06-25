@@ -94,6 +94,9 @@
             <if test="param1.status == 4">
                 reject_remark = #{param1.rejectRemark} ,
             </if>
+            <if test="param1.status == 5">
+                delivery_id = #{param1.deliveryId}  ,
+            </if>
         </set>
         where id = #{form.id}
     </update>

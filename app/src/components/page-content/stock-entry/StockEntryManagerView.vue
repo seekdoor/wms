@@ -75,7 +75,16 @@
                             icon-color-class="color-olive"
                             :disabled="!finishEnable"
                             @click.native="clickFinishButton"
+                            v-if="type === 1"
                     >订单完成
+                    </el-button-mini>
+                    <el-button-mini
+                            icon="iconfont icon-truck"
+                            icon-color-class="color-olive"
+                            :disabled="!finishEnable"
+                            v-if="type === 2"
+                            @click.native="clickDeliveryButton"
+                    >完成发货
                     </el-button-mini>
                 </el-button-group>
             </el-button-curd-group>
@@ -139,11 +148,17 @@
                         prop="status"
                         :label="`${titleText}状态`"
                         sortable="custom"
-                        width="100"
+                        width="105"
                 >
-                    <template slot-scope="{row}">
-                        <approve-tags :status="row.status"></approve-tags>
-                    </template>
+                    <div class="flex-box flex-center" slot-scope="{row}"
+                    >
+                        <approve-tags :status="row.status" :is-stock-in="type===1"></approve-tags>
+                        <div class="ml-xs disp-ib" style="padding-top: 2px;">
+                            <el-tag type="info">
+                                <i class="iconfont icon-truck"></i>
+                            </el-tag>
+                        </div>
+                    </div>
                 </el-table-column>
                 <el-table-column
                         prop="categoryId"
@@ -225,10 +240,17 @@
                             type="text"
                             icon="iconfont icon-circle"
                             title="完成订单"
-                            v-if="row.status === 3"
+                            v-if="row.status === 3 && type === 1"
                             @click.native="clickRowFinishButton(row)"
                     ></el-button-mini>
-
+                    <el-button-mini
+                            type="text"
+                            icon="iconfont icon-truck"
+                            icon-color-class="color-olive"
+                            title="完成发货"
+                            v-if="row.status === 3 && type === 2"
+                            @click.native="clickRowDeliveryButton(row)"
+                    ></el-button-mini>
                 </template>
             </table-panel>
 
@@ -238,6 +260,7 @@
                 :visible.sync="showAddDialog"
                 :edit-id="editId"
                 @finish="refreshData"
+                :type="type"
         ></stock-entry-add-dialog>
 
         <move-list-dialog
@@ -262,7 +285,14 @@
         <stock-entry-reject-dialog
                 :visible.sync="showRejectDialog"
                 :stock-entry="selectStockEntry"
+                @finish="refreshData"
         ></stock-entry-reject-dialog>
+
+        <stock-entry-delivery-finish-dialog
+                :visible.sync="showDeliveryFinishDialog"
+                :stock-entry="selectStockEntry"
+                @finish="refreshData"
+        ></stock-entry-delivery-finish-dialog>
     </div>
 </template>
 
@@ -286,10 +316,13 @@
     import ApproveTags from "@/components/page-content/enum-selector/ApproveTags";
     import StockEntryPreviewDialog from "@/components/page-content/stock-entry/dialog/StockEntryPreviewDialog";
     import StockEntryRejectDialog from "@/components/page-content/stock-entry/dialog/StockEntryRejectDialog";
+    import StockEntryDeliveryFinishDialog
+        from "@/components/page-content/stock-entry/dialog/StockEntryDeliveryFinishDialog";
 
     export default {
         name: "StockEntryManagerView",
         components: {
+            StockEntryDeliveryFinishDialog,
             StockEntryRejectDialog,
             StockEntryPreviewDialog,
             ApproveTags,
@@ -318,6 +351,7 @@
                 showMoveAddDialog: false,
                 showPreviewDialog: false,
                 showRejectDialog: false,
+                showDeliveryFinishDialog: false,
                 filterForm: new StockEntryModel(this.type),
                 data: [],
                 paginate: new PaginateModel(this.refreshData),
@@ -461,6 +495,17 @@
                     DialogUtil.toastSuccess(resp);
                     this.refreshData();
                 })
+            },
+            clickDeliveryButton() {
+                this.selectStockEntry = this.selectedRow[0];
+                this.showDeliveryFinishDialog = true;
+            },
+            clickRowDeliveryButton(row) {
+                this.selectStockEntry = row;
+                this.showDeliveryFinishDialog = true;
+            },
+            delivery(nodes) {
+
             }
 
         },

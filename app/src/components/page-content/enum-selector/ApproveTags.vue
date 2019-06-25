@@ -1,5 +1,5 @@
 <template>
-    <div class="ApproveTags">
+    <div class="ApproveTags disp-ib">
         <el-tag
                 effect="dark"
                 :type="statusEnum.colors[statusUse]"

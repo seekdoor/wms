@@ -113,6 +113,7 @@ export default {
         approve: ['/stock_entry/approve', 'post'],
         finish: ['/stock_entry/finish', 'post'],
         submit: ['/stock_entry/submit', 'post'],
+        deliveryFinish: ['/stock_entry/delivery_finish', 'post'],
     },
     move: {
         selectByStockEntryId: ['/move/select_by_stock_entry_id', 'get'],

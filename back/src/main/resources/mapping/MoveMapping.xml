@@ -120,16 +120,19 @@
     <update id="updateStatusByMove">
         update move
         <set>
-            status = #{param1.status}
+            status = #{param1.status} ,
             <if test="param1.status == 3 or param1.status == 4">
                 approve_uid = #{param1.approveUid} ,
-                approve_time = now()
+                approve_time = now() ,
             </if>
             <if test="param1.status == 3">
                 reject_remark = '',
             </if>
             <if test="param1.status == 4">
                 reject_remark = #{param1.rejectRemark} ,
+            </if>
+            <if test="param1.status == 5">
+                delivery_id = #{param1.deliveryId} ,
             </if>
         </set>
         where id = #{param1.id}
