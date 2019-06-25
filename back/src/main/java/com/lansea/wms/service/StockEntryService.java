@@ -6,13 +6,11 @@ import com.lansea.wms.mapper.MoveMapper;
 import com.lansea.wms.mapper.StockEntryMapper;
 import com.lansea.wms.model.Delivery;
 import com.lansea.wms.model.Move;
-import com.lansea.wms.model.Stock;
 import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.DeleteMapping;
 
 import java.util.List;
 
@@ -27,6 +25,14 @@ public class StockEntryService extends BaseService {
 
     @Autowired
     MoveService moveService;
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public Integer insert(StockEntry stockEntry) {
+        stockEntry.setStatus(1);
+        approveLogService.addStockEntryLog(stockEntry);
+        return stockEntryMapper.insert(stockEntry);
+    }
 
     /**
      * 出入库单 审批
@@ -60,26 +66,26 @@ public class StockEntryService extends BaseService {
     }
 
     /**
-     * 修改状态
+     * 修改审批状态
      *
      * @param stockEntry 订单
      * @return
      */
     public Integer updateStatus(StockEntry stockEntry) {
+        approveLogService.addStockEntryLog(stockEntry);
         return stockEntryMapper.updateStatus(stockEntry);
     }
 
     /**
      * 提交审核
      *
-     * @param stockEntry
+     * @param stockEntry 订单
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
     public Integer submit(StockEntry stockEntry) {
         stockEntry.setStatus(2);
-        approve(stockEntry);
-        return stockEntryMapper.updateStatus(stockEntry);
+        return updateStatus(stockEntry);
     }
 
     @Autowired

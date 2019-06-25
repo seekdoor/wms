@@ -153,8 +153,9 @@
                     <div class="flex-box flex-center" slot-scope="{row}"
                     >
                         <approve-tags :status="row.status" :is-stock-in="type===1"></approve-tags>
-                        <div class="ml-xs disp-ib" style="padding-top: 2px;">
-                            <el-tag type="info">
+                        <div class="" style="padding-top: 2px;margin-left: 2px;"
+                             v-if="row.type === 2 && row.status === 5 && row.deliveryId !== 0">
+                            <el-tag type="info" class="cursor-p">
                                 <i class="iconfont icon-truck"></i>
                             </el-tag>
                         </div>
@@ -273,6 +274,7 @@
         <move-add-dialog
                 :visible.sync="showMoveAddDialog"
                 :edit-id="0"
+                :type="type"
                 :stock-entry="selectStockEntry"
                 @finish="refreshData"
         ></move-add-dialog>
@@ -280,17 +282,20 @@
         <stock-entry-preview-dialog
                 :visible.sync="showPreviewDialog"
                 :edit-id="editId"
+                :type="type"
         ></stock-entry-preview-dialog>
 
         <stock-entry-reject-dialog
                 :visible.sync="showRejectDialog"
                 :stock-entry="selectStockEntry"
+                :type="type"
                 @finish="refreshData"
         ></stock-entry-reject-dialog>
 
         <stock-entry-delivery-finish-dialog
                 :visible.sync="showDeliveryFinishDialog"
                 :stock-entry="selectStockEntry"
+                :type="type"
                 @finish="refreshData"
         ></stock-entry-delivery-finish-dialog>
     </div>
@@ -388,6 +393,7 @@
 
             clickAddButton() {
                 this.editId = 0;
+                this.selectStockEntry = this.selectedRow[0];
                 this.showAddDialog = true;
             },
             clickEditButton() {
@@ -413,6 +419,7 @@
                 this.showPreviewDialog = true;
             },
             clickRowAddMoveButton(row) {
+                this.editId = 0;
                 this.selectStockEntry = row;
                 this.showMoveAddDialog = true;
             },

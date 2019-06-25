@@ -88,7 +88,8 @@
         },
         data() {
             return {
-                stockEntry: new StockEntryModel(this.type)
+                stockEntry: new StockEntryModel(this.type),
+
             }
         },
         mounted() {

@@ -10,7 +10,6 @@ import com.lansea.wms.mapper.StockEntryMapper;
 import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.service.NumberCreateService;
 import com.lansea.wms.service.StockEntryService;
-import com.lansea.wms.service.ValidateService;
 import com.lansea.wms.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -57,7 +56,7 @@ public class StockEntryController extends BaseController {
         stockEntry.setNumber(numberCreateService.create(
                 stockEntry.getType() == 1 ? "stock_in" : "stock_out"
         ));
-        stockEntryMapper.insert(stockEntry);
+        stockEntryService.insert(stockEntry);
         return Result.success("新增成功");
     }
 

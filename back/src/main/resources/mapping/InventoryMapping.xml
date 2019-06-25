@@ -41,7 +41,6 @@
     <update id="update">
         update inventory
         <set>
-            quantity = #{form.quantity} ,
             last_in_time = #{param1.lastInTime} ,
             last_out_time = #{form.lastOutTime} ,
             last_in_quantity = #{param1.lastInQuantity} ,
@@ -62,7 +61,7 @@
         and is_del is null
     </select>
     <delete id="selectMoveCountByInventory">
-        select count(*) from move where inventory_id = #{inventory.id} and is_del is null
+        select count(id) from move where inventory_id = #{inventory.id} and is_del is null
     </delete>
     <update id="finishByMove">
         update inventory
@@ -97,6 +96,10 @@
             </if>
         </where>
     </update>
+    <select id="findByMtlAndStk" resultType="com.lansea.wms.model.Inventory">
+        <include refid="selectBase"></include>
+        where t.material_id = #{form.materialId} and t.stock_id = #{param1.stockId} and t.is_del is null and t.quantity > 0
+    </select>
 
 
 </mapper>

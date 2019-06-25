@@ -17,7 +17,7 @@ export default {
      * @param format
      * @returns {string}
      */
-    dateTimeFormat(time, format = '%Y-%m-%d %H:%i:%s') {
+    dateTimeFormat(time = new Date, format = '%Y-%m-%d %H:%i:%s') {
         format = format.replace('%Y', time.getFullYear());
         format = format.replace('%m', this.padStartZero(time.getMonth() + 1));
         format = format.replace('%d', this.padStartZero(time.getDate()));
@@ -33,7 +33,7 @@ export default {
      * @param format
      * @returns {string}
      */
-    dateFormat(time, format = '%Y-%m-%d') {
+    dateFormat(time = new Date(), format = '%Y-%m-%d') {
         return this.dateTimeFormat(time, format);
     },
 
@@ -55,5 +55,6 @@ export default {
      */
     padStartZero(str, num = 2) {
         return (str + '').padStart(num, '0');
-    }
+    },
+
 }

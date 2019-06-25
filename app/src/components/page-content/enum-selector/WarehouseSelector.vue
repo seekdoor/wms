@@ -34,6 +34,14 @@
             },
             width: {
                 default: '200px'
+            },
+            filterIds: {
+                default() {
+                    return [];
+                }
+            },
+            needFilter: {
+                default :false
             }
         },
         data() {
@@ -83,6 +91,8 @@
                         id: 0,
                         name: '全部'
                     }].concat(this.tree);
+                } else if ( this.needFilter || this.filterIds.length) {
+                    this.tree = CollectionUtil.filterTree(this.tree, x => this.filterIds.includes(x.id), 'children', 3);
                 }
                 this.refreshSelect();
             },
@@ -106,6 +116,9 @@
             },
             value() {
                 this.refreshSelect();
+            },
+            filterIds() {
+                this.createTree();
             }
         },
         computed: {

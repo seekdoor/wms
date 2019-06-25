@@ -15,25 +15,9 @@
                                     :types="'1,2,3'"
                                     v-model="move.materialId"
                                     width="100%"
+                                    :filter-ids="mtlFilterIds"
+                                    :need-filter=" type === 2"
                             ></MaterialSelector>
-                        </el-form-item>
-                    </el-col>
-                </el-row>
-                <el-row :gutter="10">
-                    <el-col :span="12">
-                        <el-form-item :label="`计划数量`" :required="true">
-                            <el-input-integer
-                                    :is-float="true"
-                                    v-model="move.planQuantity"
-                            ></el-input-integer>
-                        </el-form-item>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-form-item :label="`实际数量`" :required="true">
-                            <el-input-integer
-                                    :is-float="true"
-                                    v-model="move.quantity"
-                            ></el-input-integer>
                         </el-form-item>
                     </el-col>
                 </el-row>
@@ -45,10 +29,40 @@
                                     :value="move.stockId"
                                     @change="warehouseChange"
                                     width="100%"
+                                    :filter-ids="stkFilterIds"
+                                    :need-filter="type === 2"
                             ></warehouse-selector>
                         </el-form-item>
                     </el-col>
                 </el-row>
+                <el-row :gutter="10" v-if="type===2">
+                    <el-col :span="24">
+                        <el-form-item :label="`当前剩余库存数量`" :required="true">
+                            <el-input :disabled="true" v-model="inventory.quantity"></el-input>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+                <el-row :gutter="10">
+                    <el-col :span="12">
+                        <el-form-item :label="`计划数量`" :required="true">
+                            <el-input-integer
+                                    :is-float="true"
+                                    v-model="move.planQuantity"
+                                    :max="type === 1 ? 9999999 : inventory.quantity"
+                            ></el-input-integer>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12">
+                        <el-form-item :label="`实际数量`" :required="true">
+                            <el-input-integer
+                                    :is-float="true"
+                                    v-model="move.quantity"
+                                    :max="type === 1 ? 9999999 : inventory.quantity"
+                            ></el-input-integer>
+                        </el-form-item>
+                    </el-col>
+                </el-row>
+
                 <el-row :gutter="10">
                     <el-col :span="24">
                         <el-form-item :label="`备注`" :required="false">
@@ -63,6 +77,7 @@
 
             <div class="text-right mt-xs">
                 <el-button-submit
+                        :loading="loading"
                         :is-block="false"
                         @click.native="clickSubmit"
                 >保存提交
@@ -83,6 +98,7 @@
     import MoveModel from "@/project/model/MoveModel";
     import ElInputInteger from "@/components/common/input/ElInpuInteger";
     import WarehouseSelector from "@/components/page-content/enum-selector/WarehouseSelector";
+    import InventoryModel from "@/project/model/InventoryModel";
 
     export default {
         name: "MoveAddDialog",
@@ -108,7 +124,11 @@
         },
         data() {
             return {
-                move: new MoveModel()
+                loading: false,
+                move: new MoveModel(),
+                stkFilterIds: [],
+                mtlFilterIds: [],
+                inventory: new InventoryModel()
             }
         },
         mounted() {
@@ -121,6 +141,7 @@
                 this.$emit('update:visible', v);
             },
             refreshData() {
+                this.refreshSelectorFilter();
                 if (!this.editId) {
                     this.move = new MoveModel();
                     this.move.quantity = 0;
@@ -133,16 +154,50 @@
                     id: this.editId
                 }).then(resp => {
                     this.move = resp;
+                });
+            },
+
+            refreshSelectorFilter() {
+                this.inventory = new InventoryModel();
+                if (this.type !== 2) {
+                    this.stkFilterIds = [];
+                    this.mtlFilterIds = [];
+                    return
+                }
+                this.$ajax.request(Api.inventory.selectAllMaterialIds).then(resp => {
+                    this.mtlFilterIds = resp;
+                    this.refreshStockFilter();
+                })
+            },
+            refreshStockFilter(filterIds = null) {
+                if (this.type !== 2) {
+                    this.stkFilterIds = [];
+                    this.mtlFilterIds = [];
+                    return
+                }
+                filterIds = filterIds || this.mtlFilterIds;
+                if (!filterIds.length) return;
+                this.$ajax.request(Api.inventory.selectAllStockIdsByMtlIds, {
+                    materialIds: filterIds.join(',')
+                }).then(resp => {
+                    this.stkFilterIds = resp;
+                });
+            },
+
+            refreshInventory() {
+                this.$ajax.request(Api.inventory.getByMtlAndStk, this.inventory).then(resp => {
+                    this.inventory = resp || new InventoryModel;
                 })
             },
 
             clickSubmit() {
+                this.loading = true;
                 let api = this.editId ? Api.move.update : Api.move.insert;
                 this.$ajax.request(api, this.move).then(resp => {
                     DialogUtil.toastSuccess(resp);
                     this.showDialog(false);
                     this.$emit('finish');
-                })
+                }).finally(() => this.loading = false)
             },
             warehouseChange(nodes) {
                 this.move.warehouseId = nodes[0];
@@ -155,7 +210,16 @@
                 if (v) {
                     this.refreshData();
                 }
-            }
+            },
+            'move.materialId'(v) {
+                this.inventory.materialId = v;
+                this.refreshStockFilter([v]);
+            },
+            'move.stockId'(v) {
+                this.inventory.stockId = v;
+                this.refreshInventory();
+            },
+
         },
         computed: {
             titleText() {

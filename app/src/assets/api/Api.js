@@ -121,6 +121,12 @@ export default {
         delete: ['/move/delete', 'post'],
         getById: ['/move/get_by_id', 'get'],
         update: ['/move/update', 'post'],
+    },
+    inventory: {
+        selectAllMaterialIds: ['/inventory/select_all_material_ids', 'get'],
+        selectAllStockIds: ['/inventory/select_all_stock_ids', 'get'],
+        selectAllStockIdsByMtlIds: ['/inventory/select_all_stock_ids_by_mtl_ids', 'get'],
+        getByMtlAndStk: ['/inventory/get_by_mtl_and_stk', 'get'],
     }
 
 }

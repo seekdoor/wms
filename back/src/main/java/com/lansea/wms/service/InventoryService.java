@@ -29,7 +29,7 @@ public class InventoryService extends BaseService {
      */
     public Inventory saveInventoryByMove(Move move) {
         Inventory inventory;
-        if (move.getInventoryId() == null) {
+        if (move.getInventoryId() == null || move.getInventoryId() == 0) {
             inventory = inventoryMapper.findByMove(move);
         } else {
             inventory = inventoryMapper.findById(move.getInventoryId());
@@ -54,7 +54,7 @@ public class InventoryService extends BaseService {
      * @return
      */
     public Inventory mergeByMove(Inventory inventory, Move move) {
-        if (inventory.getId() == null) {
+        if (inventory.getId() == null || inventory.getId() == 0) {
             inventory.setMaterialId(move.getMaterialId());
             inventory.setQuantity(new BigDecimal(0));
             inventory.setCreateUidToLoginUser(userService);

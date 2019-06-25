@@ -12,6 +12,7 @@ public class ApproveLog extends BaseUser {
     private Integer pid;
     private Integer type;
     private Integer status;
+    private String remark;
 
     public Integer getId() {
         return id;
@@ -43,5 +44,13 @@ public class ApproveLog extends BaseUser {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

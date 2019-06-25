@@ -16,6 +16,12 @@
             },
             isFloat: {
                 default: false
+            },
+            min: {
+                default: 0
+            },
+            max: {
+                default: 99999999
             }
         },
         data() {
@@ -40,6 +46,13 @@
                 this.valueUse = c ? c[0] : 0;
                 if (this.valueUse.length > 1 && [...this.valueUse][1] !== '.' && [...this.valueUse][0] === '0') {
                     this.valueUse = this.valueUse.slice(1);
+                }
+                let num = Number.parseFloat(this.valueUse);
+                if (num < this.min) {
+                    this.valueUse = this.min;
+                }
+                if (num > this.max) {
+                    this.valueUse = this.max;
                 }
                 this.$emit('input', this.valueUse);
             },

@@ -1,3 +1,5 @@
+import DateTimeUtil from "@/util/DateTimeUtil";
+
 export default class BaseUser {
 
     createUid = 0 ;

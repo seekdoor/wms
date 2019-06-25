@@ -23,21 +23,35 @@ public class ApproveLogService extends BaseService {
     public ApproveLog addStockEntryLog(StockEntry stockEntry) {
         ApproveLog approveLog = new ApproveLog();
         approveLog.setType(1);
-        approveLog.setPid(stockEntry.getId());
-        approveLog.setStatus(stockEntry.getStatus());
-        approveLog.setCreateUidToLoginUser(userService);
-        approveLogMapper.insert(approveLog);
+        String remark = stockEntry.getRemark();
+        if (stockEntry.getStatus() == 4) {
+            remark = stockEntry.getRejectRemark();
+        }
+        approveLogMapper.insert(setLogInfo(approveLog, stockEntry.getStatus(), stockEntry.getId(), remark));
         return approveLog;
     }
 
-    public ApproveLog addMoveLog(Move move){
+    /**
+     * 添加以为日志
+     * @param move
+     * @return
+     */
+    public ApproveLog addMoveLog(Move move) {
         ApproveLog approveLog = new ApproveLog();
-        approveLog.setType(1);
-        approveLog.setPid(move.getId());
-        approveLog.setStatus(move.getStatus());
-        approveLog.setCreateUidToLoginUser(userService);
-        approveLogMapper.insert(approveLog);
+        approveLog.setType(2);
+        String remark = move.getRemark();
+        if (move.getStatus() == 4) {
+            remark = move.getRejectRemark();
+        }
+        approveLogMapper.insert(setLogInfo(approveLog, move.getStatus(), move.getId(), remark));
         return approveLog;
     }
 
+    private ApproveLog setLogInfo(ApproveLog approveLog, Integer status, Integer pid, String remark) {
+        approveLog.setPid(pid);
+        approveLog.setStatus(status);
+        approveLog.setCreateUidToLoginUser(userService);
+        approveLog.setRemark(remark);
+        return approveLog;
+    }
 }

@@ -8,6 +8,8 @@ import StatesContainer from "@/project/StatesContainer";
 export default class AjaxUtil {
 
     static _ajaxCount = 0;
+    static _UrlRequestMap = new Map();
+
     option = {};
 
     constructor(url = '', params = {}) {
@@ -126,6 +128,8 @@ export default class AjaxUtil {
                 return Promise.reject(err);
             })
     }
+
+
 
     /**
      * 请求错误情况返回

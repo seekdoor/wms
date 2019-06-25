@@ -84,6 +84,7 @@
         <move-add-dialog
                 :visible.sync="showAddDialog"
                 :edit-id="editId"
+                :type="type"
                 :stock-entry="stockEntry"
                 @finish="refreshData"
         ></move-add-dialog>

@@ -72,16 +72,17 @@ export default {
      * @param tree
      * @param filter
      * @param idKey
-     * @param pidKey
      * @param childKey
+     * @param deep
+     * @param nowDeep
      * @returns {Array}
      */
-    filterTree(tree, filter, idKey = 'id', pidKey = 'pid', childKey = 'children') {
+    filterTree(tree, filter, childKey = 'children', deep = null , nowDeep = 0) {
         let res = [];
         for (let leaf of tree) {
-            let show = filter(leaf);
+            let show = (deep === null || deep === nowDeep + 1) && filter(leaf);
             if (leaf.children && leaf.children.length) {
-                leaf.children = this.filterTree(leaf.children, filter, idKey, pidKey, childKey);
+                leaf.children = this.filterTree(leaf.children, filter, childKey, deep, nowDeep + 1);
             }
             if (show || (leaf.children && leaf.children.length)) {
                 res.push(leaf);

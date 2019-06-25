@@ -91,7 +91,7 @@
         select * from company
         <where>
             <if test="category != null and category != 0">
-                and category = category
+                and category = #{category}
             </if>
             and is_del is null
         </where>

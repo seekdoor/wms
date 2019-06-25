@@ -64,6 +64,7 @@
             return {
                 stock: new StockModel(),
                 loading: false,
+
             }
         },
         mounted() {

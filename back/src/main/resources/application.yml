@@ -37,7 +37,7 @@ mybatis:
   type-aliases-package: com.lansea.wms.model
   configuration:
     mapUnderscoreToCamelCase: true
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 pagehelper:
   helperDialect: mysql

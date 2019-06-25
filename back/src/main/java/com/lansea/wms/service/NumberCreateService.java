@@ -39,7 +39,6 @@ public class NumberCreateService {
             numberCreate.setLastDate(now);
             numberCreate.setIndex(1);
         }
-        System.out.println(numberCreate);
         numberCreateMapper.update(numberCreate);
         StringBuilder number = new StringBuilder(numberCreate.getPrefix());
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");

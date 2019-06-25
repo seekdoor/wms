@@ -1,6 +1,7 @@
 package com.lansea.wms.model.base;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.lansea.wms.entity.SerializeBase;
 import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.DateUtil;

@@ -13,6 +13,7 @@
 
 <script>
     import Api from "@/assets/api/Api";
+    import CollectionUtil from "@/util/CollectionUtil";
 
     export default {
         name: "MaterialSelector",
@@ -26,6 +27,14 @@
             },
             width: {
                 default: '200px'
+            },
+            filterIds: {
+                default() {
+                    return [];
+                }
+            },
+            needFilter:{
+                default : false
             }
         },
         data() {
@@ -71,6 +80,9 @@
                         tree.push(f);
                     }
                 });
+                if( this.needFilter || this.filterIds.length){
+                    tree = CollectionUtil.filterTree(tree, x => this.filterIds.includes(x.id), 'children', 2);
+                }
                 return tree;
             },
             valueUse() {
