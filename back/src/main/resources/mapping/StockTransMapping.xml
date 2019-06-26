@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.StockTransMapper">
+
+    <sql id="selectBase">
+
+        select
+        t.* ,
+        war_t.code warehouse_code ,
+        war_t.name warehouse_name ,
+        res_t.code reservoir_code,
+        res_t.name reservoir_name ,
+        stk_t.code stock_code,
+        stk_t.name stock_name,
+        ( select count(id) from move where move.stock_trans_id = t.id and move.is_del is null ) move_count,
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
+        from stock_trans t
+        <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseJoin"></include>
+        left join warehouse war_t on war_t.id = t.warehouse_tid
+        left join reservoir res_t on res_t.id = t.reservoir_tid
+        left join stock stk_t on stk_t.id = t.stock_tid
+    </sql>
+    <select id="selectWhere" resultType="com.lansea.wms.model.StockTrans">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="form.number != null and form.number != ''">
+                and t.number like '${form.number}%'
+            </if>
+            <if test="form.status != null and form.status != 0">
+                and t.status = #{form.status}
+            </if>
+            <if test="form.startTime != null and form.startTime != ''">
+                and t.create_time >= #{form.startTime}
+            </if>
+            <if test="form.endTime != null and form.endTime != ''">
+                and t.create_time &lt;= #{form.endTime}
+            </if>
+            and t.is_del is null
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
+    </select>
+    <select id="findById" resultType="com.lansea.wms.model.StockTrans">
+        <include refid="selectBase"></include>
+        where t.id = #{id} and is_del is null
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="form.id">
+        insert into stock_trans(
+        number, warehouse_id, reservoir_id, stock_id,
+        status, remark, warehouse_tid, reservoir_tid, stock_tid,
+        create_uid,  create_time)
+        values (
+        #{param1.number} ,#{form.warehouseId} ,#{form.reservoirId} ,#{param1.stockId} ,
+        1, #{form.remark} ,#{form.warehouseTid} ,#{form.reservoirTid} ,#{param1.stockId} ,
+        #{param1.createUid} , now()
+        )
+    </insert>
+    <update id="update">
+        update stock_trans
+        <set>
+            `number` = #{param1.number} ,
+            `remark` = #{form.remark} ,
+            `update_uid` = #{form.updateUid} ,
+            `update_time` = #{form.updateTime} ,
+            <if test="form.moveCount lt 1">
+                `warehouse_id` = #{form.warehouseId} ,
+                `reservoir_id` = #{form.reservoirId} ,
+                `stock_id` = #{param1.stockId} ,
+                `warehouse_tid` = #{form.warehouseTid} ,
+                `reservoir_tid` = #{form.reservoirTid} ,
+                `stock_tid` = #{form.stockTid} ,
+            </if>
+        </set>
+        where id = #{param1.id}
+    </update>
+    <update id="updateStatus">
+        update stock_trans
+        <set>
+            `status` = #{form.status} ,
+            <if test="form.status != 2">
+                approve_uid = #{form.approveUid},
+                approve_time = now() ,
+            </if>
+            <if test="form.status == 4">
+                reject_remark = #{param1.rejectRemark} ,
+            </if>
+        </set>
+        where id = #{param1.id}
+    </update>
+
+
+</mapper>

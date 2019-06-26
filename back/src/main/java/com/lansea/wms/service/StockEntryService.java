@@ -30,8 +30,9 @@ public class StockEntryService extends BaseService {
     @Transactional(rollbackFor = Exception.class)
     public Integer insert(StockEntry stockEntry) {
         stockEntry.setStatus(1);
+        Integer num = stockEntryMapper.insert(stockEntry);
         approveLogService.addStockEntryLog(stockEntry);
-        return stockEntryMapper.insert(stockEntry);
+        return num ;
     }
 
     /**

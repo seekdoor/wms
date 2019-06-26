@@ -4,6 +4,7 @@ import com.lansea.wms.mapper.ApproveLogMapper;
 import com.lansea.wms.model.ApproveLog;
 import com.lansea.wms.model.Move;
 import com.lansea.wms.model.StockEntry;
+import com.lansea.wms.model.StockTrans;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,17 +34,18 @@ public class ApproveLogService extends BaseService {
 
     /**
      * 添加以为日志
-     * @param move
+     *
+     * @param stockTrans 移位单
      * @return
      */
-    public ApproveLog addMoveLog(Move move) {
+    public ApproveLog addStockTransLog(StockTrans stockTrans) {
         ApproveLog approveLog = new ApproveLog();
         approveLog.setType(2);
-        String remark = move.getRemark();
-        if (move.getStatus() == 4) {
-            remark = move.getRejectRemark();
+        String remark = stockTrans.getRemark();
+        if (stockTrans.getStatus() == 4) {
+            remark = stockTrans.getRejectRemark();
         }
-        approveLogMapper.insert(setLogInfo(approveLog, move.getStatus(), move.getId(), remark));
+        approveLogMapper.insert(setLogInfo(approveLog, stockTrans.getStatus(), stockTrans.getId(), remark));
         return approveLog;
     }
 

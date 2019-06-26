@@ -137,4 +137,25 @@
         </set>
         where id = #{param1.id}
     </update>
+    <select id="selectByStockTransId" resultType="com.lansea.wms.model.Move">
+        <include refid="selectBase"></include>
+        where t.stock_trans_id = #{stockTransId}  and t.is_del is null
+    </select>
+    <update id="updateStatusByStockTrans">
+        update move
+        <set>
+            status = #{param1.status},
+            <if test="param1.status == 3 or param1.status == 4">
+                approve_uid = #{param1.approveUid} ,
+                approve_time = now(),
+            </if>
+            <if test="param1.status == 3">
+                reject_remark = '',
+            </if>
+            <if test="param1.status == 4">
+                reject_remark = #{param1.rejectRemark} ,
+            </if>
+        </set>
+        where stock_trans_id = #{param1.id}
+    </update>
 </mapper>
