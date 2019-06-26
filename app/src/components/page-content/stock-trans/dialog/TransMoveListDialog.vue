@@ -77,7 +77,7 @@
 
                     <el-table-column
                             prop="stockId"
-                            label="源货架编号"
+                            label="源货架"
                             width="120"
                     >
                         <template slot-scope="{row}">
@@ -93,7 +93,7 @@
 
                     <el-table-column
                             prop="stockTid"
-                            label="目标货架编号"
+                            label="目标货架"
                             width="120"
                     >
                         <template slot-scope="{row}">
@@ -102,7 +102,7 @@
                                     effect="dark"
                                     :content="stockText(row,true)"
                                     placement="top">
-                                <span class="cursor-p">{{row.stockToName}}</span>
+                                <span class="cursor-p">{{row.stockNameTo}}</span>
                             </el-tooltip>
                         </template>
                     </el-table-column>

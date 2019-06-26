@@ -25,9 +25,9 @@ export default class MoveModel extends BaseUser {
     reservoirName = '';
     stockName = '';
 
-    warehouseIdTo = 0;
-    reservoirIdTo = 0;
-    stockIdTo = 0;
+    warehouseTid = 0;
+    reservoirTid = 0;
+    stockTid = 0;
 
     warehousNameTo = '';
     reservoirNameTo = '';
