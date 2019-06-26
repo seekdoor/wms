@@ -28,6 +28,7 @@
     <select id="findById" resultType="com.lansea.wms.model.Inventory">
         <include refid="selectBase"></include>
         where t.id = #{id} and t.is_del is null
+        limit 1
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="form.id">
         insert into inventory(
@@ -61,7 +62,7 @@
         and is_del is null
     </select>
     <delete id="selectMoveCountByInventory">
-        select count(id) from move where inventory_id = #{inventory.id} and is_del is null
+        select count(id) from move where ( inventory_id = #{inventory.id} or inventory_tid = #{inventory.id} )  and is_del is null
     </delete>
     <update id="finishByMove">
         update inventory
@@ -98,7 +99,8 @@
     </update>
     <select id="findByMtlAndStk" resultType="com.lansea.wms.model.Inventory">
         <include refid="selectBase"></include>
-        where t.material_id = #{form.materialId} and t.stock_id = #{param1.stockId} and t.is_del is null and t.quantity > 0
+        where t.material_id = #{form.materialId} and t.stock_id = #{param1.stockId} and t.is_del is null and t.quantity
+        > 0
     </select>
 
 

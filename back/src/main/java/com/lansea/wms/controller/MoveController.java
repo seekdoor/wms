@@ -17,6 +17,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.groups.Default;
+import java.math.BigDecimal;
 
 
 @RestController
@@ -38,19 +39,33 @@ public class MoveController extends BaseController {
         );
     }
 
+    @GetMapping(value = "/select_by_stock_trans_id")
+    @ApiOperation(value = "根据移位单号获取")
+    Result selectByStockTransId(Integer stockTransId) {
+        return Result.success(
+                moveMapper.selectByStockTransId(stockTransId)
+        );
+    }
+
     @Autowired
     StockEntryMapper stockEntryMapper;
 
     @PostMapping(value = "/insert")
     @ApiOperation(value = "新增出入库信息")
-    Result insert(@Validated @RequestBody Move move, BindingResult result) {
+    Result insert(@Validated @RequestBody Move form, BindingResult result) {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
-        if (moveService.checkApproved(move)) {
+        if (form.getType() != 3 && form.getPlanQuantity().equals(new BigDecimal("0"))) {
+            return Result.error("计划数量不能为0");
+        }
+        if (form.getType() == 3) {
+            form.setPlanQuantity(form.getQuantity());
+        }
+        if (moveService.checkApproved(form)) {
             return Result.error("订单已被审批!");
         }
-        moveService.insertMove(move);
+        moveService.insertMove(form);
         return Result.success("添加成功");
     }
 

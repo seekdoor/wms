@@ -41,4 +41,7 @@ public interface InventoryMapper {
 
     Inventory findByMtlAndStk(@Param("form") Inventory form);
 
+    @Select("select distinct material_id, material_id from inventory where is_del is null and quantity > 0 and stock_id = #{stkId} ")
+    List<Integer> selectAllMtlIdsByStkId(@Param("stkId") Integer stkId);
+
 }

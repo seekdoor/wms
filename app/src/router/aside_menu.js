@@ -131,6 +131,13 @@ export default [
                     title: '出库管理',
                 },
             },
+            {
+                path: '/StockTransManager',
+                component: () => import("@/components/page-content/stock-trans/StockTransManagerView.vue"),
+                meta: {
+                    title: '库存移位',
+                },
+            },
         ]
     },
 

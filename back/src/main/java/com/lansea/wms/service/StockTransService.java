@@ -5,6 +5,7 @@ import com.lansea.wms.form.DeleteIdsForm;
 import com.lansea.wms.mapper.MoveMapper;
 import com.lansea.wms.mapper.StockTransMapper;
 import com.lansea.wms.model.Move;
+import com.lansea.wms.model.NumberCreate;
 import com.lansea.wms.model.StockTrans;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class StockTransService extends BaseService {
     @Autowired
     MoveMapper moveMapper;
 
+    @Autowired
+    NumberCreateService numberCreateService;
+
     /**
      * 新增移库单
      *
@@ -33,6 +37,7 @@ public class StockTransService extends BaseService {
      */
     @Transactional(rollbackFor = Exception.class)
     public Integer insert(StockTrans form) {
+        form.setNumber(numberCreateService.create("stock_trans"));
         Integer num = stockTransMapper.insert(form);
         approveLogService.addStockTransLog(form);
         return num;
@@ -62,7 +67,20 @@ public class StockTransService extends BaseService {
     }
 
     /**
-     * 提交审核移位
+     * 提交审核
+     *
+     * @param stockTrans
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Integer submit(StockTrans stockTrans) {
+        stockTrans.setStatus(2);
+        moveMapper.updateStatusByStockTrans(stockTrans);
+        return updateStatus(stockTrans);
+    }
+
+    /**
+     * 审核移位
      *
      * @param stockTrans
      * @return

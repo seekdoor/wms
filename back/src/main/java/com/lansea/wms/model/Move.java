@@ -28,8 +28,8 @@ public class Move extends BaseUserBetweenTime {
     private Integer inventoryTid;
     private Integer companyId;
     private Integer stockEntryId;
+    private Integer stockTransId;
 
-    @DecimalMin(value = "0.01", message = "请填写计划数量")
     private BigDecimal planQuantity;
 
     @DecimalMin(value = "0.01", message = "请填写实际数量")
@@ -70,15 +70,18 @@ public class Move extends BaseUserBetweenTime {
     private String reservoirCode;
     private String stockCode;
 
-    private Integer warehouseIdTo;
-    private Integer reservoirIdTo;
-    private Integer stockIdTo;
+    private Integer warehouseTid;
+    private Integer reservoirTid;
+    private Integer stockTid;
 
 
     private String warehouseNameTo;
     private String reservoirNameTo;
     private String stockNameTo;
 
+    private String warehouseCodeTo;
+    private String reservoirCodeTo;
+    private String stockCodeTo;
 
     public Integer getId() {
         return id;
@@ -232,30 +235,6 @@ public class Move extends BaseUserBetweenTime {
         this.stockName = stockName;
     }
 
-    public Integer getWarehouseIdTo() {
-        return warehouseIdTo;
-    }
-
-    public void setWarehouseIdTo(Integer warehouseIdTo) {
-        this.warehouseIdTo = warehouseIdTo;
-    }
-
-    public Integer getReservoirIdTo() {
-        return reservoirIdTo;
-    }
-
-    public void setReservoirIdTo(Integer reservoirIdTo) {
-        this.reservoirIdTo = reservoirIdTo;
-    }
-
-    public Integer getStockIdTo() {
-        return stockIdTo;
-    }
-
-    public void setStockIdTo(Integer stockIdTo) {
-        this.stockIdTo = stockIdTo;
-    }
-
     public String getWarehouseNameTo() {
         return warehouseNameTo;
     }
@@ -374,5 +353,61 @@ public class Move extends BaseUserBetweenTime {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Integer getStockTransId() {
+        return stockTransId;
+    }
+
+    public void setStockTransId(Integer stockTransId) {
+        this.stockTransId = stockTransId;
+    }
+
+    public Integer getWarehouseTid() {
+        return warehouseTid;
+    }
+
+    public void setWarehouseTid(Integer warehouseTid) {
+        this.warehouseTid = warehouseTid;
+    }
+
+    public Integer getReservoirTid() {
+        return reservoirTid;
+    }
+
+    public void setReservoirTid(Integer reservoirTid) {
+        this.reservoirTid = reservoirTid;
+    }
+
+    public Integer getStockTid() {
+        return stockTid;
+    }
+
+    public void setStockTid(Integer stockTid) {
+        this.stockTid = stockTid;
+    }
+
+    public String getWarehouseCodeTo() {
+        return warehouseCodeTo;
+    }
+
+    public void setWarehouseCodeTo(String warehouseCodeTo) {
+        this.warehouseCodeTo = warehouseCodeTo;
+    }
+
+    public String getReservoirCodeTo() {
+        return reservoirCodeTo;
+    }
+
+    public void setReservoirCodeTo(String reservoirCodeTo) {
+        this.reservoirCodeTo = reservoirCodeTo;
+    }
+
+    public String getStockCodeTo() {
+        return stockCodeTo;
+    }
+
+    public void setStockCodeTo(String stockCodeTo) {
+        this.stockCodeTo = stockCodeTo;
     }
 }

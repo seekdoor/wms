@@ -5,13 +5,11 @@ import com.lansea.wms.controller.base.BaseController;
 import com.lansea.wms.entity.Result;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.form.DeleteIdsForm;
-import com.lansea.wms.mapper.StockMapper;
 import com.lansea.wms.mapper.StockTransMapper;
 import com.lansea.wms.model.StockTrans;
 import com.lansea.wms.service.StockTransService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.omg.CORBA.INTERNAL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -31,7 +29,7 @@ public class StockTransController extends BaseController {
     @Autowired
     StockTransService stockTransService;
 
-    @GetMapping(value = "/selectWhere")
+    @GetMapping(value = "/select_where")
     @ApiOperation(value = "条件分页列表")
     Result selectWhere(StockTrans form) {
         pageService.setPaginate();
@@ -51,6 +49,9 @@ public class StockTransController extends BaseController {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
+        if (form.getStockId().equals(form.getStockTid())) {
+            return Result.error("源货架与目标货架不能是同一个货架！");
+        }
         stockTransService.insert(form);
         return Result.success("添加成功");
     }
@@ -66,6 +67,9 @@ public class StockTransController extends BaseController {
         if (status != 1 && status != 4) {
             return Result.error("库位单已被审批，无法修改！");
         }
+        if (form.getStockId().equals(form.getStockTid())) {
+            return Result.error("源货架与目标货架不能是同一个货架！");
+        }
         form.setMoveCount(stockTrans.getMoveCount());
         stockTransService.update(form);
         return Result.success("修改成功");
@@ -79,6 +83,20 @@ public class StockTransController extends BaseController {
         }
         Integer num = stockTransService.delete(form);
         return Result.successDelete(num);
+    }
+
+    @PostMapping(value = "/submit")
+    @ApiOperation(value = "提交审批")
+    Result submit(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockTrans form, BindingResult result) {
+        if (result.hasErrors()) {
+            return Result.errorByBindingResult(result);
+        }
+        StockTrans stockTrans = stockTransMapper.findById(form.getId());
+        if (!stockTrans.canSubmit()) {
+            return Result.error("已提交,不可重复提交!");
+        }
+        stockTransService.submit(form);
+        return null;
     }
 
     @PostMapping(value = "/approve")
@@ -98,5 +116,20 @@ public class StockTransController extends BaseController {
         stockTransService.approve(form);
         return Result.success("审批成功");
     }
+
+    @PostMapping(value = "/finish")
+    @ApiOperation(value = "完成操作")
+    Result finish(@Validated({ValidClass.EditForm.class, Default.class}) @RequestBody StockTrans form, BindingResult result) {
+        if (result.hasErrors()) {
+            return Result.errorByBindingResult(result);
+        }
+        StockTrans stockTrans = stockTransMapper.findById(form.getId());
+        if (!stockTrans.canFinish()) {
+            return Result.error("非法提交1");
+        }
+        stockTransService.finish(form);
+        return Result.success("已完成移位");
+    }
+
 
 }

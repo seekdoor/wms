@@ -43,4 +43,10 @@ public class InventoryController extends BaseController {
         return Result.success(inventoryMapper.findByMtlAndStk(inventory));
     }
 
+    @GetMapping(value = "/select_all_mtl_ids_by_stk_id")
+    @ApiOperation(value = "根据货架id获取物料id列表")
+    Result selectAllMtlIdsByStkId(Integer stkId){
+        return Result.success(inventoryMapper.selectAllMtlIdsByStkId(stkId));
+    }
+
 }

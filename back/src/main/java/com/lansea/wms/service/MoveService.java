@@ -5,9 +5,11 @@ import com.lansea.wms.form.DeleteIdsForm;
 import com.lansea.wms.mapper.InventoryMapper;
 import com.lansea.wms.mapper.MoveMapper;
 import com.lansea.wms.mapper.StockEntryMapper;
+import com.lansea.wms.mapper.StockTransMapper;
 import com.lansea.wms.model.Inventory;
 import com.lansea.wms.model.Move;
 import com.lansea.wms.model.StockEntry;
+import com.lansea.wms.model.StockTrans;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,6 +40,15 @@ public class MoveService extends BaseService {
         Inventory inventory = inventoryService.saveInventoryByMove(move);
         move.setCreateUidToLoginUser(userService);
         move.setInventoryId(inventory.getId());
+        if (move.getType() == 3) {
+            Move moveTo = new Move();
+            moveTo.setMaterialId(move.getMaterialId());
+            moveTo.setWarehouseId(move.getWarehouseTid());
+            moveTo.setReservoirId(move.getReservoirTid());
+            moveTo.setStockId(move.getStockTid());
+            Inventory ityTo = inventoryService.saveInventoryByMove(moveTo);
+            move.setInventoryTid(ityTo.getId());
+        }
         moveMapper.insert(move);
         return move;
     }
@@ -83,6 +94,9 @@ public class MoveService extends BaseService {
     @Autowired
     StockEntryMapper stockEntryMapper;
 
+    @Autowired
+    StockTransMapper stockTransMapper;
+
     /**
      * 出入库所属订单是否已经审批
      *
@@ -90,12 +104,16 @@ public class MoveService extends BaseService {
      * @return
      */
     public boolean checkApproved(Move move) {
-        if (move.getStockEntryId() > 0) {
+        Integer status = 0;
+        if (move.getType() != 3 && move.getStockEntryId() > 0) {
             StockEntry stockEntry = stockEntryMapper.findById(move.getStockEntryId());
-            Integer seStatus = stockEntry.getStatus();
-            return seStatus != 1 && seStatus != 4;
+            status = stockEntry.getStatus();
         }
-        return false;
+        if (move.getType() == 3 && move.getStockTransId() > 0) {
+            StockTrans stockTrans = stockTransMapper.findById(move.getStockTransId());
+            status = stockTrans.getStatus();
+        }
+        return status != null && status == 2;
     }
 
     /**

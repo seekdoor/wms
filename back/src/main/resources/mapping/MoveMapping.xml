@@ -12,12 +12,15 @@
         ity.warehouse_id,
         ity.reservoir_id,
         ity.stock_id,
-        ity_t.warehouse_id warehouse_id_to,
-        ity_t.reservoir_id reservoir_id_to,
-        ity_t.stock_id stock_id_to,
+        ity_t.warehouse_id warehouse_tid,
+        ity_t.reservoir_id reservoir_tid,
+        ity_t.stock_id stock_tid,
         war_t.name warehouse_name_to,
         res_t.name reservoir_name_to,
         stk_t.name stock_name_to ,
+        war_t.code warehouse_code_to,
+        res_t.code reservoir_code_to,
+        stk_t.code stock_code_to ,
         appr_u.real_name approve_user_name,
         ( select name from category where id = mtl.category_id ) material_category_name ,
         ( select name from category where id = mtl.unit_id ) material_unit_name
@@ -72,12 +75,12 @@
     <insert id="insert" useGeneratedKeys="true" keyProperty="move.id">
         insert into move (
         type, inventory_id, inventory_tid, company_id, stock_entry_id, happen_date, create_uid, create_time,
-        material_id, `number` , plan_quantity, quantity
+        material_id, `number` , plan_quantity, quantity, stock_trans_id
         )
         values(
         #{param1.type} ,#{move.inventoryId} ,#{move.inventoryTid} ,#{move.companyId} ,#{move.stockEntryId} ,
         #{move.happenDate} ,#{move.createUid} , now() , #{move.materialId},#{move.number},
-        #{move.planQuantity} ,#{move.quantity}
+        #{move.planQuantity} ,#{move.quantity}, #{move.stockTransId}
         )
     </insert>
     <update id="update">
@@ -139,7 +142,7 @@
     </update>
     <select id="selectByStockTransId" resultType="com.lansea.wms.model.Move">
         <include refid="selectBase"></include>
-        where t.stock_trans_id = #{stockTransId}  and t.is_del is null
+        where t.stock_trans_id = #{stockTransId} and t.is_del is null
     </select>
     <update id="updateStatusByStockTrans">
         update move

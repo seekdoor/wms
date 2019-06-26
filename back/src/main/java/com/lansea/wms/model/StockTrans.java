@@ -19,7 +19,7 @@ public class StockTrans extends BaseWareUserTime {
     @Min(value = 1, message = "id 非法", groups = {ValidClass.EditForm.class})
     private Integer id;
 
-    @CodeValidate(message = "单号长度必须为 2-40")
+    @CodeValidate(message = "单号长度必须为 2-40", groups = {ValidClass.EditForm.class})
     private String number;
     private Integer status;
 
@@ -29,18 +29,19 @@ public class StockTrans extends BaseWareUserTime {
     private Integer warehouseTid;
     private Integer reservoirTid;
 
-    @Min(value = 1, message = "请选择移动货架")
-    private Integer stockTid;
-
-    private String warehouseToName;
-    private String reservoirToName;
-    private String stockToName;
-
-    private String warehouseToCode;
-    private String reservoirToCode;
+    @Min(value = 1, message = "请选择源货架")
+    private Integer stockId;
 
     @Min(value = 1, message = "请选择目标货架")
-    private String stockToCode;
+    private Integer stockTid;
+
+    private String warehouseNameTo;
+    private String reservoirNameTo;
+    private String stockNameTo;
+
+    private String warehouseCodeTo;
+    private String reservoirCodeTo;
+    private String stockCodeTo;
 
     private Integer moveCount;
 
@@ -56,6 +57,7 @@ public class StockTrans extends BaseWareUserTime {
 
     /**
      * 是否允许提交
+     *
      * @return
      */
     public boolean canSubmit() {
@@ -82,7 +84,6 @@ public class StockTrans extends BaseWareUserTime {
         if (status == null) return false;
         return status == 3;
     }
-
 
 
     // ################################################################################
@@ -143,52 +144,62 @@ public class StockTrans extends BaseWareUserTime {
         this.stockTid = stockTid;
     }
 
-    public String getWarehouseToName() {
-        return warehouseToName;
+    @Override
+    public Integer getStockId() {
+        return stockId;
     }
 
-    public void setWarehouseToName(String warehouseToName) {
-        this.warehouseToName = warehouseToName;
+    @Override
+    public void setStockId(Integer stockId) {
+        this.stockId = stockId;
     }
 
-    public String getReservoirToName() {
-        return reservoirToName;
+    public String getWarehouseNameTo() {
+        return warehouseNameTo;
     }
 
-    public void setReservoirToName(String reservoirToName) {
-        this.reservoirToName = reservoirToName;
+    public void setWarehouseNameTo(String warehouseNameTo) {
+        this.warehouseNameTo = warehouseNameTo;
     }
 
-    public String getStockToName() {
-        return stockToName;
+    public String getReservoirNameTo() {
+        return reservoirNameTo;
     }
 
-    public void setStockToName(String stockToName) {
-        this.stockToName = stockToName;
+    public void setReservoirNameTo(String reservoirNameTo) {
+        this.reservoirNameTo = reservoirNameTo;
     }
 
-    public String getWarehouseToCode() {
-        return warehouseToCode;
+    public String getStockNameTo() {
+        return stockNameTo;
     }
 
-    public void setWarehouseToCode(String warehouseToCode) {
-        this.warehouseToCode = warehouseToCode;
+    public void setStockNameTo(String stockNameTo) {
+        this.stockNameTo = stockNameTo;
     }
 
-    public String getReservoirToCode() {
-        return reservoirToCode;
+    public String getWarehouseCodeTo() {
+        return warehouseCodeTo;
     }
 
-    public void setReservoirToCode(String reservoirToCode) {
-        this.reservoirToCode = reservoirToCode;
+    public void setWarehouseCodeTo(String warehouseCodeTo) {
+        this.warehouseCodeTo = warehouseCodeTo;
     }
 
-    public String getStockToCode() {
-        return stockToCode;
+    public String getReservoirCodeTo() {
+        return reservoirCodeTo;
     }
 
-    public void setStockToCode(String stockToCode) {
-        this.stockToCode = stockToCode;
+    public void setReservoirCodeTo(String reservoirCodeTo) {
+        this.reservoirCodeTo = reservoirCodeTo;
+    }
+
+    public String getStockCodeTo() {
+        return stockCodeTo;
+    }
+
+    public void setStockCodeTo(String stockCodeTo) {
+        this.stockCodeTo = stockCodeTo;
     }
 
     public Integer getMoveCount() {
@@ -215,19 +226,19 @@ public class StockTrans extends BaseWareUserTime {
         this.approveTime = approveTime;
     }
 
-    public String getApproveUserName() {
-        return approveUserName;
-    }
-
-    public void setApproveUserName(String approveUserName) {
-        this.approveUserName = approveUserName;
-    }
-
     public String getRejectRemark() {
         return rejectRemark;
     }
 
     public void setRejectRemark(String rejectRemark) {
         this.rejectRemark = rejectRemark;
+    }
+
+    public String getApproveUserName() {
+        return approveUserName;
+    }
+
+    public void setApproveUserName(String approveUserName) {
+        this.approveUserName = approveUserName;
     }
 }

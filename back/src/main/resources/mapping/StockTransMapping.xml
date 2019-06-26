@@ -6,12 +6,12 @@
 
         select
         t.* ,
-        war_t.code warehouse_code ,
-        war_t.name warehouse_name ,
-        res_t.code reservoir_code,
-        res_t.name reservoir_name ,
-        stk_t.code stock_code,
-        stk_t.name stock_name,
+        war_t.code warehouse_code_to ,
+        war_t.name warehouse_name_to ,
+        res_t.code reservoir_code_to,
+        res_t.name reservoir_name_to ,
+        stk_t.code stock_code_to,
+        stk_t.name stock_name_to,
         ( select count(id) from move where move.stock_trans_id = t.id and move.is_del is null ) move_count,
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
         from stock_trans t
@@ -41,7 +41,7 @@
     </select>
     <select id="findById" resultType="com.lansea.wms.model.StockTrans">
         <include refid="selectBase"></include>
-        where t.id = #{id} and is_del is null
+        where t.id = #{id} and t.is_del is null
     </select>
     <insert id="insert" useGeneratedKeys="true" keyProperty="form.id">
         insert into stock_trans(
@@ -50,14 +50,13 @@
         create_uid,  create_time)
         values (
         #{param1.number} ,#{form.warehouseId} ,#{form.reservoirId} ,#{param1.stockId} ,
-        1, #{form.remark} ,#{form.warehouseTid} ,#{form.reservoirTid} ,#{param1.stockId} ,
+        1, #{form.remark} ,#{form.warehouseTid} ,#{form.reservoirTid} ,#{param1.stockTid} ,
         #{param1.createUid} , now()
         )
     </insert>
     <update id="update">
         update stock_trans
         <set>
-            `number` = #{param1.number} ,
             `remark` = #{form.remark} ,
             `update_uid` = #{form.updateUid} ,
             `update_time` = #{form.updateTime} ,
