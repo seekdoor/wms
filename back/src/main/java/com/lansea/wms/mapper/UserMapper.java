@@ -35,4 +35,6 @@ public interface UserMapper {
     @Update("update user where is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
+    Integer logout(@Param("user") User user);
+
 }

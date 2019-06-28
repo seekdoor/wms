@@ -39,6 +39,8 @@ public class Inventory extends BaseWarehouseAndUser {
     private String materialCode;
     private String materialName;
 
+    private String mtlUnitName;
+
 
     public Integer getId() {
         return id;
@@ -110,5 +112,13 @@ public class Inventory extends BaseWarehouseAndUser {
 
     public void setMaterialName(String materialName) {
         this.materialName = materialName;
+    }
+
+    public String getMtlUnitName() {
+        return mtlUnitName;
+    }
+
+    public void setMtlUnitName(String mtlUnitName) {
+        this.mtlUnitName = mtlUnitName;
     }
 }

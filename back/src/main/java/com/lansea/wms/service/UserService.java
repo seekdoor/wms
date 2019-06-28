@@ -54,4 +54,15 @@ public class UserService {
         }
         return users;
     }
+
+    /**
+     * 用户退出登录
+     *
+     * @return
+     */
+    public Integer logOut() {
+
+        return userMapper.logout(getLoginUser());
+
+    }
 }

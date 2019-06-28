@@ -22,6 +22,9 @@
         res_t.code reservoir_code_to,
         stk_t.code stock_code_to ,
         appr_u.real_name approve_user_name,
+        stk_e.number stockEntryNumber ,
+        stk_e.order_number stockEntryOrderNumber ,
+        stk_ts.number stockTransNumber ,
         ( select name from category where id = mtl.category_id ) material_category_name ,
         ( select name from category where id = mtl.unit_id ) material_unit_name
         from move t
@@ -36,6 +39,8 @@
         left join reservoir res_t on ity_t.reservoir_id = res_t.id
         left join stock stk_t on ity_t.stock_id = stk_t.id
         left join `user` appr_u on appr_u.id = t.approve_uid
+        left join stock_entry stk_e on stk_e.id = t.stock_entry_id
+        left join stock_trans stk_ts on stk_ts.id = t.stock_trans_id
     </sql>
     <select id="selectWhere" resultType="com.lansea.wms.model.Move">
         <include refid="selectBase"></include>
@@ -46,10 +51,10 @@
             <if test="move.companyId != null and move.companyId != 0">
                 and t.company_id = #{param1.companyId}
             </if>
-            <if test="move.startTime != null and move.startTime != ''">
+            <if test="move.startTime != null">
                 and t.happen_date >= #{param1.startTime}
             </if>
-            <if test="move.endTime != null and move.endTime != ''">
+            <if test="move.endTime != null">
                 and t.happen_date &lt; #{param1.endTime}
             </if>
             <if test="move.status != null and move.status != 0">
@@ -63,6 +68,15 @@
             </if>
             <if test="param1.stockId != null and param1.stockId != 0">
                 and ity.stock_id = #{param1.stockId}
+            </if>
+            <if test="param1.stockEntryNumber != null and param1.stockEntryNumber != ''">
+                and stk_e.number like '%${param1.stockEntryNumber}%'
+            </if>
+            <if test="param1.stockEntryOrderNumber != null and param1.stockEntryOrderNumber != ''">
+                and stk_e.order_number like '%${param1.stockEntryOrderNumber}%'
+            </if>
+            <if test="param1.stockTransNumber != null and param1.stockTransNumber != ''">
+                and stk_ts.number like '%${param1.stockTransNumber}%'
             </if>
             and t.is_del is null
         </where>

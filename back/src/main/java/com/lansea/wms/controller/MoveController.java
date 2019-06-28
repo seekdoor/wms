@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.groups.Default;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @RestController
@@ -97,5 +98,33 @@ public class MoveController extends BaseController {
         moveService.updateMove(move);
         return Result.success("修改成功");
     }
+
+    @GetMapping(value = "/stock_in_list")
+    @ApiOperation(value = "入库记录")
+    Result stockInList(Move move) {
+        move.setType(1);
+        pageService.setPaginate();
+        List<Move> list = moveMapper.selectWhere(move, pageService.createSort());
+        return Result.successPage(list);
+    }
+
+    @GetMapping(value = "/stock_out_list")
+    @ApiOperation(value = "出库记录")
+    Result stockOutList(Move move) {
+        move.setType(2);
+        pageService.setPaginate();
+        List<Move> list = moveMapper.selectWhere(move, pageService.createSort());
+        return Result.successPage(list);
+    }
+
+    @GetMapping(value = "/trans_list")
+    @ApiOperation(value = "移位记录")
+    Result transList(Move move){
+        move.setType(3);
+        pageService.setPaginate();
+        List<Move> list = moveMapper.selectWhere(move, pageService.createSort());
+        return Result.successPage(list);
+    }
+
 
 }

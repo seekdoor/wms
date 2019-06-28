@@ -1,6 +1,6 @@
 export default {
 
     domain : 'http://localhost:9102/' ,
-    domainName : '蓝海 wms 系统' ,
+    domainName : '通用 wms 系统' ,
 
 }

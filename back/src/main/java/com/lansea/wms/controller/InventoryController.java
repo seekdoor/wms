@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/inventory")
 @Api(description = "库存管理")
@@ -45,8 +47,17 @@ public class InventoryController extends BaseController {
 
     @GetMapping(value = "/select_all_mtl_ids_by_stk_id")
     @ApiOperation(value = "根据货架id获取物料id列表")
-    Result selectAllMtlIdsByStkId(Integer stkId){
+    Result selectAllMtlIdsByStkId(Integer stkId) {
         return Result.success(inventoryMapper.selectAllMtlIdsByStkId(stkId));
     }
+
+    @GetMapping(value = "/list")
+    @ApiOperation(value = "条件查询分页列表")
+    Result list(Inventory inventory) {
+        pageService.setPaginate();
+        List<Inventory> list = inventoryMapper.selectWhere(inventory, pageService.createSort());
+        return Result.successPage(list);
+    }
+
 
 }

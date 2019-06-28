@@ -110,4 +110,5 @@ public class UserController {
         Integer num = userMapper.deleteByIds(form.getIds());
         return Result.success("共删除" + num + "条记录");
     }
+
 }

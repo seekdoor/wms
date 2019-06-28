@@ -5,7 +5,6 @@ import com.lansea.wms.form.DeleteIdsForm;
 import com.lansea.wms.mapper.MoveMapper;
 import com.lansea.wms.mapper.StockTransMapper;
 import com.lansea.wms.model.Move;
-import com.lansea.wms.model.NumberCreate;
 import com.lansea.wms.model.StockTrans;
 import com.lansea.wms.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;

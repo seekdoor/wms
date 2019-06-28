@@ -2,9 +2,11 @@ package com.lansea.wms.model.base;
 
 import com.lansea.wms.util.DateUtil;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 
+@Component
 public class BaseWareUserTime extends BaseWarehouseAndUser {
 
     @DateTimeFormat(pattern = DateUtil.DATE_FORMAT)

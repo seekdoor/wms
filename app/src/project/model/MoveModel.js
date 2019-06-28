@@ -38,4 +38,10 @@ export default class MoveModel extends BaseUser {
 
     deliveryId = 0;
 
+    stockEntryNumber = '';
+    stockEntryOrderNumber = '';
+
+    stockTransNumber = '';
+    stockTransOrderNumber = '';
+
 }

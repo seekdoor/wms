@@ -1,5 +1,6 @@
 package com.lansea.wms.mapper;
 
+import com.lansea.wms.entity.Sort;
 import com.lansea.wms.model.Inventory;
 import com.lansea.wms.model.Move;
 import com.lansea.wms.model.StockEntry;
@@ -13,7 +14,7 @@ import java.util.List;
 @Mapper
 public interface InventoryMapper {
 
-    List<Inventory> selectWhere(@Param("form") Inventory form);
+    List<Inventory> selectWhere(@Param("form") Inventory form, @Param("sort") Sort sort);
 
     Inventory findById(@Param("id") Integer id);
 

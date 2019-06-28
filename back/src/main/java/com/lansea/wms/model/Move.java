@@ -83,6 +83,12 @@ public class Move extends BaseUserBetweenTime {
     private String reservoirCodeTo;
     private String stockCodeTo;
 
+    private String StockEntryNumber;
+    private String StockEntryOrderNumber;
+
+    private String stockTransNumber;
+    private String stockTransOrderNumber;
+
     public Integer getId() {
         return id;
     }
@@ -409,5 +415,37 @@ public class Move extends BaseUserBetweenTime {
 
     public void setStockCodeTo(String stockCodeTo) {
         this.stockCodeTo = stockCodeTo;
+    }
+
+    public String getStockEntryNumber() {
+        return StockEntryNumber;
+    }
+
+    public void setStockEntryNumber(String stockEntryNumber) {
+        StockEntryNumber = stockEntryNumber;
+    }
+
+    public String getStockEntryOrderNumber() {
+        return StockEntryOrderNumber;
+    }
+
+    public void setStockEntryOrderNumber(String stockEntryOrderNumber) {
+        StockEntryOrderNumber = stockEntryOrderNumber;
+    }
+
+    public String getStockTransNumber() {
+        return stockTransNumber;
+    }
+
+    public void setStockTransNumber(String stockTransNumber) {
+        this.stockTransNumber = stockTransNumber;
+    }
+
+    public String getStockTransOrderNumber() {
+        return stockTransOrderNumber;
+    }
+
+    public void setStockTransOrderNumber(String stockTransOrderNumber) {
+        this.stockTransOrderNumber = stockTransOrderNumber;
     }
 }

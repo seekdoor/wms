@@ -156,7 +156,7 @@ public class StockEntryController extends BaseController {
             return Result.error(sRes);
         }
         StockEntry stockEntry = stockEntryMapper.findById(form.getStockEntry().getId());
-        if( stockEntry.getStatus() != 3){
+        if (stockEntry.getStatus() != 3) {
             return Result.error("请审核完成后重试！");
         }
         if (form.getNeedDelivery() == 1) {

@@ -77,6 +77,12 @@
         where
         id = #{user.id}
     </insert>
+    <update id="logout">
+        update user
+        set
+            token = null ,
+        where id = ${user.id}
+    </update>
 
 
 </mapper>

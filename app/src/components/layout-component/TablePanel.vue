@@ -32,6 +32,7 @@
                             label="操作"
                             :fixed="fixed"
                             :width="operateWidth"
+                            v-if="operateShow"
                     >
                         <template slot-scope="scope">
                             <slot name="operate" :row="scope.row"></slot>
@@ -43,27 +44,30 @@
                             label="仓库"
                             :sortable="sortable"
                             width="140"
+                            :show-overflow-tooltip="true"
                             v-if="showAllWarehouse || showWarehouse"
                     >
-                        <template slot-scope="{row}">{{ row.warehouseName }}</template>
+                        <template slot-scope="{row}">({{ row.warehouseCode }}){{ row.warehouseName }}</template>
                     </el-table-column>
                     <el-table-column
                             prop="reservoirId"
                             label="库区"
                             :sortable="sortable"
                             width="140"
+                            :show-overflow-tooltip="true"
                             v-if="showAllWarehouse || showReservoir"
                     >
-                        <template slot-scope="{row}">{{ row.reservoirName }}</template>
+                        <template slot-scope="{row}">({{ row.reservoirCode }}){{ row.reservoirName }}</template>
                     </el-table-column>
                     <el-table-column
                             prop="stockId"
                             label="货架"
                             :sortable="sortable"
                             width="140"
+                            :show-overflow-tooltip="true"
                             v-if="showAllWarehouse || showStock"
                     >
-                        <template slot-scope="{row}">{{ row.stockName }}</template>
+                        <template slot-scope="{row}">({{ row.stockCode }}){{ row.stockName }}</template>
                     </el-table-column>
                     <el-table-column
                             prop="createUid"
@@ -269,7 +273,7 @@
                     t.style.visiblity = 'hidden';
                 });
             },
-            doLayOut(){
+            doLayOut() {
                 this.$refs.table.doLayout();
             }
         },

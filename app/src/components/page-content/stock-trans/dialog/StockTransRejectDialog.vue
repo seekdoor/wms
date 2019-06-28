@@ -32,6 +32,7 @@
     import ElButtonSubmit from "@/components/common/button/ElButtonSubmit";
     import Api from "@/assets/api/Api";
     import DialogUtil from "@/util/DialogUtil";
+    import StockTransModel from "@/project/model/StockTransModel";
 
     export default {
         name: "StockTransRejectDialog",
@@ -40,15 +41,15 @@
             visible: {
                 default: false
             },
-            stockEntry: {
+            stockTrans: {
                 default() {
-                    return new StockEntryModel()
+                    return new StockTransModel()
                 }
             }
         },
         data() {
             return {
-                form: Object.assign({}, this.stockEntry),
+                form: Object.assign({}, this.stockTrans),
                 loading: false,
             }
         },
@@ -64,7 +65,7 @@
             submit() {
                 this.loading = true;
                 this.form.status = 4;
-                this.$ajax.request(Api.stockEntry.approve, this.form).then(resp => {
+                this.$ajax.request(Api.stockTrans.approve, this.form).then(resp => {
                     DialogUtil.toastSuccess(resp);
                     this.showDialog(false);
                     this.$emit('finish');
@@ -74,7 +75,7 @@
         watch: {
             visible(v) {
                 if (v) {
-                    this.form = Object.assign({}, this.stockEntry);
+                    this.form = Object.assign({}, this.stockTrans);
                 }
             }
         },

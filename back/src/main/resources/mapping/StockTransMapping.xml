@@ -29,10 +29,10 @@
             <if test="form.status != null and form.status != 0">
                 and t.status = #{form.status}
             </if>
-            <if test="form.startTime != null and form.startTime != ''">
+            <if test="form.startTime != null">
                 and t.create_time >= #{form.startTime}
             </if>
-            <if test="form.endTime != null and form.endTime != ''">
+            <if test="form.endTime != null">
                 and t.create_time &lt;= #{form.endTime}
             </if>
             and t.is_del is null

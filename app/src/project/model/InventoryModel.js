@@ -12,5 +12,6 @@ export default class InventoryModel extends BaseWarehouseAndUser {
     lastOutQuantity = 0;
     materialCode = '';
     materialName = '';
+    mtlUnitName = '';
 
 }

@@ -8,6 +8,7 @@ import com.lansea.wms.form.DeleteIdsForm;
 import com.lansea.wms.mapper.StockTransMapper;
 import com.lansea.wms.model.StockTrans;
 import com.lansea.wms.service.StockTransService;
+import com.lansea.wms.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,7 +97,7 @@ public class StockTransController extends BaseController {
             return Result.error("已提交,不可重复提交!");
         }
         stockTransService.submit(form);
-        return null;
+        return Result.success("提交成功!");
     }
 
     @PostMapping(value = "/approve")
@@ -112,6 +113,9 @@ public class StockTransController extends BaseController {
         Integer fStatus = form.getStatus();
         if (fStatus != 3 && fStatus != 4) {
             return Result.error("非法请求2");
+        }
+        if (fStatus == 4 && StringUtil.isBlank(form.getRejectRemark())) {
+            return Result.error("请填写驳回理由");
         }
         stockTransService.approve(form);
         return Result.success("审批成功");

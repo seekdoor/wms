@@ -40,10 +40,10 @@ export default {
      * @returns {{sortOrder: string, sortField: *}|{}}
      */
     getSortField(column, prefix = '') {
-        if (!column) return {};
+        if (!column || !column.column) return {};
         if (prefix !== '') {
-            if (!column.includes('.')) {
-                column = prefix + '.' + column;
+            if (!column.prop.includes('.')) {
+                column.prop = prefix + '.' + column.prop;
             }
         }
         return {

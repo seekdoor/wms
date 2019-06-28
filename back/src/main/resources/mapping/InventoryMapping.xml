@@ -7,23 +7,25 @@
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseField"></include>
         ,
         mtl.code material_code,
-        mtl.name material_name
+        mtl.name material_name,
+        cty.name mtl_unit_name
         from inventory t
         <include refid="com.lansea.wms.mapper.base.TempMapper.selectUserWarehouseJoin"></include>
         left join material mtl on mtl.id = t.material_id
+        left join category cty on cty.id = mtl.unit_id
     </sql>
     <select id="selectWhere" resultType="com.lansea.wms.model.Inventory">
         <include refid="selectBase"></include>
         <where>
             <if test="form.materialCode != null and form.materialCode != ''">
-                and mtl.code like '%{$form.materialCode}%'
+                and mtl.code like '%${form.materialCode}%'
             </if>
             <if test="form.materialName != null and form.materialName != ''">
-                and mtl.name like '%{$form.materialName}%'
+                and mtl.name like '%${form.materialName}%'
             </if>
             <include refid="com.lansea.wms.mapper.base.TempMapper.whereWarehouse"></include>
         </where>
-        <include refid="com.lansea.wms.mapper.base.TempMapper.sortNoT"></include>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
     </select>
     <select id="findById" resultType="com.lansea.wms.model.Inventory">
         <include refid="selectBase"></include>

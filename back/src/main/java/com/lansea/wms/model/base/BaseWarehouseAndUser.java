@@ -1,7 +1,10 @@
 package com.lansea.wms.model.base;
 
+import org.springframework.stereotype.Component;
+
 import javax.validation.constraints.Min;
 
+@Component
 public class BaseWarehouseAndUser extends BaseUser {
 
     @Min(value = 1, message = "请选择仓库")

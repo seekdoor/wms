@@ -1,5 +1,6 @@
 package com.lansea.wms.mapper;
 
+import com.lansea.wms.entity.Sort;
 import com.lansea.wms.model.Move;
 import com.lansea.wms.model.StockEntry;
 import com.lansea.wms.model.StockTrans;
@@ -12,7 +13,7 @@ import java.util.List;
 @Mapper
 public interface MoveMapper {
 
-    List<Move> selectWhere(@Param("move") Move move);
+    List<Move> selectWhere(@Param("move") Move move, @Param("sort") Sort sort);
 
     Move findById(@Param("id") Integer id);
 

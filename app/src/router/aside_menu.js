@@ -138,6 +138,27 @@ export default [
                     title: '库存移位',
                 },
             },
+            {
+                path: '/InventorySearchView',
+                component: () => import("@/components/page-content/inventory/InventorySearchView.vue"),
+                meta: {
+                    title: '库存记录',
+                },
+            },
+            {
+                path: '/StockInLogView',
+                component: () => import("@/components/page-content/stock-entry/StockInLogView.vue"),
+                meta: {
+                    title: '入库记录',
+                },
+            },
+            {
+                path: '/StockOutLogView',
+                component: () => import("@/components/page-content/stock-entry/StockOutLogView.vue"),
+                meta: {
+                    title: '出库记录',
+                },
+            },
         ]
     },
 

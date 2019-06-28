@@ -254,23 +254,17 @@
                 :stock-trans="selectStockTrans"
                 @finish="refreshData"
         ></trans-move-add-dialog>
-        <stock-entry-preview-dialog
+        <stock-trans-preview-dialog
                 :visible.sync="showPreviewDialog"
                 :edit-id="editId"
                 :type="type"
-        ></stock-entry-preview-dialog>
-        <stock-entry-reject-dialog
+        ></stock-trans-preview-dialog>
+        <stock-trans-reject-dialog
                 :visible.sync="showRejectDialog"
-                :stock-entry="selectStockTrans"
+                :stock-trans="selectStockTrans"
                 :type="type"
                 @finish="refreshData"
-        ></stock-entry-reject-dialog>
-        <stock-entry-delivery-finish-dialog
-                :visible.sync="showDeliveryFinishDialog"
-                :stock-entry="selectStockTrans"
-                :type="type"
-                @finish="refreshData"
-        ></stock-entry-delivery-finish-dialog>
+        ></stock-trans-reject-dialog>
     </div>
 </template>
 
@@ -299,10 +293,14 @@
     import TransMoveAddDialog from "@/components/page-content/stock-trans/dialog/TransMoveAddDialog";
     import TransMoveListDialog from "@/components/page-content/stock-trans/dialog/TransMoveListDialog";
     import StockTransAddDialog from "@/components/page-content/stock-trans/dialog/StockTransAddDialog";
+    import StockTransRejectDialog from "@/components/page-content/stock-trans/dialog/StockTransRejectDialog";
+    import StockTransPreviewDialog from "@/components/page-content/stock-trans/dialog/StockTransPreviewDialog";
 
     export default {
         name: "StockTransManagerView",
         components: {
+            StockTransPreviewDialog,
+            StockTransRejectDialog,
             StockTransAddDialog,
             TransMoveListDialog,
             TransMoveAddDialog,
@@ -453,12 +451,12 @@
 
             finishSE(nodes) {
                 DialogUtil.confirm(`
-                    确定完成一下单号？ </br>
+                    确定要完成以下移位单？ </br>
                     [ ${nodes[0].number} ]
                 `).then(() => {
                     let se = Object.assign({}, nodes[0]);
                     se.status = 5;
-                    return this.$ajax.request(Api.stockEntry.finish, se);
+                    return this.$ajax.request(Api.stockTrans.finish, se);
                 }).then(resp => {
                     DialogUtil.toastSuccess(resp);
                     this.refreshData();
@@ -473,10 +471,10 @@
             },
             submit(nodes) {
                 DialogUtil.confirm(`
-                    确定要将以下订单提交审核吗？ </br>
+                    确定要将以下移位单提交审核吗？ </br>
                     [ ${nodes[0].number} ]
                 `).then(() => {
-                    return this.$ajax.request(Api.stockEntry.submit, nodes[0]);
+                    return this.$ajax.request(Api.stockTrans.submit, nodes[0]);
                 }).then(resp => {
                     DialogUtil.toastSuccess(resp);
                     this.refreshData();

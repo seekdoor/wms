@@ -122,6 +122,9 @@ export default {
         delete: ['/move/delete', 'post'],
         getById: ['/move/get_by_id', 'get'],
         update: ['/move/update', 'post'],
+        stockInList: ['/move/stock_in_list', 'get'],
+        stockOutList: ['/move/stock_out_list', 'get'],
+        transList: ['/move/trans_list', 'get'],
     },
     inventory: {
         selectAllMaterialIds: ['/inventory/select_all_material_ids', 'get'],
@@ -129,6 +132,7 @@ export default {
         selectAllStockIdsByMtlIds: ['/inventory/select_all_stock_ids_by_mtl_ids', 'get'],
         getByMtlAndStk: ['/inventory/get_by_mtl_and_stk', 'get'],
         selectAllMtlIdsByStkId: ['/inventory/select_all_mtl_ids_by_stk_id', 'get'],
+        list: ['/inventory/list', 'get'],
     },
     stockTrans: {
         approve: ['/stock_trans/approve', 'post'],

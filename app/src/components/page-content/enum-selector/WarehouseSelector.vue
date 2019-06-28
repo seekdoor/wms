@@ -102,7 +102,7 @@
             },
 
             itemChange(nodes) {
-                if (nodes.length < this.level) return;
+                if ( !this.isFilter && nodes.length < this.level) return;
                 this.$emit('input', nodes.length !== this.level ? 0 : nodes[nodes.length - 1]);
                 this.$emit('change', nodes);
             }
