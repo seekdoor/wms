@@ -1,5 +1,9 @@
 import VueUtil from "@/util/VueUtil";
 import UrlUtil from "@/util/UrlUtil";
+import CollectionUtil from "@/util/CollectionUtil";
+import aside_menu from "@/router/aside_menu";
+import ObjectUtil from "@/util/ObjectUtil";
+import Windows from "@/project/var/Windows";
 
 export default {
 
@@ -42,7 +46,7 @@ export default {
             this.toPath(to, params);
         } else {
             this.toRoute(to);
-       }
+        }
     },
 
     /**
@@ -60,10 +64,36 @@ export default {
      * 用于翻页浏览器地址保存
      * @param params
      */
-    setQuery(params = {}){
+    setQuery(params = {}) {
         let nowQuery = UrlUtil.query();
-        nowQuery = Object.assign(nowQuery,params);
+        nowQuery = Object.assign(nowQuery, params);
         location.query = UrlUtil.toQueryString(nowQuery);
-    }
+    },
 
+    /**
+     * 跳转到登录界面
+     * @param query
+     */
+    toLogin(query = {}) {
+        this.toRoute({
+            path: '/Login',
+            query: query
+        })
+    },
+    /**
+     * 跳转到后台
+     * @param query
+     */
+    toBack(query = {}) {
+        this.toRoute({
+            path: '/Back',
+            query: query
+        })
+    },
+
+    toWindow(path, query = {}) {
+        let route = CollectionUtil.findDeep(aside_menu, x => x.path === path);
+        route.params = query;
+        Windows.set(route);
+    }
 }

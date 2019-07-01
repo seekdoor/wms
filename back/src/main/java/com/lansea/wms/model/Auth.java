@@ -1,5 +1,6 @@
 package com.lansea.wms.model;
 
+import com.lansea.wms.entity.SerializeBase;
 import com.lansea.wms.entity.ValidClass;
 import io.swagger.annotations.ApiModel;
 import org.hibernate.validator.constraints.Length;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Repository
 @ApiModel(value = "Auth")
-public class Auth {
+public class Auth extends SerializeBase {
 
     @Min(value = 1, message = "id非法", groups = {ValidClass.EditForm.class})
     private Integer id;

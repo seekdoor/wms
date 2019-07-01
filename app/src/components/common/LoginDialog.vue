@@ -1,18 +1,13 @@
 <template>
     <div class="LoginDialog">
-        <el-dialog
-                title="后台登陆"
-                :visible.sync="visible"
-                :show-close="false"
-                :close-on-click-modal="false"
-                width="320px"
-        >
+        <div class="mar-center login-dialog" >
+            <div class="fz-md text-center dialog-title">WMS 登录</div>
             <el-form :model="form">
                 <el-form-item label="用户名">
-                    <el-input v-model="form.userName" autocomplete="off"></el-input>
+                    <el-input v-model="form.userName" autocomplete="off" size="middle"></el-input>
                 </el-form-item>
                 <el-form-item label="密码">
-                    <el-input type="password" v-model="form.password" autocomplete="off"></el-input>
+                    <el-input type="password" v-model="form.password" autocomplete="off" size="middle"></el-input>
                 </el-form-item>
             </el-form>
             <div class="mt-lg">
@@ -28,7 +23,7 @@
                     登录后台
                 </el-button>
             </div>
-        </el-dialog>
+        </div>
     </div>
 </template>
 
@@ -65,13 +60,13 @@
         },
         methods: {
             reload() {
-                console.log(123);
             },
             clickSubmitButton() {
                 this.submitting = true;
                 AjaxUtil.request(Api.logReg.login, this.form)
                     .then(user => {
                         UserHandle.setLoginUser(user);
+                        DialogUtil.toastSuccess("成功登陆后台");
                         this.$_router.to('/Back');
                     }).finally(() => this.submitting = false);
             }
@@ -85,5 +80,14 @@
     @import (reference) "~@/style/all.less";
 
     .LoginDialog {
+        .login-dialog{
+            width: 260px;
+            margin-top: 100px;
+            padding: 20px 20px;
+            border: 1px solid #eaeaea;
+        }
+        .dialog-title{
+
+        }
     }
 </style>

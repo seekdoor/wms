@@ -162,5 +162,22 @@ export default [
         ]
     },
 
+    {
+        path: '/LoggerList',
+        component: () => import("@/components/page-content/user/UserManagerView.vue"),
+        meta: {
+            title: '日志查询',
+            icon: 'iconfont icon-clipboard-list'
+        },
+        children: [
+            {
+                path: '/LoginRecordView',
+                component: () => import("@/components/page-content/logger/LoginRecordView.vue"),
+                meta: {
+                    title: '用户登录日志',
+                },
+            },
 
+        ]
+    },
 ]

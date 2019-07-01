@@ -279,7 +279,7 @@
         },
 
         watch: {
-            resize() {
+            data() {
                 this.resizeHeight();
             },
             selectedRow() {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lansea.wms.mapper.LoginRecordMapper">
+
+    <sql id="selectBase">
+        select
+        t.* ,
+        u.user_name user_name ,
+        u.real_name real_name
+        from login_record t
+        left join user u on u.id = t.uid
+    </sql>
+
+    <insert id="insert">
+        insert into login_record(ip, uid, type, create_time)
+        values (#{form.ip} , #{form.uid}, #{param1.type} , now())
+    </insert>
+    <select id="selectWhere" resultType="com.lansea.wms.model.LoginRecord">
+        <include refid="selectBase"></include>
+        <where>
+            <if test="form.ip != null and form.ip != ''">
+                and t.ip like "%${form.ip}%"
+            </if>
+            <if test="form.uid">
+                and t.uid = #{form.uid}
+            </if>
+            <if test="form.type != null and form.type != 0">
+                and t.type = #{form.type}
+            </if>
+            <if test="form.startTime != null">
+                and t.create_time >= #{form.startTime}
+            </if>
+            <if test="form.endTime != null">
+                and t.create_time &lt;= #{form.endTime}
+            </if>
+        </where>
+        <include refid="com.lansea.wms.mapper.base.TempMapper.sort"></include>
+    </select>
+</mapper>

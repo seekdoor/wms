@@ -3,6 +3,7 @@ package com.lansea.wms.controller;
 import com.lansea.wms.entity.Result;
 import com.lansea.wms.mapper.UserMapper;
 import com.lansea.wms.model.User;
+import com.lansea.wms.service.LoginRecordService;
 import com.lansea.wms.service.UserService;
 import com.lansea.wms.util.MD5Util;
 import io.swagger.annotations.Api;
@@ -26,6 +27,9 @@ public class LogRegController {
     @Autowired
     UserService userService;
 
+    @Autowired
+    LoginRecordService loginRecordService;
+
     @PostMapping(value = "/login")
     @ApiOperation(value = "用户登录")
     Result login(@Validated({User.Login.class}) @RequestBody User userForm, BindingResult bindingResult) {
@@ -33,12 +37,16 @@ public class LogRegController {
             return Result.errorByBindingResult(bindingResult);
         }
         User user = userMapper.findByUserName(userForm.getUserName());
-        if (user == null) {
+        if (user == null ) {
             return Result.error("用户不存在");
+        }
+        if( user.getActivated() == 1 ){
+            return Result.error("您的账户尚未激活，请联系管理员激活!");
         }
         if (!MD5Util.verify(userForm.getPassword(), user.getPassword())) {
             return Result.error("密码错误");
         }
+        loginRecordService.addLogin(user);
         userService.refreshUserToken(user);
         return Result.success(user);
     }

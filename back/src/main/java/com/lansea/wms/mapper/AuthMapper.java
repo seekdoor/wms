@@ -1,6 +1,7 @@
 package com.lansea.wms.mapper;
 
 import com.lansea.wms.model.Auth;
+import com.lansea.wms.model.User;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +29,7 @@ public interface AuthMapper {
 
     List<Auth> selectAllByRoleId(@Param("roleId") Integer roleId);
 
+    Auth findByName(@Param("name") String name);
+
+    Auth findByUserAndAuthName(@Param("user") User user, @Param("name") String name);
 }

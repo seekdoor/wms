@@ -50,6 +50,15 @@ export default {
             'sortField': StringUtil.toLine(column.prop),
             'sortOrder': column.order === 'ascending' ? 'asc' : 'desc'
         }
+    },
+
+    /**
+     * 初始化传递参数
+     * @param vue
+     */
+    initParams(vue) {
+        vue.filterForm = Object.assign(vue.filterForm, vue.params);
+        vue.$emit("update:params", {})
     }
 
 }

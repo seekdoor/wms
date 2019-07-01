@@ -80,8 +80,14 @@
     <update id="logout">
         update user
         set
-            token = null ,
+            token = null
         where id = ${user.id}
+    </update>
+    <update id="updatePassword">
+        update user
+        set
+        password = #{user.password}
+        where id = #{param1.id}
     </update>
 
 

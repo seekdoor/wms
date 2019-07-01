@@ -13,6 +13,7 @@ import com.lansea.wms.util.MD5Util;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -109,6 +110,34 @@ public class UserController {
         System.out.println(form);
         Integer num = userMapper.deleteByIds(form.getIds());
         return Result.success("共删除" + num + "条记录");
+    }
+
+    @PostMapping(value = "/logout")
+    @ApiOperation(value = "退出登录")
+    Result logout() {
+        userService.logOut();
+        return Result.success("已安全退出");
+    }
+
+    @PostMapping(value = "/change_my_info")
+    @ApiOperation(value = "修改我的个人信息")
+    Result changeMyInfo(@Validated({User.ChangeMyInfo.class}) @RequestBody UserAddForm form, BindingResult result){
+        if( result.hasErrors() ){
+            return Result.errorByBindingResult(result);
+        }
+        if(!form.verifyRePassword()){
+            return Result.error("两次密码输入不一致");
+        }
+        User user = userService.getLoginUser();
+        if(!user.getId().equals(form.getId())){
+            return Result.error("非法请求！");
+        }
+        if( !MD5Util.verify(form.getOldPassword(), user.getPassword()) ){
+            return Result.error("原密码错误");
+        }
+        user.setPassword( MD5Util.getMD5(form.getPassword()));
+        userMapper.updatePassword(user);
+        return Result.success("修改个人信息成功");
     }
 
 }

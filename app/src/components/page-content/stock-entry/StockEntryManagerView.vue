@@ -346,7 +346,8 @@
             // 出入库 1:入库；2：出库
             type: {
                 default: 1
-            }
+            },
+            params : Object
         },
         data() {
             return {
@@ -368,6 +369,7 @@
             }
         },
         mounted() {
+            EcUtil.initParams(this);
             this.reload();
         },
         methods: {

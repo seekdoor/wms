@@ -40,7 +40,7 @@
                             const end = new Date();
                             const start = new Date();
                             start.setTime(start.getTime() - 3600 * 1000 * 24 * 7);
-                            picker.$emit('pick', [start, end]);
+                            picker.$emit('pick', [start, '']);
                         }
                     }, {
                         text: '最近一个月',
@@ -48,7 +48,7 @@
                             const end = new Date();
                             const start = new Date();
                             start.setTime(start.getTime() - 3600 * 1000 * 24 * 30);
-                            picker.$emit('pick', [start, end]);
+                            picker.$emit('pick', [start, '']);
                         }
                     }, {
                         text: '最近三个月',
@@ -56,7 +56,7 @@
                             const end = new Date();
                             const start = new Date();
                             start.setTime(start.getTime() - 3600 * 1000 * 24 * 90);
-                            picker.$emit('pick', [start, end]);
+                            picker.$emit('pick', [start, '']);
                         }
                     }],
                 },
@@ -72,10 +72,10 @@
                 if (!v || v.length < 2) {
                     this.$emit('update:start-time', '');
                     this.$emit('update:end-time', '');
-                    return ;
+                    return;
                 }
-                this.$emit('update:start-time', DateTimeUtil.dateFormat(v[0]));
-                this.$emit('update:end-time', DateTimeUtil.dateFormat(v[1]));
+                this.$emit('update:start-time', v[0] === '' ? '' : DateTimeUtil.dateFormat(v[0]));
+                this.$emit('update:end-time', v[1] === '' ? '' : DateTimeUtil.dateFormat(v[1]));
             }
         },
         watch: {
@@ -87,9 +87,9 @@
             dateRange() {
                 return [new Date(this.startTime), new Date(this.endTime)]
             },
-            pickerStyle(){
+            pickerStyle() {
                 return {
-                    'width' : this.width ,
+                    'width': this.width,
                 }
             }
         },

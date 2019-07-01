@@ -63,6 +63,7 @@
             refreshData() {
                 if (!this.editId) {
                     this.role = new RoleModel;
+                    this.$refs.tree.setCheckedKeys([]);
                     return;
                 }
                 this.$ajax.request(Api.role_auth.getRoleById, {

@@ -1,11 +1,15 @@
 package com.lansea.wms.service;
 
 import com.lansea.wms.entity.Token;
+import com.lansea.wms.form.UserAddForm;
+import com.lansea.wms.mapper.LoginRecordMapper;
 import com.lansea.wms.mapper.RoleMapper;
 import com.lansea.wms.mapper.UserMapper;
 import com.lansea.wms.model.User;
+import com.lansea.wms.util.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -21,6 +25,9 @@ public class UserService {
 
     @Autowired
     RoleMapper roleMapper;
+
+    @Autowired
+    LoginRecordService loginRecordService;
 
     /**
      * 刷新用户在数据库中的  token
@@ -61,8 +68,8 @@ public class UserService {
      * @return
      */
     public Integer logOut() {
-
+        loginRecordService.addLogout();
         return userMapper.logout(getLoginUser());
-
     }
+
 }

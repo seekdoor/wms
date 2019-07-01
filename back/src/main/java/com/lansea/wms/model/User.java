@@ -22,14 +22,8 @@ import java.util.Date;
 public class User {
 
 
-
-    //用户登录分组
-    public interface Login {
-    }
-
-
     @ApiModelProperty(value = "ID", example = "1")
-    @Min(value = 1, message = "id非法", groups = {ValidClass.EditForm.class})
+    @Min(value = 1, message = "id非法", groups = {ValidClass.EditForm.class, ChangeMyInfo.class})
     private Integer id;
 
     @ApiModelProperty(value = "用户名")
@@ -47,7 +41,7 @@ public class User {
     private String email;
 
     @ApiModelProperty(value = "密码")
-    @NotNull(message = "密码不能为空", groups = {Login.class, ValidClass.AddForm.class})
+    @NotNull(message = "密码不能为空", groups = {Login.class, ValidClass.AddForm.class, ChangeMyInfo.class})
     @Password
     private String password;
 
@@ -84,6 +78,8 @@ public class User {
 
     private String roleName;
 
+    private Integer isRoot;
+
     /**
      * 隐藏安全字段
      *
@@ -93,6 +89,14 @@ public class User {
         password = null;
         token = null;
         return this;
+    }
+
+    // 用户登录分组
+    public interface Login {
+    }
+
+    // 修改我的信息
+    public interface ChangeMyInfo {
     }
 
     public Integer getId() {
@@ -222,5 +226,13 @@ public class User {
 
     public void setDepartId(Integer departId) {
         this.departId = departId;
+    }
+
+    public Integer getIsRoot() {
+        return isRoot;
+    }
+
+    public void setIsRoot(Integer isRoot) {
+        this.isRoot = isRoot;
     }
 }

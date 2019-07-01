@@ -12,7 +12,7 @@ public interface UserMapper {
     @Select("select * from user where id = #{id} limit 1")
     User findById(@Param("id") Integer id);
 
-    @Select("select * from user where user_name = #{userName} limit 1")
+    @Select("select * from user where user_name = #{userName} and is_del is null limit 1")
     User findByUserName(@Param("userName") String userName);
 
     // 更新用户Token
@@ -32,9 +32,11 @@ public interface UserMapper {
     Integer changePassword(@Param("user") User user);
 
     // 批量删除
-    @Update("update user where is_del = now() where id in (${ids})")
+    @Update("update user set is_del = now() where id in (${ids})")
     Integer deleteByIds(@Param("ids") String ids);
 
     Integer logout(@Param("user") User user);
+
+    Integer updatePassword(@Param("user") User user);
 
 }

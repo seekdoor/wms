@@ -143,6 +143,9 @@ export default {
         list: ['/stock_trans/select_where', 'get'],
         submit: ['/stock_trans/submit', 'post'],
         update: ['/stock_trans/update', 'post'],
+    },
+    logger: {
+        loginRecordList: ['/logger/login_record_list', 'get'],
     }
 
 }

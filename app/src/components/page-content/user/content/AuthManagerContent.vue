@@ -127,6 +127,7 @@
                     })
                 }).then(resp => {
                     DialogUtil.toastSuccess(resp);
+                    this.refreshData();
                 })
             },
             addDialogFinish() {

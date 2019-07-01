@@ -16,6 +16,8 @@ export default class UserModel {
     roleName = '';
     departId = 0;
     departName = '';
+    isRoot = 0 ;
+    oldPassword = '' ;
 
     setDefaultActivated(v = 1) {
         this.activated = v;

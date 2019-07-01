@@ -13,9 +13,13 @@ import javax.validation.constraints.NotNull;
 public class UserAddForm extends User {
 
     @ApiModelProperty(value = "重复密码")
-    @NotBlank(message = "重复密码不能为空", groups = {ValidClass.AddForm.class})
+    @NotBlank(message = "重复密码不能为空", groups = {ValidClass.AddForm.class, ChangeMyInfo.class})
     @Password(message = "重复密码格式错误")
     private String rePassword;
+
+    @NotBlank(message = "原密码不能为空", groups = {ValidClass.AddForm.class, ChangeMyInfo.class})
+    @Password(message = "原密码格式错误")
+    private String oldPassword;
 
     public boolean verifyRePassword() {
         return getPassword().equals(rePassword);
@@ -27,5 +31,13 @@ public class UserAddForm extends User {
 
     public void setRePassword(String rePassword) {
         this.rePassword = rePassword;
+    }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
     }
 }

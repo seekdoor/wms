@@ -41,6 +41,7 @@
                                     :key="item.path"
                                     v-show="item.meta.title === windows.selectedName"
                                     class="flex-grow pa-xs "
+                                    :params.sync="item.params || {}"
                             ></component>
                         </div>
 
@@ -49,6 +50,7 @@
                 <div class="layout-footer"></div>
             </div>
         </div>
+
     </div>
 </template>
 

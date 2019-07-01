@@ -12,7 +12,7 @@
         <set>
             pid = #{auth.pid} ,
             name = #{auth.name} ,
-            url = #{auth.name}
+            url = #{auth.url}
         </set>
         where id=#{auth.id}
     </update>
@@ -29,6 +29,16 @@
         where id in (
             select r.auth_id from role_auth r where r.role_id = #{roleId}
         )
+    </select>
+    <select id="findByName" resultType="com.lansea.wms.model.Auth">
+        select * from auth where url like '${name}%' limit 1
+    </select>
+    <select id="findByUserAndAuthName" resultType="com.lansea.wms.model.Auth">
+        select t.* from auth t
+        inner join role_auth ra on ra.auth_id = t.id
+        inner join user u on u.role_id = ra.role_id
+        where t.url like '${name}%'
+        limit 1
     </select>
 
 
