@@ -20,6 +20,7 @@
                             type="index"
                             fixed="left"
                             :index="rowIndex"
+                            width="60"
                             v-if="showIndex"
                     ></el-table-column>
                     <el-table-column
