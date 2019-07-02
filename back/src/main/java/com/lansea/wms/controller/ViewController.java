@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class ViewController {
 
     @RequestMapping(value = "")
-    String index(){
+    String index() {
         return "index";
     }
 
