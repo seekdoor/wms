@@ -2,6 +2,7 @@
     <div class="CategoryManagerView flex-box flex-column">
         <search-card-layout
                 @click-search="refreshData"
+                :loading="loading"
         >
             <div class="flex-box search-card">
                 <div class="">

@@ -12,7 +12,7 @@ module.exports = {
         port: 20003
     },
     outputDir : resolve("dist") ,
-    publicPath: "./static/",
+    publicPath: "./",
     chainWebpack: (config) => {
         config.resolve.alias
             .set('@', resolve('src'))

@@ -24,15 +24,11 @@ public class InterceptorConfigurer implements WebMvcConfigurer {
 
         registry.addInterceptor(tokenInterceptor())
                 .addPathPatterns("/**")
+                .excludePathPatterns("/static/**")
                 .excludePathPatterns("/log_reg/**")
                 .excludePathPatterns("/")
                 .excludePathPatterns("/v2/**")
                 .excludePathPatterns("/swagger-ui.html")
-                .excludePathPatterns("/**/*.jpg")
-                .excludePathPatterns("/**/*.png")
-                .excludePathPatterns("/**/*.css")
-                .excludePathPatterns("/**/*.css")
-                .excludePathPatterns("/static/**")
                 .excludePathPatterns("/swagger-resources/**")
                 .excludePathPatterns("/webjars/**");
     }

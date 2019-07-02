@@ -7,7 +7,9 @@
                     <el-input v-model="form.userName" autocomplete="off" size="middle"></el-input>
                 </el-form-item>
                 <el-form-item label="密码">
-                    <el-input type="password" v-model="form.password" autocomplete="off" size="middle"></el-input>
+                    <el-input type="password" v-model="form.password" autocomplete="off" size="middle"
+                        @keydown.native.enter="clickSubmitButton"
+                    ></el-input>
                 </el-form-item>
             </el-form>
             <div class="mt-lg">
