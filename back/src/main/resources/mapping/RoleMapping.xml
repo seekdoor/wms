@@ -48,8 +48,8 @@
     </update>
     <!-- 新增一条数据 -->
     <insert id="insert" useGeneratedKeys="true" keyProperty="role.id">
-        insert into role(name,remark,create_uid,update_uid,create_time,update_time)
-        values(#{role.name} ,#{role.remark} ,#{role.createUid} ,#{role.createUid} ,now(),now())
+        insert into role(name,remark,create_uid,create_time)
+        values(#{role.name} ,#{role.remark} ,#{role.createUid} ,now())
     </insert>
 
 

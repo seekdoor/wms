@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
+    "echarts": "^4.2.1",
     "element-ui": "^2.4.5",
     "pinyin-match": "^1.0.8",
     "quill": "^1.3.6",

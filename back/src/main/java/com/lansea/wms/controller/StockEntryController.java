@@ -77,7 +77,7 @@ public class StockEntryController extends BaseController {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
-        Integer num = stockEntryMapper.delete(form.getIds());
+        Integer num = stockEntryService.delete(form.getIds());
         return Result.successDelete(num);
     }
 

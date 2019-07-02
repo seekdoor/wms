@@ -69,6 +69,7 @@ public class CompanyController {
         if (result.hasErrors()) {
             return Result.errorByBindingResult(result);
         }
+        company.setUpdateUidToLoginUser(userService);
         companyMapper.update(company);
         return Result.success("修改合作方成功");
     }

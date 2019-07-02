@@ -59,6 +59,30 @@ export default {
     initParams(vue) {
         vue.filterForm = Object.assign(vue.filterForm, vue.params);
         vue.$emit("update:params", {})
+    },
+
+    /**
+     * 给数值添加都好
+     * @param number
+     * @param sp
+     * @param len
+     * @returns {string|...*|string}
+     */
+    numberDivide(number, sp = ',', len = 3) {
+        number += '';
+        let arr = number.split('.');
+        let zt = [...arr[0]];
+        let zr = '';
+        for (let i = 0; i < zt.length; i++) {
+            if (i % len === 0 && i !== 0) {
+                zr = sp + zr;
+            }
+            zr = zt[zt.length - i - 1] + zr;
+        }
+        if (typeof arr[1] !== 'undefined' && arr[1].length > 0) {
+            zr += '.' + arr[1];
+        }
+        return zr;
     }
 
 }

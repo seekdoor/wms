@@ -23,6 +23,11 @@ export default {
             index--;
         }
         this.selectedName = this.list[index].meta.title;
+    } ,
+
+    clearWindow(){
+        this.list = [aside_menu[0]];
+        this.selectedName = aside_menu[0].meta.title ;
     }
 
 }

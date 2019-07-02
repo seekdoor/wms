@@ -1,5 +1,4 @@
 import BaseWarehouseAndUser from "@/project/model/base/BaseWarehouseAndUser";
-import DateTimeUtil from "@/util/DateTimeUtil";
 
 export default class InventoryModel extends BaseWarehouseAndUser {
 

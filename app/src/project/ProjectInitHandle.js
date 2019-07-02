@@ -5,6 +5,7 @@ import Colors from "@/project/enum/Colors";
 import Config from "@/assets/Config";
 import UserHandle from "@/project/user/UserHandle";
 import ImageEnum from "@/project/enum/ImageEnum";
+import EcUtil from "@/util/EcUtil";
 
 /**
  * 项目初始化函数
@@ -24,6 +25,7 @@ export default {
         Vue.prototype.$_colors = Colors;
         Vue.prototype.$_config = Config;
         Vue.prototype.$_images = ImageEnum
+        Vue.prototype.$_ecUtil = EcUtil
     },
 
     /**
@@ -37,7 +39,6 @@ export default {
          * 初始化用户信息
          */
         UserHandle.initCheckUser();
-        console.log( UserHandle.getLoginUser() );
     },
 
 }

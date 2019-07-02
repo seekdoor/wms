@@ -11,7 +11,7 @@
     </sql>
     <sql id="insertValues">
         #{user.userName} ,#{user.realName} , #{user.email}, #{user.activated} ,
-        #{user.mobile} ,#{user.phone} ,#{user.roleId}, #{user.password}, #{user.departId}
+        #{user.mobile} ,#{user.phone} ,#{user.roleId}, #{user.departId}, #{user.password}
     </sql>
 
     <!-- 刷新 token -->

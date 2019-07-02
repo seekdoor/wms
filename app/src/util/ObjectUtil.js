@@ -22,6 +22,10 @@ export default {
         for (let i in dict) {
             let D = dict[i];
             let c = {};
+            try {
+                i *= 1;
+            } catch (ignore) {
+            }
             c[idKey] = i;
             c[labelKey] = D;
             ret.push(c);

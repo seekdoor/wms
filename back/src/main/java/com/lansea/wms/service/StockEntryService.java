@@ -32,7 +32,7 @@ public class StockEntryService extends BaseService {
         stockEntry.setStatus(1);
         Integer num = stockEntryMapper.insert(stockEntry);
         approveLogService.addStockEntryLog(stockEntry);
-        return num ;
+        return num;
     }
 
     /**
@@ -106,6 +106,18 @@ public class StockEntryService extends BaseService {
         StockEntry stockEntry = form.getStockEntry();
         stockEntry.setDeliveryId(delivery.getId());
         return finish(stockEntry);
+    }
+
+    /**
+     * 删除出入库订单
+     *
+     * @param ids
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public Integer delete(String ids) {
+        moveMapper.deleteByStockEntryIds(ids);
+        return stockEntryMapper.delete(ids);
     }
 
 }

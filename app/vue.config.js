@@ -11,6 +11,8 @@ module.exports = {
     devServer: {
         port: 20003
     },
+    outputDir : resolve("dist") ,
+    publicPath: "./",
     chainWebpack: (config) => {
         config.resolve.alias
             .set('@', resolve('src'))

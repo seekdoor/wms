@@ -47,7 +47,7 @@
             <if test="company.name != null and company.name != ''">
                 and t.name like '%${company.name}%'
             </if>
-            <if test="company.category != null and company.category != ''">
+            <if test="company.category != null and company.category != 0">
                 and t.category = #{company.category}
             </if>
             <if test="company.contactName != null and company.contactName != ''">
@@ -82,7 +82,7 @@
             email = #{company.email} ,
             remark = #{company.remark} ,
             update_uid = #{company.updateUid},
-            upate_time = now()
+            update_time = now()
         where
             id = #{company.id}
     </update>

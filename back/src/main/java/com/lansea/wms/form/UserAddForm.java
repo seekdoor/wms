@@ -17,7 +17,7 @@ public class UserAddForm extends User {
     @Password(message = "重复密码格式错误")
     private String rePassword;
 
-    @NotBlank(message = "原密码不能为空", groups = {ValidClass.AddForm.class, ChangeMyInfo.class})
+    @NotBlank(message = "原密码不能为空", groups = { ChangeMyInfo.class})
     @Password(message = "原密码格式错误")
     private String oldPassword;
 

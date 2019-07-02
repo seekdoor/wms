@@ -4,7 +4,7 @@
              :style="leftContainerStyle"
         >
             <div class="layout-title flex-box flex-shrink-off flex-center color-silver overflow-h">
-                <span v-if="$store.state.asideIsExpend">蓝海 WMS 系统</span>
+                <span v-if="$store.state.asideIsExpend">通用 WMS 系统</span>
                 <i class="iconfont icon-node-js " v-if="!$store.state.asideIsExpend"></i>
             </div>
             <div class="layout-aside-menu flex-grow">

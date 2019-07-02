@@ -12,41 +12,41 @@
             >
                 <el-row :gutter="5">
                     <el-col :span="18">
-                        <el-form-item label="编码">
+                        <el-form-item label="编码" :required="true">
                             <el-input type="text" v-model="company.code"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="6">
-                        <el-form-item label="分类">
-                            <company-selector
+                        <el-form-item label="分类" :required="true">
+                            <company-category-selector
                                     v-model="company.category"
                                     :is-filter="false"
-                            ></company-selector>
+                            ></company-category-selector>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="5">
                     <el-col :span="16">
-                        <el-form-item label="公司名称">
+                        <el-form-item label="公司名称" :required="true">
                             <el-input type="text" v-model="company.name"></el-input>
                         </el-form-item>
                     </el-col>
                     <el-col :span="8">
-                        <el-form-item label="联系人名称">
+                        <el-form-item label="联系人名称" :required="true">
                             <el-input type="text" v-model="company.contactName"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="5">
                     <el-col :span="18">
-                        <el-form-item label="公司地址">
+                        <el-form-item label="公司地址" :required="true">
                             <el-input type="text" v-model="company.address"></el-input>
                         </el-form-item>
                     </el-col>
                 </el-row>
                 <el-row :gutter="5">
                     <el-col :span="12">
-                        <el-form-item label="联系人手机号">
+                        <el-form-item label="联系人手机号" :required="true">
                             <el-input type="text" v-model="company.mobile"></el-input>
                         </el-form-item>
                     </el-col>

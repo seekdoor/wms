@@ -1,10 +1,12 @@
 <template>
     <div class="CompanyCategorySelector" style="width: 110px;">
-        <el-select :value="value" @input="inputEvent" placeholder="选择分类">
+        <el-select :value="valueUse" @input="inputEvent" placeholder="选择分类">
             <el-option label="全部" :value="0" v-if="isFilter"></el-option>
-            <el-option :label="category[1]" :value="1"></el-option>
-            <el-option :label="category[2]" :value="2"></el-option>
-            <el-option :label="category[3]" :value="3"></el-option>
+            <el-option :value="item.id "
+                       :label="item.label"
+                       v-for="(item,i) in category.list()"
+                       :key="item.id"
+            ></el-option>
         </el-select>
     </div>
 </template>
@@ -40,7 +42,12 @@
             }
         },
         watch: {},
-        computed: {},
+        computed: {
+            valueUse() {
+                if (this.value) return this.value;
+                return this.isFilter ? 0 : null;
+            }
+        },
 
     }
 </script>

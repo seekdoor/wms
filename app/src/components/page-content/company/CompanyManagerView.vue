@@ -15,10 +15,10 @@
                 </div>
                 <div class="" style="width: 150px;">
                     <span class="">分类</span>
-                    <company-selector
+                    <company-category-selector
                             v-model="filterForm.category"
                             :is-filter="true"
-                    ></company-selector>
+                    ></company-category-selector>
                 </div>
                 <div class="" style="width: 200px;">
                     <span class="">联系人姓名</span>

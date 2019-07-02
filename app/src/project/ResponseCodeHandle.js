@@ -3,6 +3,7 @@
  */
 import DialogUtil from "@/util/DialogUtil";
 import UserHandle from "@/project/user/UserHandle";
+import RouterUtil from "@/util/RouterUtil";
 
 export default class ResponseCodeHandle {
 
@@ -48,6 +49,9 @@ export default class ResponseCodeHandle {
             case 110 :
                 this._code110Handle();
                 return false;
+            case 120:
+                this._code120Handle();
+                return false;
             default :
                 this._codeOtherHandle();
                 return false;
@@ -72,6 +76,18 @@ export default class ResponseCodeHandle {
      */
     _code110Handle = () => {
         UserHandle.removeLoginUser();
+        RouterUtil.toLogin();
+        DialogUtil.toastError("用户凭证过期，请重新登录！");
+    };
+
+    /**
+     * code == 120
+     * 权限不足
+     *
+     * @private
+     */
+    _code120Handle = () => {
+        DialogUtil.toastError("您的权限不足，请联系管理员开通！");
     };
 
     /**

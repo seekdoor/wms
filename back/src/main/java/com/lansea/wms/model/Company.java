@@ -3,6 +3,7 @@ package com.lansea.wms.model;
 import com.lansea.wms.entity.SerializeBase;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.enums.CompanyCategoryEnum;
+import com.lansea.wms.model.base.BaseUser;
 import com.lansea.wms.util.DateUtil;
 import com.lansea.wms.util.EnumUtil;
 import com.lansea.wms.validate.Mobile;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 @Repository
 @ApiModel(value = "Company", description = "第三方公司（客户，供应商）模型")
-public class Company extends SerializeBase {
+public class Company extends BaseUser {
 
     @ApiModelProperty(value = "ID")
     @Min(value = 1, message = "ID 非法", groups = {ValidClass.EditForm.class, ValidClass.FindIdForm.class})
@@ -54,16 +55,6 @@ public class Company extends SerializeBase {
     private String email;
 
     private String remark;
-
-    private Integer createUid;
-
-    private Integer updateUid;
-
-    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
-    private Date createTime;
-
-    @DateTimeFormat(pattern = DateUtil.DATE_TIME_FORMAT)
-    private Date updateTime;
 
     // 扩展字段
 
@@ -165,29 +156,6 @@ public class Company extends SerializeBase {
         this.remark = remark;
     }
 
-    public Integer getCreateUid() {
-        return createUid;
-    }
-
-    public void setCreateUid(Integer createUid) {
-        this.createUid = createUid;
-    }
-
-    public Integer getUpdateUid() {
-        return updateUid;
-    }
-
-    public void setUpdateUid(Integer updateUid) {
-        this.updateUid = updateUid;
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
 
     public String getCreateUserName() {
         return createUserName;
@@ -205,11 +173,4 @@ public class Company extends SerializeBase {
         this.updateUserName = updateUserName;
     }
 
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

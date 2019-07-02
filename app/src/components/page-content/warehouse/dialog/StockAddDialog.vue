@@ -7,13 +7,13 @@
                 :title="editId? `编辑 ${stock.id}` : `新增`"
         >
             <el-form label-position="top">
-                <el-form-item label="仓位编号">
+                <el-form-item label="货架编号">
                     <el-input type="text" v-model="stock.code"></el-input>
                 </el-form-item>
-                <el-form-item label="仓位名称">
+                <el-form-item label="货架名称">
                     <el-input type="text" v-model="stock.name"></el-input>
                 </el-form-item>
-                <el-form-item label="所属仓库">
+                <el-form-item label="所属仓位">
                     <warehouse-selector
                             width="100%"
                             :level="2"
