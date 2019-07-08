@@ -9,3 +9,5 @@
 * app 为前端代码
 
 演示地址：[http://wms.fangjc1986.com](http://wms.fangjc1986.com)
+帐号：test
+密码：123456
