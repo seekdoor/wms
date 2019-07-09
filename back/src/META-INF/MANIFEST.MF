@@ -1,0 +1,39 @@
+Manifest-Version: 1.0
+Class-Path: thymeleaf-spring5-3.0.11.RELEASE.jar spring-beans-5.1.7.RE
+ LEASE.jar spring-tx-5.1.7.RELEASE.jar snakeyaml-1.23.jar springfox-sw
+ agger-common-2.6.1.jar spring-web-5.1.7.RELEASE.jar spring-plugin-met
+ adata-1.2.0.RELEASE.jar mybatis-spring-2.0.1.jar spring-boot-starter-
+ thymeleaf-2.1.5.RELEASE.jar core-3.1.0.jar tomcat-embed-websocket-9.0
+ .19.jar spring-amqp-2.1.6.RELEASE.jar tomcat-embed-core-9.0.19.jar sp
+ ringfox-swagger2-2.6.1.jar springfox-spi-2.6.1.jar spring-rabbit-2.1.
+ 6.RELEASE.jar amqp-client-5.4.3.jar spring-boot-autoconfigure-2.1.5.R
+ ELEASE.jar spring-webmvc-5.1.7.RELEASE.jar mapstruct-1.0.0.Final.jar 
+ spring-jcl-5.1.7.RELEASE.jar spring-boot-starter-jdbc-2.1.5.RELEASE.j
+ ar slf4j-api-1.7.26.jar spring-messaging-5.1.7.RELEASE.jar guava-18.0
+ .jar spring-retry-1.2.4.RELEASE.jar spring-boot-starter-2.1.5.RELEASE
+ .jar jackson-annotations-2.9.0.jar logback-classic-1.2.3.jar mybatis-
+ 3.5.1.jar jackson-core-2.9.8.jar hibernate-validator-6.0.16.Final.jar
+  jackson-datatype-jsr310-2.9.8.jar spring-context-5.1.7.RELEASE.jar s
+ pring-plugin-core-1.2.0.RELEASE.jar spring-boot-starter-web-2.1.6.REL
+ EASE.jar fastjson-1.2.57.jar mybatis-spring-boot-starter-2.0.1.jar at
+ toparser-2.0.5.RELEASE.jar swagger-annotations-1.5.10.jar druid-1.1.1
+ 0.jar classmate-1.4.0.jar jackson-datatype-jdk8-2.9.8.jar springfox-s
+ wagger-ui-2.6.1.jar spring-boot-2.1.5.RELEASE.jar druid-spring-boot-s
+ tarter-1.1.10.jar unbescape-1.1.6.RELEASE.jar pagehelper-spring-boot-
+ starter-1.2.3.jar log4j-to-slf4j-2.11.2.jar jsqlparser-1.0.jar thymel
+ eaf-extras-java8time-3.0.4.RELEASE.jar jul-to-slf4j-1.7.26.jar mybati
+ s-spring-boot-autoconfigure-2.0.1.jar spring-core-5.1.7.RELEASE.jar j
+ boss-logging-3.3.2.Final.jar thymeleaf-3.0.11.RELEASE.jar spring-boot
+ -starter-json-2.1.5.RELEASE.jar jackson-module-parameter-names-2.9.8.
+ jar validation-api-2.0.1.Final.jar pagehelper-5.1.2.jar springfox-spr
+ ing-web-2.6.1.jar jackson-databind-2.9.8.jar log4j-api-2.11.2.jar log
+ back-core-1.2.3.jar swagger-models-1.5.10.jar mysql-connector-java-5.
+ 1.35.jar springfox-schema-2.6.1.jar spring-boot-starter-tomcat-2.1.5.
+ RELEASE.jar spring-boot-starter-amqp-2.1.5.RELEASE.jar pagehelper-spr
+ ing-boot-autoconfigure-1.2.3.jar spring-boot-devtools-2.1.5.RELEASE.j
+ ar spring-aop-5.1.7.RELEASE.jar spring-jdbc-5.1.7.RELEASE.jar HikariC
+ P-3.2.0.jar javax.annotation-api-1.3.2.jar spring-boot-starter-loggin
+ g-2.1.5.RELEASE.jar tomcat-embed-el-9.0.19.jar spring-expression-5.1.
+ 7.RELEASE.jar springfox-core-2.6.1.jar
+Main-Class: com.lansea.wms.WmsApplication
+

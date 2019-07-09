@@ -13,7 +13,7 @@ export default {
     /**
      * 登录用户在缓存中的key值
      */
-    _cache_key: "login_user_cache",
+    _cache_key: "login_user_cache" + (process.env.NODE_ENV === 'production' ? '_production' : ''),
     /**
      * 设置状态管理器 isLogin 当前状态
      * @param status    登录状态 false ：未登录， true ： 已登录

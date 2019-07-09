@@ -75,7 +75,7 @@ export default class ResponseCodeHandle {
      * @private
      */
     _code110Handle = () => {
-        UserHandle.removeLoginUser();
+        // UserHandle.removeLoginUser();
         RouterUtil.toLogin();
         DialogUtil.toastError("用户凭证过期，请重新登录！");
     };

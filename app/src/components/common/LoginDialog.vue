@@ -50,7 +50,7 @@
                 formLabelWidth: 100,
                 submitting: false,
                 form: {
-                    userName: 'admin',
+                    userName: 'test',
                     password: '123456',
                 }
             }
