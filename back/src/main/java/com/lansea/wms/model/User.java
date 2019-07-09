@@ -1,5 +1,6 @@
 package com.lansea.wms.model;
 
+import com.lansea.wms.entity.SerializeBase;
 import com.lansea.wms.entity.ValidClass;
 import com.lansea.wms.util.DateUtil;
 import com.lansea.wms.validate.Mobile;
@@ -19,7 +20,7 @@ import java.util.Date;
 
 @Repository
 @ApiModel(value = "User", description = "用户模型")
-public class User {
+public class User extends SerializeBase {
 
 
     @ApiModelProperty(value = "ID", example = "1")

@@ -33,7 +33,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             if (user == null) {
                 throw new Exception("Token 用户不存在");
             }
-            if( user.getActivated() == 1){
+            if (user.getActivated() == 1) {
                 throw new Exception("您的账户尚未激活，请联系管理员激活!");
             }
             request.setAttribute("loginUser", user);
@@ -42,6 +42,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                 throw new Exception("您的账户权限不足，请联系管理员开通！");
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage());
             Result result = Result.error(e.getMessage(), code);
             response.getWriter().print(JSONObject.toJSONString(result));
             return false;
